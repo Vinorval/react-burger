@@ -1,6 +1,6 @@
 import React from "react";
+import burgerIngredientsStyles from './burgerIngredients.module.css'
 import PropTypes from 'prop-types';
-import './burgerIngredients.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -22,11 +22,11 @@ class BurgerIngredients extends React.Component {
             this.state.data.map((item) => {
                 if (item.type === name) {
                     return (
-                        <li className="item" key={item._id}>
-                            {item.__v > 0 && <p className="item-number">{item.__v}</p>}
-                            <img className="item__image" alt={item.name} src={item.image} />
-                            <p className="item__price">{item.price} <CurrencyIcon type="primary" /></p>
-                            <p className="item__text">{item.name}</p>
+                        <li className={burgerIngredientsStyles.item} key={item._id}>
+                            {item.__v > 0 && <p className={burgerIngredientsStyles.item__number}>{item.__v}</p>}
+                            <img className={burgerIngredientsStyles.item__image} alt={item.name} src={item.image} />
+                            <p className={burgerIngredientsStyles.item__price}>{item.price} <CurrencyIcon type="primary" /></p>
+                            <p className={burgerIngredientsStyles.item__text}>{item.name}</p>
                         </li>
                     )
                 }
@@ -48,18 +48,18 @@ class BurgerIngredients extends React.Component {
                         Начинки
                     </Tab>
                 </div>
-                <menu className="menu">
-                    <div className="menu__item">
-                        <h3 className="menu__title">Булки</h3>
-                        <ul className="menu__list">{this.showIngredient("bun")}</ul>
+                <menu className={burgerIngredientsStyles.menu}>
+                    <div className={burgerIngredientsStyles.menu__item}>
+                        <h3 className={burgerIngredientsStyles.menu__title}>Булки</h3>
+                        <ul className={burgerIngredientsStyles.menu__list}>{this.showIngredient("bun")}</ul>
                     </div>
-                    <div className="menu__item">
-                        <h3 className="menu__title">Соусы</h3>
-                        <ul className="menu__list">{this.showIngredient("sauce")}</ul>
+                    <div className={burgerIngredientsStyles.menu__item}>
+                        <h3 className={burgerIngredientsStyles.menu__title}>Соусы</h3>
+                        <ul className={burgerIngredientsStyles.menu__list}>{this.showIngredient("sauce")}</ul>
                     </div>
-                    <div className="menu__item">
-                        <h3 className="menu__title">Начинки</h3>
-                        <ul className="menu__list">{this.showIngredient("main")}</ul>
+                    <div className={burgerIngredientsStyles.menu__item}>
+                        <h3 className={burgerIngredientsStyles.menu__title}>Начинки</h3>
+                        <ul className={burgerIngredientsStyles.menu__list}>{this.showIngredient("main")}</ul>
                     </div>
                 </menu>
             </section>
@@ -68,7 +68,7 @@ class BurgerIngredients extends React.Component {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object)
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default BurgerIngredients

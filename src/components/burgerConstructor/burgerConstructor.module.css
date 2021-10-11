@@ -1,4 +1,4 @@
-.burger-menu {
+.burger__menu {
     margin: 0;
     padding: 0;
     display: grid;
@@ -6,7 +6,7 @@
     row-gap: 16px;
 }
 
-.burger-list {
+.burger__list {
     margin: 0;
     margin-left: -32px;
     padding: 0;
@@ -17,23 +17,23 @@
     overflow-y: scroll;
 }
 
-.burger-list::-webkit-scrollbar {
+.burger__list::-webkit-scrollbar {
     width: 8px;
     background-color: #2F2F37;
 }
 
-.burger-list::-webkit-scrollbar-thumb {
+.burger__list::-webkit-scrollbar-thumb {
     background-color: #8585AD;
 }
 
-.burger-item {
+.burger__item {
     display: grid;
     align-items: center;
     grid-template-columns: 24px calc(100% - 24px - 8px);
     column-gap: 8px;
 }
 
-.burger-price {
+.burger__price {
     width: 576px;
     display: grid;
     justify-content: end;

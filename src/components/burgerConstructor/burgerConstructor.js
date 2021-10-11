@@ -1,6 +1,6 @@
 import React from "react";
+import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
-import './burgerConstructor.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 class BurgerConstructor extends React.Component {
@@ -14,7 +14,7 @@ class BurgerConstructor extends React.Component {
             this.state.data.map((item) => {
                 if (item.type !== "bun")
                     return (
-                        <li className="burger-item" key={item._id}>
+                        <li className={burgerConstructorStyles.burger__item} key={item._id}>
                             <DragIcon type="primary" />
                             <ConstructorElement
                                 text={item.name}
@@ -30,7 +30,7 @@ class BurgerConstructor extends React.Component {
     render () {
         return (
             <section>
-                <menu className="burger-menu">
+                <menu className={burgerConstructorStyles.burger__menu}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
@@ -38,7 +38,7 @@ class BurgerConstructor extends React.Component {
                         price={this.state.bun.price}
                         thumbnail={this.state.bun.image}
                     />
-                    <ul className="burger-list">{this.showIngredient()}</ul>
+                    <ul className={burgerConstructorStyles.burger__list}>{this.showIngredient()}</ul>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
@@ -47,8 +47,8 @@ class BurgerConstructor extends React.Component {
                         thumbnail={this.state.bun.image}
                     />
                 </menu>
-                <div className="burger-price">
-                    <p className="sum">610 <CurrencyIcon type="primary" /></p>
+                <div className={burgerConstructorStyles.burger__price}>
+                    <p className={burgerConstructorStyles.sum}>610 <CurrencyIcon type="primary" /></p>
                     <Button type="primary" size="large">
                         Оформить заказ
                     </Button>
@@ -59,7 +59,7 @@ class BurgerConstructor extends React.Component {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object)
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default BurgerConstructor
