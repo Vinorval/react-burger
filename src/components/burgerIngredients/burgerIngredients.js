@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './burgerIngredients.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -65,5 +66,9 @@ class BurgerIngredients extends React.Component {
         )
     }
 }
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default BurgerIngredients

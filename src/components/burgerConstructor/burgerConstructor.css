@@ -1,0 +1,53 @@
+.burger-menu {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    justify-content: center;
+    row-gap: 16px;
+}
+
+.burger-list {
+    margin: 0;
+    margin-left: -32px;
+    padding: 0;
+    list-style-type: none;
+    display: grid;
+    row-gap: 16px;
+    height: calc(100vh - 88px - 250px - 200px);
+    overflow-y: scroll;
+}
+
+.burger-list::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+}
+
+.burger-list::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.burger-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 24px calc(100% - 24px - 8px);
+    column-gap: 8px;
+}
+
+.burger-price {
+    width: 576px;
+    display: grid;
+    justify-content: end;
+    grid-template-columns: 119px 215px;
+    margin-top: 40px;
+    column-gap: 40px;
+}
+
+.sum {
+    margin: 0;
+    text-align: end;
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 64px;
+}
