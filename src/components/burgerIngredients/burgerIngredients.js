@@ -4,22 +4,18 @@ import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-class BurgerIngredients extends React.Component {
-    
-    state = {
-        current: 'Булки',
-        data: this.props.data
-    };
+function BurgerIngredients(props) {
+    const [current, setCurrent] = React.useState('Булки');
 
-    clickOnBun = () => this.setState({ current: 'Булки' });
+    const clickOnBun = () => setCurrent('Булки' );
 
-    clickOnSauces = () => this.setState({ current: 'Соусы' });
+    const clickOnSauces = () => setCurrent('Соусы' );
 
-    clickOnMain = () => this.setState({ current: 'Начинки' });
+    const clickOnMain = () => setCurrent('Начинки' );
 
-    showIngredient = (name) => {
+    const returnIngredient = (name) => {
         return (
-            this.state.data.map((item) => {
+            props.data.map((item) => {
                 if (item.type === name) {
                     return (
                         <li className={burgerIngredientsStyles.item} key={item._id}>
@@ -34,37 +30,35 @@ class BurgerIngredients extends React.Component {
         )
     }
 
-    render() {
-        return (
-            <section>
-                <div style={{ display: 'flex' }}>
-                    <Tab value="Булки" active={this.state.current === 'Булки'} onClick={this.clickOnBun}>
-                        Булки
-                    </Tab>
-                    <Tab value="Соусы" active={this.state.current === 'Соусы'} onClick={this.clickOnSauces}>
-                        Соусы
-                    </Tab>
-                    <Tab value="Начинки" active={this.state.current === 'Начинки'} onClick={this.clickOnMain}>
-                        Начинки
-                    </Tab>
+    return (
+        <section>
+            <div style={{ display: 'flex' }}>
+                <Tab value="Булки" active={current === 'Булки'} onClick={clickOnBun}>
+                    Булки
+                </Tab>
+                <Tab value="Соусы" active={current === 'Соусы'} onClick={clickOnSauces}>
+                    Соусы
+                </Tab>
+                <Tab value="Начинки" active={current === 'Начинки'} onClick={clickOnMain}>
+                    Начинки
+                </Tab>
+            </div>
+            <menu className={burgerIngredientsStyles.menu}>
+                <div className={burgerIngredientsStyles.menu__item}>
+                    <h3 className={burgerIngredientsStyles.menu__title}>Булки</h3>
+                    <ul className={burgerIngredientsStyles.menu__list}>{returnIngredient("bun")}</ul>
                 </div>
-                <menu className={burgerIngredientsStyles.menu}>
-                    <div className={burgerIngredientsStyles.menu__item}>
-                        <h3 className={burgerIngredientsStyles.menu__title}>Булки</h3>
-                        <ul className={burgerIngredientsStyles.menu__list}>{this.showIngredient("bun")}</ul>
-                    </div>
-                    <div className={burgerIngredientsStyles.menu__item}>
-                        <h3 className={burgerIngredientsStyles.menu__title}>Соусы</h3>
-                        <ul className={burgerIngredientsStyles.menu__list}>{this.showIngredient("sauce")}</ul>
-                    </div>
-                    <div className={burgerIngredientsStyles.menu__item}>
-                        <h3 className={burgerIngredientsStyles.menu__title}>Начинки</h3>
-                        <ul className={burgerIngredientsStyles.menu__list}>{this.showIngredient("main")}</ul>
-                    </div>
-                </menu>
-            </section>
-        )
-    }
+                <div className={burgerIngredientsStyles.menu__item}>
+                    <h3 className={burgerIngredientsStyles.menu__title}>Соусы</h3>
+                    <ul className={burgerIngredientsStyles.menu__list}>{returnIngredient("sauce")}</ul>
+                </div>
+                <div className={burgerIngredientsStyles.menu__item}>
+                    <h3 className={burgerIngredientsStyles.menu__title}>Начинки</h3>
+                    <ul className={burgerIngredientsStyles.menu__list}>{returnIngredient("main")}</ul>
+                </div>
+            </menu>
+        </section>
+    )
 }
 
 BurgerIngredients.propTypes = {
