@@ -3,15 +3,17 @@ import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-class BurgerConstructor extends React.Component {
-    state = {
-        data: this.props.data,
-        bun: this.props.data.find((item) => item.type === "bun")
-    };
+function BurgerConstructor(props) {
 
-    showIngredient = () => {
+    const returnBun = () => {
+        const newBun = props.data.find((item) => item.type === "bun");
+        return newBun
+
+    }
+
+    const returnIngredient = () => {
         return (
-            this.state.data.map((item) => {
+            props.data.map((item) => {
                 if (item.type !== "bun")
                     return (
                         <li className={burgerConstructorStyles.burger__item} key={item._id}>
@@ -27,35 +29,33 @@ class BurgerConstructor extends React.Component {
         )
     }
 
-    render () {
-        return (
-            <section>
-                <menu className={burgerConstructorStyles.burger__menu}>
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={`${this.state.bun.name} (верх)`}
-                        price={this.state.bun.price}
-                        thumbnail={this.state.bun.image}
-                    />
-                    <ul className={burgerConstructorStyles.burger__list}>{this.showIngredient()}</ul>
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={`${this.state.bun.name} (низ)`}
-                        price={this.state.bun.price}
-                        thumbnail={this.state.bun.image}
-                    />
-                </menu>
-                <div className={burgerConstructorStyles.burger__price}>
-                    <p className={burgerConstructorStyles.sum}>610 <CurrencyIcon type="primary" /></p>
-                    <Button type="primary" size="large">
-                        Оформить заказ
-                    </Button>
-                </div>
-            </section>
-        )
-    }
+    return (
+        <section>
+            <menu className={burgerConstructorStyles.burger__menu}>
+                <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text={`${returnBun().name} (верх)`}
+                    price={returnBun().price}
+                    thumbnail={returnBun().image}
+                />
+                <ul className={burgerConstructorStyles.burger__list}>{returnIngredient()}</ul>
+                <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={`${returnBun().name} (низ)`}
+                    price={returnBun().price}
+                    thumbnail={returnBun().image}
+                />
+            </menu>
+            <div className={burgerConstructorStyles.burger__price}>
+                <p className={burgerConstructorStyles.sum}>610 <CurrencyIcon type="primary" /></p>
+                <Button type="primary" size="large">
+                    Оформить заказ
+                </Button>
+            </div>
+        </section>
+    )
 }
 
 BurgerConstructor.propTypes = {
