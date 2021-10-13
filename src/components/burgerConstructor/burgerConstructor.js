@@ -3,17 +3,11 @@ import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor(props) {
-
-    const returnBun = () => {
-        const newBun = props.data.find((item) => item.type === "bun");
-        return newBun
-
-    }
+function BurgerConstructor({ data, bun }) {
 
     const returnIngredient = () => {
         return (
-            props.data.map((item) => {
+            data.map((item) => {
                 if (item.type !== "bun")
                     return (
                         <li className={burgerConstructorStyles.burger__item} key={item._id}>
@@ -25,7 +19,7 @@ function BurgerConstructor(props) {
                             />
                         </li>
                     )
-                })
+            })
         )
     }
 
@@ -35,17 +29,17 @@ function BurgerConstructor(props) {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${returnBun().name} (верх)`}
-                    price={returnBun().price}
-                    thumbnail={returnBun().image}
+                    text={`${bun.name} (верх)`}
+                    price={bun.price}
+                    thumbnail={bun.image}
                 />
                 <ul className={burgerConstructorStyles.burger__list}>{returnIngredient()}</ul>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${returnBun().name} (низ)`}
-                    price={returnBun().price}
-                    thumbnail={returnBun().image}
+                    text={`${bun.name} (низ)`}
+                    price={bun.price}
+                    thumbnail={bun.image}
                 />
             </menu>
             <div className={burgerConstructorStyles.burger__price}>
