@@ -45,7 +45,7 @@
 .sum {
     margin: 0;
     text-align: end;
-    font-family: 'Iceland';
+    font-family: 'Iceland', Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 48px;

@@ -20,7 +20,7 @@ function BurgerIngredients({data, onClick}) {
                     return (
                         <Ingredient data={item} onClick={onClick} key={item._id}/>
                     )
-                }
+                } else { return null }
             })
         )
     }

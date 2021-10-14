@@ -18,7 +18,6 @@
     font-family: "Iceland";
     font-style: normal;
     font-weight: normal;
-    color: #F2F2F3;
 }
 
 .item__image {
@@ -28,7 +27,6 @@
 .item__price {
     margin: 0;
     text-align: center;
-    color: #F2F2F3;
     font-family: 'Iceland';
     font-style: normal;
     font-weight: normal;
@@ -39,8 +37,6 @@
 .item__text {
     margin: 0;
     text-align: center;
-    color: #F2F2F3;
-    font-family: 'Jet Brains Mono';
     font-size: 16px;
     line-height: 24px;
 }

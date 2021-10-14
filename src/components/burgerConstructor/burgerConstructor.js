@@ -8,7 +8,7 @@ function BurgerConstructor({ data, bun, openPopup }) {
     const returnIngredient = () => {
         return (
             data.map((item) => {
-                if (item.type !== "bun")
+                if (item.type !== "bun") {
                     return (
                         <li className={burgerConstructorStyles.burger__item} key={item._id}>
                             <DragIcon type="primary" />
@@ -19,6 +19,7 @@ function BurgerConstructor({ data, bun, openPopup }) {
                             />
                         </li>
                     )
+                } else { return null }
             })
         )
     }
