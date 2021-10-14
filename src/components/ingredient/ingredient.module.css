@@ -15,7 +15,7 @@
     border-radius: 16px;
     background-color: #4C4CFF;
     line-height: 32px;
-    font-family: "Iceland";
+    font-family: "Iceland, Arial, sans-serif";
     font-style: normal;
     font-weight: normal;
 }
@@ -27,7 +27,7 @@
 .item__price {
     margin: 0;
     text-align: center;
-    font-family: 'Iceland';
+    font-family: 'Iceland, Arial, sans-serif';
     font-style: normal;
     font-weight: normal;
     font-size: 28px;
