@@ -3,7 +3,7 @@ import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor({ data, bun }) {
+function BurgerConstructor({ data, bun, openPopup }) {
 
     const returnIngredient = () => {
         return (
@@ -44,7 +44,7 @@ function BurgerConstructor({ data, bun }) {
             </menu>
             <div className={burgerConstructorStyles.burger__price}>
                 <p className={burgerConstructorStyles.sum}>610 <CurrencyIcon type="primary" /></p>
-                <Button type="primary" size="large">
+                <Button onClick={openPopup} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>

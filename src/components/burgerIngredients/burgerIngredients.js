@@ -2,9 +2,9 @@ import React from "react";
 import burgerIngredientsStyles from './burgerIngredients.module.css'
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import Ingredient from "../ingredient/ingredient";
 
-function BurgerIngredients(props) {
+function BurgerIngredients({data, onClick}) {
     const [current, setCurrent] = React.useState('Булки');
 
     const clickOnBun = () => setCurrent('Булки' );
@@ -15,15 +15,10 @@ function BurgerIngredients(props) {
 
     const returnIngredient = (name) => {
         return (
-            props.data.map((item) => {
+            data.map((item) => {
                 if (item.type === name) {
                     return (
-                        <li className={burgerIngredientsStyles.item} key={item._id}>
-                            {item.__v > 0 && <p className={burgerIngredientsStyles.item__number}>{item.__v}</p>}
-                            <img className={burgerIngredientsStyles.item__image} alt={item.name} src={item.image} />
-                            <p className={burgerIngredientsStyles.item__price}>{item.price} <CurrencyIcon type="primary" /></p>
-                            <p className={burgerIngredientsStyles.item__text}>{item.name}</p>
-                        </li>
+                        <Ingredient data={item} onClick={onClick} key={item._id}/>
                     )
                 }
             })
