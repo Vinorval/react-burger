@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import ingredientDetailsStyles from './ingredientDetails.module.css';
 
 function IngredientDetails({image, name, property}) {
@@ -27,5 +28,11 @@ function IngredientDetails({image, name, property}) {
         </div>
     )
 }
+
+IngredientDetails.propTypes = {
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    property:PropTypes.object.isRequired
+};
 
 export default IngredientDetails

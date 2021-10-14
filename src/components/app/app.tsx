@@ -55,7 +55,7 @@ function App() {
         <BurgerConstructor bun={bun} data={data} openPopup={handleOpenPopupOrder} />
       </main>
       <ModalOverlay isOpen={popupOrder} closePopup={closePopup}>
-        <Modal closePopup={closePopup}>
+        <Modal title='' closePopup={closePopup}>
           <OrderDetails/>
         </Modal>
       </ModalOverlay>
