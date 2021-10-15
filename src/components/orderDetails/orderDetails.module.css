@@ -4,6 +4,8 @@
     display: grid;
     grid-template-rows: 120px 30px 176px 56px;
     row-gap: 32px;
+    text-align: center;
+    justify-content: center;
 }
 
 .number {

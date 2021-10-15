@@ -4,7 +4,6 @@ import AppHeader from '../appHeader/appHeader.js';
 import BurgerIngredients from '../burgerIngredients/burgerIngredients.js';
 import BurgerConstructor from '../burgerConstructor/burgerConstructor';
 import Modal from '../modal/modal';
-import ModalOverlay from "../modalOverlay/modalOverlay";
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 const URL = 'https://norma.nomoreparties.space/api/ingredients';
@@ -48,22 +47,19 @@ function App() {
 
   return (
     <div className={appStyles.App}>
+      <div id="react-modals"></div>
       <AppHeader/>
       <main className={appStyles.main}>
         <h2 className={appStyles.title}>Соберите бургер</h2>
         <BurgerIngredients data={data} onClick={handleIngredientClick}/>
         <BurgerConstructor bun={bun} data={data} openPopup={handleOpenPopupOrder} />
       </main>
-      <ModalOverlay isOpen={popupOrder} closePopup={closePopup}>
-        <Modal title='' closePopup={closePopup}>
-          <OrderDetails/>
-        </Modal>
-      </ModalOverlay>
-      <ModalOverlay isOpen={popupIngredient} closePopup={closePopup}>
-        <Modal title='Детали ингредиента' closePopup={closePopup}>
-          <IngredientDetails image={imageIngredient} name={nameIngredient} property={property}/>
-        </Modal>
-      </ModalOverlay>
+      <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
+        <OrderDetails/>
+      </Modal>
+      <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
+        <IngredientDetails image={imageIngredient} name={nameIngredient} property={property}/>
+      </Modal>
     </div>
   );
 }
