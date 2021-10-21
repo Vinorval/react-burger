@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import burgerIngredientsStyles from './burgerIngredients.module.css'
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
+import { DataConstructor } from '../../servieces/appContext';
 
-function BurgerIngredients({data, onClick}) {
+function BurgerIngredients({ onClick }) {
+    const { data } = useContext(DataConstructor);
     const [current, setCurrent] = React.useState('Булки');
 
     const clickOnBun = () => setCurrent('Булки' );
@@ -57,7 +59,6 @@ function BurgerIngredients({data, onClick}) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
     onClick: PropTypes.func.isRequired
 };
 

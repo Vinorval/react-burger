@@ -7,7 +7,7 @@ import Modal from '../modal/modal';
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { DataConstructor, NumberOrder } from '../../servieces/appContext';
-const URL = 'https://norma.nomoreparties.space/api/ingredients';
+import { URL } from '../../utils/utils';
 
 function App() {
   const [data, setData] = React.useState([]);
@@ -20,7 +20,7 @@ function App() {
   const [property, setProperty] = React.useState({});
 
   React.useEffect(() => {
-    fetch(URL)
+    fetch(`${URL}/ingredients`)
       .then(res => res.json())
       .then(data => {
         setData(data.data);
@@ -51,13 +51,12 @@ function App() {
 
   return (
     <div className={appStyles.App}>
-      <div id="react-modals"></div>
       <DataConstructor.Provider value={{ data, setData}}>
         <NumberOrder.Provider value={{numberOrder, setNumberOrder}}>
           <AppHeader/>
           <main className={appStyles.main}>
             <h2 className={appStyles.title}>Соберите бургер</h2>
-            <BurgerIngredients data={data} onClick={handleIngredientClick}/>
+            <BurgerIngredients onClick={handleIngredientClick}/>
             <BurgerConstructor bun={bun} openPopup={handleOpenPopupOrder} />
           </main>
           <Modal isOpen={popupOrder} title='' closePopup={closePopup}>

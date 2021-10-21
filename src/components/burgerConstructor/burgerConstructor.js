@@ -3,6 +3,7 @@ import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DataConstructor, NumberOrder } from '../../servieces/appContext';
+import { URL } from '../../utils/utils';
 
 function BurgerConstructor({ bun, openPopup }) {
     const { data } = useContext(DataConstructor);
@@ -35,7 +36,7 @@ function BurgerConstructor({ bun, openPopup }) {
           if (el.type !== "bun") return idsData.push(el._id);
         });
 
-        fetch('https://norma.nomoreparties.space/api/orders', {
+        fetch(`${URL}/orders`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
