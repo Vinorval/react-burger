@@ -37,7 +37,7 @@
     width: 576px;
     display: grid;
     justify-content: end;
-    grid-template-columns: 119px 215px;
+    grid-template-columns: 150px 215px;
     margin-top: 40px;
     column-gap: 40px;
 }

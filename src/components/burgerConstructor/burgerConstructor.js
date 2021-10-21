@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DataConstructor, NumberOrder } from '../../servieces/appContext';
 
-function BurgerConstructor({ data, bun, openPopup }) {
+function BurgerConstructor({ bun, openPopup }) {
+    const { data } = useContext(DataConstructor);
+    const {setNumberOrder} = useContext(NumberOrder);
 
     const returnIngredient = () => {
         return (
@@ -22,6 +25,42 @@ function BurgerConstructor({ data, bun, openPopup }) {
                 } else { return null }
             })
         )
+    }
+
+    const handleButton = () => {
+        let idsData = [];
+        idsData.push(bun._id);
+
+        data.forEach((el) => {
+          if (el.type !== "bun") return idsData.push(el._id);
+        });
+
+        fetch('https://norma.nomoreparties.space/api/orders', {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({"ingredients": idsData}),
+        }).then(res => res.json())
+          .then((res) => {
+              setNumberOrder(res.order.number);
+          })
+          .catch(e => {
+            console.log(e);
+          })
+
+          openPopup();
+    }
+
+    const returnSum = () => {
+        let sum = 0;
+        let totalPrice = 0;
+        data.forEach(el => {
+            if (el.type !== "bun")
+              { return sum = sum + el.price; }
+        });
+        totalPrice = ( bun.price * 2) + sum;
+        return totalPrice
     }
 
     return (
@@ -44,8 +83,8 @@ function BurgerConstructor({ data, bun, openPopup }) {
                 />
             </menu>
             <div className={burgerConstructorStyles.burger__price}>
-                <p className={burgerConstructorStyles.sum}>610 <CurrencyIcon type="primary" /></p>
-                <Button onClick={openPopup} type="primary" size="large">
+                <p className={burgerConstructorStyles.sum}>{returnSum()}<CurrencyIcon type="primary" /></p>
+                <Button onClick={handleButton} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
@@ -54,7 +93,6 @@ function BurgerConstructor({ data, bun, openPopup }) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
     bun:PropTypes.object.isRequired,
     openPopup: PropTypes.func.isRequired
 };

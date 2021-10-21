@@ -6,10 +6,12 @@ import BurgerConstructor from '../burgerConstructor/burgerConstructor';
 import Modal from '../modal/modal';
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
+import { DataConstructor, NumberOrder } from '../../servieces/appContext';
 const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const [data, setData] = React.useState([]);
+  const [numberOrder, setNumberOrder] = React.useState(0);
   const [bun, setBun] = React.useState({});
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
@@ -30,7 +32,9 @@ function App() {
       })
   }, []);
 
-  const handleOpenPopupOrder = () => setPopupOrder(true);
+  const handleOpenPopupOrder = () => {
+    setPopupOrder(true);
+  }
 
   const handleIngredientClick = (image:string, name:string, property:any) => {
     setPopupIngredient(true);
@@ -48,18 +52,22 @@ function App() {
   return (
     <div className={appStyles.App}>
       <div id="react-modals"></div>
-      <AppHeader/>
-      <main className={appStyles.main}>
-        <h2 className={appStyles.title}>Соберите бургер</h2>
-        <BurgerIngredients data={data} onClick={handleIngredientClick}/>
-        <BurgerConstructor bun={bun} data={data} openPopup={handleOpenPopupOrder} />
-      </main>
-      <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
-        <OrderDetails/>
-      </Modal>
-      <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
-        <IngredientDetails image={imageIngredient} name={nameIngredient} property={property}/>
-      </Modal>
+      <DataConstructor.Provider value={{ data, setData}}>
+        <NumberOrder.Provider value={{numberOrder, setNumberOrder}}>
+          <AppHeader/>
+          <main className={appStyles.main}>
+            <h2 className={appStyles.title}>Соберите бургер</h2>
+            <BurgerIngredients data={data} onClick={handleIngredientClick}/>
+            <BurgerConstructor bun={bun} openPopup={handleOpenPopupOrder} />
+          </main>
+          <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
+            <OrderDetails/>
+          </Modal>
+          <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
+            <IngredientDetails image={imageIngredient} name={nameIngredient} property={property}/>
+          </Modal>
+        </NumberOrder.Provider>
+      </DataConstructor.Provider>
     </div>
   );
 }
