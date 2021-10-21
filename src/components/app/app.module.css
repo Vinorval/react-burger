@@ -1,0 +1,26 @@
+.App {
+    text-align: center;
+    color: #F2F2F3;
+    font-family: 'Jet Brains Mono', Arial, sans-serif;
+  }
+  
+  .main {
+    width: 1280px;
+    margin: auto;
+    display: grid;
+    column-gap: 40px;
+    row-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 40px;
+  }
+  
+  .title {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    margin: 0;
+    text-align: start;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 40px;
+  }

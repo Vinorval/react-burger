@@ -1,0 +1,41 @@
+.menu {
+    margin: 0;
+    margin-top: 40px;
+    padding: 0;
+    height: calc(100vh - 88px - 160px - 56px);
+    overflow-y: scroll;
+}
+
+.menu::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+}
+
+.menu::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.menu__item {
+    margin-top: 40px;
+    display: grid;
+    row-gap: 24px;
+}
+
+.menu__title {
+    text-align: start;
+    margin: 0;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.menu__list {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    list-style-type: none;
+}
+

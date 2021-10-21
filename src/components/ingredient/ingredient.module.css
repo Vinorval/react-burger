@@ -1,0 +1,42 @@
+.item {
+    display: grid;
+    row-gap: 8px;
+    justify-content: center;
+    position: relative;
+}
+
+.item__number {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 16px;
+    background-color: #4C4CFF;
+    line-height: 32px;
+    font-family: "Iceland, Arial, sans-serif";
+    font-style: normal;
+    font-weight: normal;
+}
+
+.item__image {
+    margin: auto;
+}
+
+.item__price {
+    margin: 0;
+    text-align: center;
+    font-family: 'Iceland, Arial, sans-serif';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 24px;
+}
+
+.item__text {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+}
