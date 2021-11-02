@@ -1,17 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DataConstructor, NumberOrder } from '../../servieces/appContext';
 import { URL } from '../../utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBurgerItems, postOrder } from '../../services/actions/actions'
 
-function BurgerConstructor({ bun, openPopup }) {
+function BurgerConstructor({ openPopup }) {
     const { data } = useContext(DataConstructor);
     const {setNumberOrder} = useContext(NumberOrder);
+    const { burgerItems, bun } = useSelector( store => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun }) )
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getBurgerItems());
+      }, [dispatch]);
 
     const returnIngredient = () => {
         return (
-            data.map((item) => {
+            burgerItems.map((item) => {
                 if (item.type !== "bun") {
                     return (
                         <li className={burgerConstructorStyles.burger__item} key={item._id}>
@@ -36,19 +44,23 @@ function BurgerConstructor({ bun, openPopup }) {
           if (el.type !== "bun") return idsData.push(el._id);
         });
 
-        fetch(`${URL}/orders`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({"ingredients": idsData}),
-        }).then(res => res.json())
-          .then((res) => {
-              setNumberOrder(res.order.number);
-          })
-          .catch(e => {
-            console.log(e);
-          })
+        dispatch(postOrder(idsData));
+
+        //console.log(order)
+
+        //fetch(`${URL}/orders`, {
+        //  method: "POST",
+        //  headers: {
+        //    "content-type": "application/json",
+        //  },
+        //  body: JSON.stringify({"ingredients": idsData}),
+        //}).then(res => res.json())
+        //  .then((res) => {
+        //      setNumberOrder(res.order.number);
+        //  })
+        //  .catch(e => {
+        //    console.log(e);
+        //  })
 
           openPopup();
     }
@@ -94,7 +106,7 @@ function BurgerConstructor({ bun, openPopup }) {
 }
 
 BurgerConstructor.propTypes = {
-    bun:PropTypes.object.isRequired,
+    //bun:PropTypes.object.isRequired,
     openPopup: PropTypes.func.isRequired
 };
 

@@ -7,40 +7,19 @@ import Modal from '../modal/modal';
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { DataConstructor, NumberOrder } from '../../servieces/appContext';
-import { URL } from '../../utils/utils';
 
 function App() {
   const [data, setData] = React.useState([]);
   const [numberOrder, setNumberOrder] = React.useState(0);
-  const [bun, setBun] = React.useState({});
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
-  const [imageIngredient, setImageIngredient] = React.useState('');
-  const [nameIngredient, setNameIngredient] = React.useState('');
-  const [property, setProperty] = React.useState({});
-
-  React.useEffect(() => {
-    fetch(`${URL}/ingredients`)
-      .then(res => res.json())
-      .then(data => {
-        setData(data.data);
-        const bunDate = () => data.data.find((item:any) => { return item.type === "bun"});
-        setBun(bunDate());
-      })
-      .catch(e => {
-        console.log(e);
-      })
-  }, []);
 
   const handleOpenPopupOrder = () => {
     setPopupOrder(true);
   }
 
-  const handleIngredientClick = (image:string, name:string, property:any) => {
+  const handleIngredientClick = () => {
     setPopupIngredient(true);
-    setImageIngredient(image);
-    setNameIngredient(name);
-    setProperty(property);
 
   }
 
@@ -57,13 +36,13 @@ function App() {
           <main className={appStyles.main}>
             <h2 className={appStyles.title}>Соберите бургер</h2>
             <BurgerIngredients onClick={handleIngredientClick}/>
-            <BurgerConstructor bun={bun} openPopup={handleOpenPopupOrder} />
+            <BurgerConstructor openPopup={handleOpenPopupOrder} />
           </main>
           <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
             <OrderDetails/>
           </Modal>
           <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
-            <IngredientDetails image={imageIngredient} name={nameIngredient} property={property}/>
+            <IngredientDetails/>
           </Modal>
         </NumberOrder.Provider>
       </DataConstructor.Provider>

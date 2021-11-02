@@ -3,13 +3,15 @@ import React, { useContext } from "react";
 import orderDetailsStyles from './orderDetails.module.css';
 import icon from '../../images/graphics.png'
 import { NumberOrder } from '../../servieces/appContext';
+import { useSelector } from 'react-redux';
 
 function OrderDetails() {
     const {numberOrder} = useContext(NumberOrder);
+    const { order } = useSelector( store => ({ order: store.order.order }) )
 
     return (
         <div className={orderDetailsStyles.popup__conteiner}>
-            <p className={orderDetailsStyles.number}>{numberOrder}</p>
+            <p className={orderDetailsStyles.number}>{order.number}</p>
             <p className={orderDetailsStyles.order}>идентификатор заказа</p>
             <img alt='Icon' src={icon} className={orderDetailsStyles.image} />
             <div className={orderDetailsStyles.conteiner}>
