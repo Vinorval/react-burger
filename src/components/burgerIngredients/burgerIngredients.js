@@ -1,31 +1,36 @@
 import React, { useEffect, useRef } from "react";
 import burgerIngredientsStyles from './burgerIngredients.module.css'
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from '../../services/actions/actions';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../../services/actions/actions'
 
-function BurgerIngredients({ onClick }) {
-    const { items } = useSelector( store => ({ items: store.items.items }) )
+export default function BurgerIngredients({ onClick }) {
+    //забираем из редакс ингредиенты
+    const { items } = useSelector( store => ({ items: store.items.items }) );
+    const dispatch = useDispatch();
+    //создаём стейт для разделения ингредиентов
     const [current, setCurrent] = React.useState('Булки');
+    //создание рефов
     const bunRef = useRef(null);
     const saucesRef = useRef(null);
     const mainRef = useRef(null);
     const blockRef = useRef(null);
-    const dispatch = useDispatch();
-
+    
+    //активация кнопки в меню
     const clickOnBun = () => setCurrent('Булки');
-
     const clickOnSauces = () => setCurrent('Соусы');
-
     const clickOnMain = () => setCurrent('Начинки');
 
+    //активация кнопки в меню при скролле контейнера
     React.useEffect(() => {
         const scrollBlock = () => {
+            //записываем координаты блоков в контейнере
             let coordsBun = bunRef.current.getBoundingClientRect().top;
             let coordsSauces = saucesRef.current.getBoundingClientRect().top;
             let coordsMain = mainRef.current.getBoundingClientRect().top;
+            //активация необходимой кнопки при скролле с помощью координат блоков
             if ( 250 < coordsBun && coordsBun < 350 ) setCurrent('Булки');
             else if ( 250 < coordsSauces && coordsSauces < 350 ) setCurrent('Соусы');
             else if ( 250 < coordsMain && coordsMain < 350 ) setCurrent('Начинки');
@@ -36,10 +41,12 @@ function BurgerIngredients({ onClick }) {
         return () => block.removeEventListener('scroll', scrollBlock);
     })
 
+    //запрашиваем с сервера все ингредиенты
     useEffect(() => {
         dispatch(getItems());
-      }, [dispatch]);
+    }, [dispatch]);
 
+    //перебираем массив ингредиентов и возвращаем их
     const returnIngredient = (name) => {
         return (
             items.map((item) => {
@@ -52,6 +59,7 @@ function BurgerIngredients({ onClick }) {
         )
     }
 
+    //возвращаем верстку контейнера ингредиентов
     return (
         <section>
             <div style={{ display: 'flex' }}>
@@ -86,5 +94,3 @@ function BurgerIngredients({ onClick }) {
 BurgerIngredients.propTypes = {
     onClick: PropTypes.func.isRequired
 };
-
-export default BurgerIngredients

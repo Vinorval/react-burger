@@ -1,9 +1,9 @@
 import React from "react";
 import orderDetailsStyles from './orderDetails.module.css';
-import icon from '../../images/graphics.png'
 import { useSelector } from 'react-redux';
+import icon from '../../images/graphics.png'
 
-function OrderDetails() {
+export default function OrderDetails() {
     const { order } = useSelector( store => ({ order: store.order.order }) )
 
     return (
@@ -18,5 +18,3 @@ function OrderDetails() {
         </div>
     )
 }
-
-export default OrderDetails

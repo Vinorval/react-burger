@@ -2,9 +2,11 @@ import React from "react";
 import ingredientDetailsStyles from './ingredientDetails.module.css';
 import { useSelector } from 'react-redux';
 
-function IngredientDetails() {
+export default function IngredientDetails() {
+    //забираем из редукса данные о передоваемом ингредиенте
     const { ingredient } = useSelector(store => ({ ingredient: store.ingredient.ingredient }))
 
+    //возвращаем верстку модала с деталями ингредиента
     return (
         <div className={ingredientDetailsStyles.conteiner}>
             <img className={ingredientDetailsStyles.image} alt={ingredient.name} src={ingredient.image}></img>
@@ -30,5 +32,3 @@ function IngredientDetails() {
         </div>
     )
 }
-
-export default IngredientDetails

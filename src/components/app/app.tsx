@@ -1,15 +1,18 @@
 import React from "react";
 import appStyles from './app.module.css';
+//импорт библиотек DND
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+//импорт компонентов
 import AppHeader from '../appHeader/appHeader.js';
 import BurgerIngredients from '../burgerIngredients/burgerIngredients.js';
 import BurgerConstructor from '../burgerConstructor/burgerConstructor';
 import Modal from '../modal/modal';
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
-function App() {
+export default function App() {
+  //реализация открытия и закрытия попапов
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
 
@@ -26,6 +29,7 @@ function App() {
     setPopupIngredient(false);
   };
 
+  //возвращаем верстку страницы
   return (
     <div className={appStyles.App}>
       <AppHeader/>
@@ -45,5 +49,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

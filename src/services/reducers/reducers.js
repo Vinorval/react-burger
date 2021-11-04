@@ -2,14 +2,16 @@ import {
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
 
-  GET_BURGER_ITEMS_SUCCESS,
-  GET_BURGER_ITEMS_FAILED,
   ADD_ITEM,
   DELETE_ITEM,
   CHANGE_BUN,
+  CHANCE_ITEMS,
 
   OPEN_POPUP,
-  CLOSE_POPUP
+  CLOSE_POPUP,
+
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILED
 } from '../actions/actions';
 
 const initialState = {
@@ -45,12 +47,6 @@ export const ingredientsReducer = (state = initialState, action) => {
 
 export const burgerReducer = (state = initialState, action) => {
   switch (action.type) {
-     case GET_BURGER_ITEMS_SUCCESS: {
-      return { ...state, burgerItems: action.items, burgerItemsFailed: false, bun: action.bun };
-    }
-    case GET_BURGER_ITEMS_FAILED: {
-      return { ...state, burgerItemsFailed: true };
-    }
     case ADD_ITEM: {
       const check = state.quantity.find(item => item._ID === action.item._id)
         ? state.quantity.map(item => item._ID === action.item._id && ++item.qt)
@@ -67,7 +63,7 @@ export const burgerReducer = (state = initialState, action) => {
     case CHANGE_BUN: {
       return { ...state, bun: action.bun, quantityBun: { _ID: action.bun._id, qt: 1, id: Math.floor(Math.random() * 10000)} }
     }
-    case 'CHANCE_ITEMS': {
+    case CHANCE_ITEMS: {
       const updateBurgerItems = [...state.burgerItems]
       updateBurgerItems[action.dragIndex] = action.hoverItem;
       updateBurgerItems[action.hoverIndex] = action.dragItem;
@@ -95,10 +91,10 @@ export const detailsReducer = (state = initialState, action) => {
 
 export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_ORDER_SUCCESS': {
+    case GET_ORDER_SUCCESS: {
       return { ...state, order: action.order, orderFailed: false };
     }
-   case 'GET_ORDER_FAILED': {
+   case GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, order: {} };
     }
     default: {
