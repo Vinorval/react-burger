@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-//import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import React from "react";
 import orderDetailsStyles from './orderDetails.module.css';
 import icon from '../../images/graphics.png'
-import { NumberOrder } from '../../servieces/appContext';
 import { useSelector } from 'react-redux';
 
 function OrderDetails() {
-    const {numberOrder} = useContext(NumberOrder);
     const { order } = useSelector( store => ({ order: store.order.order }) )
 
     return (

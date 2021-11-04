@@ -20,6 +20,8 @@ const initialState = {
     burgerItems: [],
     burgerItemsFailed: false,
     bun: {},
+    quantity: [],
+    quantityBun: {},
 
     ingredient: {},
 
@@ -50,13 +52,20 @@ export const burgerReducer = (state = initialState, action) => {
       return { ...state, burgerItemsFailed: true };
     }
     case ADD_ITEM: {
-      return { ...state, burgerItems: [...state.burgerItems, ...state.postponed.filter(item => item.id === action.id)] }
+      const check = state.quantity.find(item => item._ID === action.item._id)
+        ? state.quantity.map(item => item._ID === action.item._id && ++item.qt)
+        : { _ID: action.item._id, qt: 1, id: Math.floor(Math.random() * 10000)};
+      return {
+        ...state,
+        burgerItems: [...state.burgerItems, action.item],
+        quantity: [...state.quantity, check] }
     }
     case DELETE_ITEM: {
-      return { ...state, burgerItems: [...state.burgerItems].filter(item => item.id !== action.id) }
+      const check = state.quantity.map(item => item._ID === action._id && --item.qt)
+      return { ...state, burgerItems: [...state.burgerItems].filter(item => item.id !== action.id), quantity: [...state.quantity, check] }
     }
     case CHANGE_BUN: {
-      return { ...state, bun: action.bun }
+      return { ...state, bun: action.bun, quantityBun: { _ID: action.bun._id, qt: 1, id: Math.floor(Math.random() * 10000)} }
     }
     default: {
       return state;

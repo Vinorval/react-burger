@@ -6,11 +6,10 @@ import BurgerConstructor from '../burgerConstructor/burgerConstructor';
 import Modal from '../modal/modal';
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
-import { DataConstructor, NumberOrder } from '../../servieces/appContext';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-  const [data, setData] = React.useState([]);
-  const [numberOrder, setNumberOrder] = React.useState(0);
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
 
@@ -20,7 +19,6 @@ function App() {
 
   const handleIngredientClick = () => {
     setPopupIngredient(true);
-
   }
 
   const closePopup = () => {
@@ -30,22 +28,20 @@ function App() {
 
   return (
     <div className={appStyles.App}>
-      <DataConstructor.Provider value={{ data, setData}}>
-        <NumberOrder.Provider value={{numberOrder, setNumberOrder}}>
-          <AppHeader/>
-          <main className={appStyles.main}>
-            <h2 className={appStyles.title}>Соберите бургер</h2>
-            <BurgerIngredients onClick={handleIngredientClick}/>
-            <BurgerConstructor openPopup={handleOpenPopupOrder} />
-          </main>
-          <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
-            <OrderDetails/>
-          </Modal>
-          <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
-            <IngredientDetails/>
-          </Modal>
-        </NumberOrder.Provider>
-      </DataConstructor.Provider>
+      <AppHeader/>
+      <DndProvider backend={HTML5Backend}>
+        <main className={appStyles.main}>
+          <h2 className={appStyles.title}>Соберите бургер</h2>
+          <BurgerIngredients onClick={handleIngredientClick}/>
+          <BurgerConstructor openPopup={handleOpenPopupOrder} />
+        </main>
+      </DndProvider>
+      <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
+        <OrderDetails/>
+      </Modal>
+      <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
+        <IngredientDetails/>
+      </Modal>
     </div>
   );
 }
