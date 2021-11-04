@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -34,14 +34,37 @@ function BurgerConstructor({ openPopup }) {
             }
           },
     }));
-    const [, dropIngr] = useDrop(() => ({ accept: 'main' }));
+
+    const movePetListItem = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragItem = burgerItems[dragIndex]
+            const hoverItem = burgerItems[hoverIndex]
+            dispatch({
+                type: 'CHANCE_ITEMS',
+                dragIndex,
+                hoverIndex,
+                dragItem,
+                hoverItem
+                //bun: { image: item.image, name: item.name, price: item.price, _id: item._id, id: Math.floor(Math.random() * 10000) }
+              });
+            // Swap places of dragItem and hoverItem in the pets array
+            //setPets(pets => {
+            //    const updatedPets = [...pets]
+            //    updatedPets[dragIndex] = hoverItem
+            //    updatedPets[hoverIndex] = dragItem
+            //    return updatedPets
+            //})
+        },
+        [burgerItems],
+    )
+    //const [, dropIngr] = useDrop(() => ({ accept: 'main' }));
 
     const returnIngredient = () => {
         return (
-            burgerItems.map((item) => {
+            burgerItems.map((item, index) => {
                 if (item.type !== "bun") {
                     return (
-                        <IngredientBurger item={item} handleDelete={handleDelete} key={item.id} />
+                        <IngredientBurger item={item} handleDelete={handleDelete} key={item.id} index={index} moveListItem={movePetListItem}/>
                     )
                 } else { return null }
             })
@@ -89,7 +112,7 @@ function BurgerConstructor({ openPopup }) {
                     price={bun.price ? bun.price : ''}
                     thumbnail={bun.image}
                 />
-                <ul ref={dropIngr} className={burgerConstructorStyles.burger__list}>{returnIngredient()}</ul>  
+                <ul className={burgerConstructorStyles.burger__list}>{returnIngredient()}</ul>  
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}

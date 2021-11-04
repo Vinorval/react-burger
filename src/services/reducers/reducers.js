@@ -67,6 +67,12 @@ export const burgerReducer = (state = initialState, action) => {
     case CHANGE_BUN: {
       return { ...state, bun: action.bun, quantityBun: { _ID: action.bun._id, qt: 1, id: Math.floor(Math.random() * 10000)} }
     }
+    case 'CHANCE_ITEMS': {
+      const updateBurgerItems = [...state.burgerItems]
+      updateBurgerItems[action.dragIndex] = action.hoverItem;
+      updateBurgerItems[action.hoverIndex] = action.dragItem;
+      return {...state, burgerItems: updateBurgerItems}
+    }
     default: {
       return state;
     }
