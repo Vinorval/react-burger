@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
+.popup__conteiner_err {
+    text-align: center;
+}
+
 .number {
     margin: 0;
     font-family: 'Iceland, Arial, sans-serif';
@@ -24,6 +28,12 @@
     font-weight: bold;
     font-size: 24px;
     line-height: 30px;
+}
+
+.order_err {
+    min-height: 420px;
+    font-size: 50px;
+    line-height: 75px;
 }
 
 .image {

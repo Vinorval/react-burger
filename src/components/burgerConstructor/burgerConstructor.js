@@ -53,7 +53,7 @@ export default function BurgerConstructor({ openPopup }) {
             burgerItems.map((item, index) => {
                 if (item.type !== "bun") {
                     return (
-                        <IngredientBurger item={item} key={item.id} index={index} moveListItem={movePetListItem}/>
+                        <IngredientBurger item={item} key={index} index={index} moveListItem={movePetListItem}/>
                     )
                 } else { return null }
             })
@@ -72,7 +72,12 @@ export default function BurgerConstructor({ openPopup }) {
         });
 
         //отправляем запрос через редакс
-        dispatch(postOrder(idsData));
+        if( !bun._id ) {
+            idsData = [];
+            dispatch(postOrder(idsData));
+        } else {
+            dispatch(postOrder(idsData))
+        };
         openPopup();
     }
 

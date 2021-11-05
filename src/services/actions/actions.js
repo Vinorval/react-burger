@@ -42,7 +42,7 @@ export function getItems() {
         })
         .then(res => res.json())
         .then(res => {
-          if (res) {
+          if (res.success) {
             dispatch({
               type: GET_ORDER_SUCCESS,
               order: res.order,
