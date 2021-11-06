@@ -4,37 +4,10 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import ingredientBurger from './ingredientBurger.module.css';
 import { DELETE_ITEM } from '../../services/actions/actions';
 import { useDispatch } from 'react-redux';
-import { useDrop, useDrag } from 'react-dnd';
+import { Draggable } from 'react-beautiful-dnd'
 
-export default function IngredientBurger ({ item, index, moveListItem }) {
+export default function IngredientBurger ({ item, index }) {
     const dispatch = useDispatch();
-
-    //создание возможности перетаскивать ингредиента коструктора
-    const [, dragRef] = useDrag({
-        type: 'main',
-        item: { index },
-    })
-
-    //создание возможности перенести в этот же контейнер
-    const [, dropRef] = useDrop({
-        accept: 'main',
-        hover: (item, monitor) => {
-            const dragIndex = item.index
-            const hoverIndex = index
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-            const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top
- 
-            if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return
-            if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return
- 
-            moveListItem(dragIndex, hoverIndex)
-            item.index = hoverIndex
-        },
-    })
-
-    const ref = React.useRef(null)
-    const dragDropRef = dragRef(dropRef(ref))
 
     //слушатель кнопки удалить
     const handleDelete = (id, _id) => {
@@ -47,20 +20,25 @@ export default function IngredientBurger ({ item, index, moveListItem }) {
  
     //возращаем верстку ингредиента конструктора
     return (
-        <li ref={dragDropRef} className={ingredientBurger.burger__item}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-                handleClose={() => {handleDelete(item.id, item._id)}}
-            />
-        </li>
+        <Draggable key={item.id} draggableId={item.id} index={index}>
+            {(provided, snapshot) => (
+              <li className={ingredientBurger.burger__item} ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={item.name}
+                  price={item.price}
+                  thumbnail={item.image}
+                  handleClose={() => {handleDelete(item.id, item._id)}}
+                />
+              </li>
+            )}
+        </Draggable>
     )
 }
 
 IngredientBurger.propTypes = {
     item: PropTypes.object.isRequired,
-    moveListItem: PropTypes.func.isRequired,
     index: PropTypes.number
 };

@@ -19,7 +19,7 @@ export default function Ingredient({data, onClick}) {
         if ( type === 'bun') return (quantityBun._ID === _id && quantityBun.qt > 0) && <p key={quantityBun.id} className={ingredientStyle.item__number}>{quantityBun.qt}</p>;
         //если это любой другой ингредиент менять ему счётчик с помощью сравнения id
         return quantity.map((item) => {
-            return (item._ID === _id && item.qt > 0) && <p key={item.id} className={ingredientStyle.item__number}>{item.qt}</p>;
+            return (item._ID === _id && item.qt > 0) && <p key={_id} className={ingredientStyle.item__number}>{item.qt}</p>;
         })
     }, [quantity, _id, quantityBun, type])
 

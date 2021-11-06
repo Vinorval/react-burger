@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,6 +7,7 @@ import { postOrder } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd';
 import { ADD_ITEM, CHANGE_BUN, CHANCE_ITEMS } from '../../services/actions/actions';
 import IngredientBurger from "../ingredientBurger/ingredientBurger";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export default function BurgerConstructor({ openPopup }) {
     //из редуса забираем ингредиенты конструктора и булку
@@ -14,38 +15,40 @@ export default function BurgerConstructor({ openPopup }) {
     const dispatch = useDispatch();
 
     //контейнер куда перетаскивают инредиенты с поиощью библиотеки dnd
+    const onDragEnd = (result) => {
+        if (!result.destination) {
+          return;
+        }
+    
+        const returnItems = reorder(burgerItems, result.source.index, result.destination.index)
+        dispatch({
+            type: CHANCE_ITEMS,
+            items: returnItems
+        })
+      }
+      const reorder = (items, startIndex, endIndex) => {
+        const newArr = Array.from(items)
+        const [removed] = newArr.splice(startIndex, 1)
+        newArr.splice(endIndex, 0, removed)
+        return newArr
+      }
+
     const [, drop] = useDrop(() => ({
         accept: 'ingredient',
         drop(item) {
             if(item.type !== "bun") {
               dispatch({
                 type: ADD_ITEM,
-                item: { image: item.image, name: item.name, price: item.price, _id: item._id, id: Math.floor(Math.random() * 10000) }
+                item: { image: item.image, name: item.name, price: item.price, _id: item._id, id: `${Math.floor(Math.random() * 10000)}` }
               });
             } else {
                 dispatch({
                     type: CHANGE_BUN,
-                    bun: { image: item.image, name: item.name, price: item.price, _id: item._id, id: Math.floor(Math.random() * 10000) }
+                    bun: { image: item.image, name: item.name, price: item.price, _id: item._id, id: `${Math.floor(Math.random() * 10000)}` }
                   });
             }
           },
     }));
-
-    //колбек для реализации перемещения ингредиентов конструктора с помощью dnd и redux
-    const movePetListItem = useCallback(
-        (dragIndex, hoverIndex) => {
-            const dragItem = burgerItems[dragIndex]
-            const hoverItem = burgerItems[hoverIndex]
-            dispatch({
-                type: CHANCE_ITEMS,
-                dragIndex,
-                hoverIndex,
-                dragItem,
-                hoverItem
-              });
-        },
-        [burgerItems],
-    )
 
     //создание ингредиентов коструктора из списка
     const returnIngredient = () => {
@@ -53,7 +56,7 @@ export default function BurgerConstructor({ openPopup }) {
             burgerItems.map((item, index) => {
                 if (item.type !== "bun") {
                     return (
-                        <IngredientBurger item={item} key={index} index={index} moveListItem={movePetListItem}/>
+                        <IngredientBurger item={item} key={index} index={index} />
                     )
                 } else { return null }
             })
@@ -103,6 +106,7 @@ export default function BurgerConstructor({ openPopup }) {
     //возвращаем верстку всего конструктора
     return (
         <section>
+            <DragDropContext onDragEnd={onDragEnd}>
             <menu ref={drop} className={burgerConstructorStyles.burger__menu}>
                 <ConstructorElement
                     type="top"
@@ -111,7 +115,11 @@ export default function BurgerConstructor({ openPopup }) {
                     price={bun.price ? bun.price : ''}
                     thumbnail={bun.image}
                 />
-                <ul className={burgerConstructorStyles.burger__list}>{returnIngredient()}</ul>  
+                <Droppable droppableId='droppable'>
+                {(provided, snapshot) => (
+                <ul className={burgerConstructorStyles.burger__list} {...provided.droppableProps} ref={provided.innerRef} >{returnIngredient()} {provided.placeholder}</ul>  
+                )}
+                </Droppable>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
@@ -126,6 +134,7 @@ export default function BurgerConstructor({ openPopup }) {
                     Оформить заказ
                 </Button>
             </div>
+            </DragDropContext>
         </section>
     )
 }
