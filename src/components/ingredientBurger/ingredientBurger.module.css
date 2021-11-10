@@ -1,0 +1,6 @@
+.burger__item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 24px calc(100% - 24px - 8px);
+    column-gap: 8px;
+}
