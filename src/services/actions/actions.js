@@ -16,18 +16,20 @@ export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
 export function getItems() {
     return function(dispatch) {
-        fetch(`${URL}/ingredients`).then(res => res.json()).then(res => {
-        if (res) {
-          dispatch({
-            type: GET_ITEMS_SUCCESS,
-            items: res.data
-          });
-        } else {
-          dispatch({
-            type: GET_ITEMS_FAILED
-          });
-        }
-      });
+        fetch(`${URL}/ingredients`)
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(res.status);
+        })
+        .then(res => {
+            dispatch({
+              type: GET_ITEMS_SUCCESS,
+              items: res.data,
+            });
+        })
+        .catch(() => dispatch({ type: GET_ITEMS_FAILED}) );
     };
   }
 
@@ -40,7 +42,12 @@ export function getItems() {
             },
             body: JSON.stringify({"ingredients": idsData}),
         })
-        .then(res => res.json())
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(res.status);
+        })
         .then(res => {
           if (res.success) {
             dispatch({
@@ -52,6 +59,7 @@ export function getItems() {
               type: GET_ORDER_FAILED
             });
           }
-        });
+        })
+        .catch(() => dispatch({ type: GET_ITEMS_FAILED}) );;
     };
   }
