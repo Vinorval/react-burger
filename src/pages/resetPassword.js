@@ -4,7 +4,8 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from "../components/appHeader/appHeader";
 
 export default function ResetPasswordPage() {
-    const [value, setValue] = React.useState('value')
+    const [password, setPassword] = React.useState('');
+    const [value, setValue] = React.useState('');
     const inputRef = React.useRef(null)
     const onIconClick = () => {
       setTimeout(() => inputRef.current.focus(), 0)
@@ -14,22 +15,23 @@ export default function ResetPasswordPage() {
     return ( 
         <div>
             <AppHeader />
-            <EntryForm title='Восстановление пароля' button='Сохранить' entry='Вспомнили пароль?' toEntry='Войти' >
+            <EntryForm title='Восстановление пароля' button='Сохранить' entry='Вспомнили пароль?' toEntry='Войти' linkEntry='/login' >
                 <Input 
-                    type={'email'}
-                    placeholder={'placeholder'}
-                    onChange={e => setValue(e.target.value)}
-                    value={value}
-                    name={'name'}
+                    type={'password'}
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder={'Введите новый пароль'}
+                    value={password}
+                    name={'password'}
                     error={false}
                     ref={inputRef}
                     onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
+                    icon='ShowIcon'
                     />
                 <Input 
-                    type={'email'}
-                    placeholder={'placeholder'}
+                    type={'text'}
+                    placeholder={'Введите код из письма'}
                     onChange={e => setValue(e.target.value)}
                     value={value}
                     name={'name'}
