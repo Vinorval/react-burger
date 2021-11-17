@@ -22,17 +22,6 @@
     line-height: 30px;
 }
 
-.form {
-    display: grid;
-    row-gap: 24px;
-    justify-items: center;
-}
-
-.button {
-    min-width: 128px;
-    height: 56px;
-}
-
 .textBlock {
     min-height: 64px;
     margin-top: 56px;

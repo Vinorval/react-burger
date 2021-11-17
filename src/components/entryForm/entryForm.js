@@ -8,14 +8,7 @@ export default function EntryForm ({ children, title, button, entry, password, t
         <section className={entryFormStyles.section} >
             <div className={entryFormStyles.conteiner} >
                 <h2 className={entryFormStyles.title} >{title}</h2>
-                <div className={entryFormStyles.form} >
-                    {children}
-                </div>
-                <div className={entryFormStyles.button}>
-                    <Button type="primary" size="medium">
-                        {button}
-                    </Button>
-                </div>
+                {children}
                 <div className={entryFormStyles.textBlock}>
                     <p className={entryFormStyles.text} >{entry} <Link to={`${linkEntry}`} className={entryFormStyles.link} >{toEntry}</Link></p>
                     <p className={entryFormStyles.text} >{password} <Link to={`${linkPassword}`} className={entryFormStyles.link} >{toPassword}</Link></p>
