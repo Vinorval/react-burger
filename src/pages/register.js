@@ -22,7 +22,7 @@ export default function RegisterPage() {
       console.log('Icon Click Callback')
     }
 
-    let login = React.useCallback(
+    let regist = React.useCallback(
         e => {
           e.preventDefault();
           console.log(form);
@@ -81,7 +81,7 @@ export default function RegisterPage() {
                     icon='ShowIcon'
                     />
             </form>
-            <Button type="primary" size="medium" onClick={login}>
+            <Button type="primary" size="medium" onClick={regist}>
                 Зарегистрироваться
             </Button>
             </EntryForm>
