@@ -76,3 +76,37 @@ export function register({email, password, name}) {
         .catch(() => dispatch({ type: 'GET_FAILED'}) );;
     };
   }
+
+  export function exit(refreshToken) {
+    return function(dispatch) {
+        console.log(refreshToken)
+        fetch(`${URL}/auth/logout`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                "token": refreshToken
+            }),
+        })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(res.status);
+        })
+        .then(res => {
+            console.log(res)
+          if (res.success) {
+            dispatch({
+              type: 'EXIT',
+            });
+          } else {
+            dispatch({
+              type: 'GET_FAILED'
+            });
+          }
+        })
+        .catch(() => dispatch({ type: 'GET_FAILED'}) );;
+    };
+  }
