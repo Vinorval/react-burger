@@ -17,6 +17,15 @@ export const auth = (state = initialState, action) => {
         case 'EXIT': {
             return { ...state, email: '', name: '', accessToken: '', refreshToken: '' }
         }
+        case 'UPDATE_TOKEN': {
+            return { ...state, accessToken: action.accessToken }
+        }
+        case 'GET_USER': {
+            return { ...state, email: action.email, name: action.name }
+        }
+        case 'UPDATE_USER': {
+            return { ...state, email: action.email, name: action.name }
+        }
         default: {
           return state;
         }

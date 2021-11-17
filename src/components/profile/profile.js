@@ -1,4 +1,3 @@
-import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import ProfileForm from "../profileForm/profileForm";
 import Styles from './profile.module.css';
@@ -9,17 +8,15 @@ import { useNavigate } from "react-router-dom";
 export default function Profile() {
     const dispatch = useDispatch();
     let navigate = useNavigate();
-    const { refreshToken } = useSelector( store => ({ refreshToken: store.auth.refreshToken }) );
 
     let exited = React.useCallback(
         e => {
           e.preventDefault();
-          console.log(refreshToken);
-          dispatch(exit(refreshToken));
+          dispatch(exit());
           navigate("/");
         },
-        [refreshToken, dispatch, navigate]
-      );
+        [dispatch, navigate]
+    );
 
     return (
         <section className={Styles.section} >
