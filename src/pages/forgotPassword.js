@@ -3,8 +3,12 @@ import EntryForm from "../components/entryForm/entryForm";
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from "../components/appHeader/appHeader";
 import { useNavigate } from "react-router-dom";
+import { URL } from "../utils/utils";
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function ForgotPasswordPage() {
+    const [email, setEmail] = React.useState('');
+    const inputRef = React.useRef(null)
     let navigate = useNavigate();
     //узнаем авторизован ли пользователь
     let auth = localStorage.getItem('authorization');
@@ -12,13 +16,34 @@ export default function ForgotPasswordPage() {
     //если пользователь авторизован отправляем его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
 
-    const [email, setEmail] = React.useState('');
-    const inputRef = React.useRef(null)
+    const onSubmit = React.useCallback(
+        e => {
+            e.preventDefault();
+            fetch(`${URL}/password-reset`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    "email": email, 
+                }),
+            }).then(res => {
+                if (res.ok) {
+                  return res.json();
+                }
+                return Promise.reject(res.status);
+            }).then(res => {
+                if (res.success) {
+                    console.log(res)
+                    return navigate('/reset-password')
+                }
+              }).catch(err => console.log(err))
+        }, [email, navigate])
 
     return ( 
         <div>
             <AppHeader />
-            <EntryForm title='Восстановление пароля' button='Восстановить' entry='Вспомнили пароль?' toEntry='Войти' linkEntry='/login' >
+            <EntryForm title='Восстановление пароля' entry='Вспомнили пароль?' toEntry='Войти' linkEntry='/login' >
                 <Input 
                     type={'email'}
                     placeholder={'Укажите e-mail'}
@@ -30,6 +55,9 @@ export default function ForgotPasswordPage() {
                     errorText={'Ошибка'}
                     size={'default'}
                     />
+                <Button type="primary" size="medium" onClick={onSubmit}>
+                    Восстановить
+                </Button>
             </EntryForm>
         </div>
     )

@@ -14,8 +14,8 @@ export default function Profile() {
         e => {
             console.log(localStorage)
           e.preventDefault();
-          dispatch(exit());
           navigate("/login");
+          dispatch(exit());
         },
         [dispatch, navigate]
     );
