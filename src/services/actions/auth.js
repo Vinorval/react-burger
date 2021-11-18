@@ -1,4 +1,13 @@
-import { URL, setCookie, deleteCookie, getCookie, getNewToken } from '../../utils/utils';
+import { URL, setCookie, deleteCookie, getCookie } from '../../utils/utils';
+
+export const REGISTRATION = 'REGISTRATION';
+export const AUTHORIZATION = 'AUTHORIZATION';
+export const EXIT = 'EXIT';
+export const GET_USER = 'GET_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const GET_FAILED = 'GET_FAILED';
+
+//проверка запроса
 const checkReponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
@@ -28,7 +37,7 @@ export function register({email, password, name}) {
             localStorage.setItem('authorization', true);
             setCookie('accessToken', res.accessToken);
             dispatch({
-              type: 'REGISTRATION',
+              type: REGISTRATION,
               email: res.user.email,
               name: res.user.name,
               accessToken: res.accessToken,
@@ -36,11 +45,11 @@ export function register({email, password, name}) {
             });
           } else {
             dispatch({
-              type: 'GET_FAILED'
+              type: GET_FAILED
             });
           }
         })
-        .catch(() => dispatch({ type: 'GET_FAILED'}) );;
+        .catch(() => dispatch({ type: GET_FAILED}) );
     };
   }
 
@@ -68,7 +77,7 @@ export function register({email, password, name}) {
             localStorage.setItem('authorization', true);
             setCookie('accessToken', res.accessToken);
             dispatch({
-              type: 'AUTHORIZATION',
+              type: AUTHORIZATION,
               email: res.user.email,
               name: res.user.name,
               accessToken: res.accessToken,
@@ -76,11 +85,11 @@ export function register({email, password, name}) {
             });
           } else {
             dispatch({
-              type: 'GET_FAILED'
+              type: GET_FAILED
             });
           }
         })
-        .catch(() => dispatch({ type: 'GET_FAILED'}) );;
+        .catch(() => dispatch({ type: GET_FAILED}) );;
     };
   }
 
@@ -92,7 +101,7 @@ export function register({email, password, name}) {
                 "content-type": "application/json"
             },
             body: JSON.stringify({
-                "token": getCookie('token')
+                "token": localStorage.getItem('token')
             }),
         })
         .then(res => {
@@ -105,18 +114,19 @@ export function register({email, password, name}) {
             console.log(res)
           if (res.success) {
             localStorage.removeItem('token');
-            localStorage.removeItem('authorization');
+            localStorage.setItem('authorization', false);
+            localStorage.removeItem('authorization')
             deleteCookie('accessToken');
             dispatch({
-              type: 'EXIT',
+              type: EXIT,
             });
           } else {
             dispatch({
-              type: 'GET_FAILED'
+              type: GET_FAILED
             });
           }
         })
-        .catch(() => dispatch({ type: 'GET_FAILED'}) );;
+        .catch(() => dispatch({ type: GET_FAILED}) );;
     };
   }
 
@@ -144,17 +154,17 @@ export function register({email, password, name}) {
       ).then(res => {
           if (res.success) {
            dispatch({
-              type: 'GET_USER',
+              type: GET_USER,
               email: res.user.email,
               name: res.user.name
             });
           } else {
             localStorage.setItem('authorization', false);
             dispatch({
-              type: 'GET_FAILED'
+              type: GET_FAILED
            });
           }
-        })//.catch(() => getNewToken(updateToken, getUser) );
+        }).catch(() => dispatch({ type: GET_FAILED}) );
     };
   }
 
@@ -174,22 +184,21 @@ export function register({email, password, name}) {
         }).then(res => {
             if (res.success) {
               dispatch({
-                type: 'UPDATE_USER',
+                type: UPDATE_USER,
                 email: res.user.email,
                 name: res.user.name
               });
             } else {
               dispatch({
-                type: 'GET_FAILED'
+                type: GET_FAILED
               });
             }
-          }).catch(() => getNewToken(updateToken, getUser) );
+          }).catch(() => dispatch({ type: GET_FAILED}) );
     };
   }
 
   const retriableFetch = async(url, options = {}) => {
     try {
-      console.log(localStorage.getItem('token'))
       const res = await fetch(url, options);
       const result = await checkReponse(res);
       return result;
@@ -197,18 +206,10 @@ export function register({email, password, name}) {
       if (err.message === "jwt expired") {
         console.log('progress...')
         const refreshData = await updateToken();
-        console.log(refreshData)
         localStorage.setItem("token", refreshData.refreshToken); 
         localStorage.setItem('authorization', true);
-        //console.log(getCookie('accessToken'))
         setCookie("accessToken", refreshData.accessToken);
-        //console.log(getCookie('accessToken'))
-        console.log(refreshData.accessToken)
-        //options.headers = {}
-        console.log(options.headers)
         options.headers.authorization = getCookie('accessToken');
-        console.log(options.headers)
-        console.log(options.headers.authorization)
         const res = await fetch(url, options);
         return await checkReponse(res);
       } else {

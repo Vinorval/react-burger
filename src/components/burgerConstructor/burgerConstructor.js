@@ -12,9 +12,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function BurgerConstructor({ openPopup }) {
     //из редуса забираем ингредиенты конструктора и булку
-    const { burgerItems, bun, notAuth} = useSelector( store => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun, notAuth: store.auth.notAuth }) )
+    const { burgerItems, bun} = useSelector( store => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun }) )
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    //узнаем: был ли пользователь авторизован
     let auth = localStorage.getItem('authorization');
 
     //контейнер куда перетаскивают инредиенты с поиощью библиотеки dnd
@@ -77,7 +78,7 @@ export default function BurgerConstructor({ openPopup }) {
           if (el.type !== "bun") return idsData.push(el._id);
         });
 
-        //console.log(auth)
+        //если пользователь не авторизован, то отправлять на страницу входа
         if(!auth) { return navigate('/login') }
 
         //отправляем запрос через редакс

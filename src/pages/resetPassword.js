@@ -6,16 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 export default function ResetPasswordPage() {
     let navigate = useNavigate();
+    //узнаём: авторизирован ли пользователь
     let auth = localStorage.getItem('authorization');
 
+    //если пользователь авторизирован, то отправлять его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
+
     const [password, setPassword] = React.useState('');
     const [value, setValue] = React.useState('');
     const inputRef = React.useRef(null)
-    const onIconClick = () => {
-      setTimeout(() => inputRef.current.focus(), 0)
-      console.log('Icon Click Callback')
-    }
 
     return ( 
         <div>
@@ -29,7 +28,6 @@ export default function ResetPasswordPage() {
                     name={'password'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     icon='ShowIcon'
@@ -42,7 +40,6 @@ export default function ResetPasswordPage() {
                     name={'name'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     />

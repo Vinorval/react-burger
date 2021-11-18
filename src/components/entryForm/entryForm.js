@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import entryFormStyles from './entryForm.module.css';
 import { Link } from "react-router-dom";
 
-export default function EntryForm ({ children, title, button, entry, password, toEntry, toPassword, linkEntry, linkPassword }) {
+export default function EntryForm ({ children, title, entry, password, toEntry, toPassword, linkEntry, linkPassword }) {
     return (
         <section className={entryFormStyles.section} >
             <div className={entryFormStyles.conteiner} >
@@ -17,3 +17,13 @@ export default function EntryForm ({ children, title, button, entry, password, t
         </section>
     )
 }
+
+EntryForm.propTypes = {
+    title: PropTypes.string.isRequired,
+    entry: PropTypes.string.isRequired,
+    linkEntry: PropTypes.string.isRequired,
+    toEntry: PropTypes.string.isRequired,
+    password: PropTypes.string,
+    linkPassword: PropTypes.string,
+    toPassword: PropTypes.string,
+};

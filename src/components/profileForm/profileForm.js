@@ -8,28 +8,35 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export default function ProfileForm() {
     const dispatch = useDispatch();
+    //начальное состояние импутов в профиле
     const { name, email } = useSelector( store => ({ name: store.auth.name, email: store.auth.email }) );
     const [form, setValue] = React.useState({ name: name, email: email, password: ''});
     const [isChange, setChenge] = React.useState(false)
   
+    //запрос на сервер для получения информации о пользователе
     React.useEffect(() => { return dispatch(getUser()) }, [dispatch])
+
+    //запись в стейт значения полей из хранилища
     React.useEffect(() => {
         setValue({ password: '', email: email, name: name});
         setChenge(false)
     }, [name, email])
 
+    //запись в стейт новые значания полей
     const onChange = e => {
       setValue({ ...form, [e.target.name]: e.target.value });
       console.log(name)
       setChenge(true);
     };
 
+    //отмена изменений
     const reset = () => {
         setValue({ password: '', email: email, name: name});
         setChenge(false)
     }
 
-    let onSubmit = React.useCallback(
+    //сохранение новых данных на сервере
+    const onSubmit = React.useCallback(
         e => {
           e.preventDefault();
           setChenge(false)

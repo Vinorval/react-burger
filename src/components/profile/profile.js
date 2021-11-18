@@ -1,29 +1,24 @@
 import React from "react";
 import ProfileForm from "../profileForm/profileForm";
 import Styles from './profile.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { exit } from "../../services/actions/auth";
-import { useNavigate, Navigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
     const dispatch = useDispatch();
     let navigate = useNavigate();
-    const location = useLocation();
-    const notAuth = useSelector( store =>  ({ notAuth: store.auth.notAuth }))
 
+    //если пользователь решил уйти, отправлять запрос на удаление токена и перенаправлять на страницу входа
     let exited = React.useCallback(
         e => {
+            console.log(localStorage)
           e.preventDefault();
           dispatch(exit());
           navigate("/login");
         },
         [dispatch, navigate]
     );
-
-    //React.useEffect(() => {
-    //    console.log(notAuth)
-    //  if(notAuth) {return <Navigate to="/login" replace state={{from: location,}} />};
-    //}, [notAuth, location])
 
     return (
         <section className={Styles.section} >

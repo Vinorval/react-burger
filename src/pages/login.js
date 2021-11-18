@@ -6,46 +6,39 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { login } from "../services/actions/auth";
 import { useNavigate } from "react-router-dom";
+import Styles from './login.module.css';
 
 export default function LoginPage() {
     const [form, setValue] = React.useState({ email: '', password: ''});
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    //узнаем: авторизирован ли пользователь
     let auth = localStorage.getItem('authorization');
     const inputRef = React.useRef(null)
-    const onIconClick = () => {
-      setTimeout(() => inputRef.current.focus(), 0)
-    }
 
-    
-
+    //записываем значения поля в стейт
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
-    const StylesForm = {
-        'display': 'grid',
-        'rowGap': '24px',
-        'justifyItems': 'center',
-    }
-
+    //регистрируем пользователя
     let log = React.useCallback(
         e => {
           e.preventDefault();
-          console.log(form);
           dispatch(login(form));
           navigate("/");
         },
         [form, dispatch, navigate]
       );
 
+      //если пользователь зарегистрирован, 
       React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
 
     return ( 
         <div>
             <AppHeader />
             <EntryForm title='Вход' entry='Вы — новый пользователь?' password='Забыли пароль?' toEntry='Зарегистрироваться' toPassword='Восстановить пароль' linkEntry='/register' linkPassword='/forgot-password' >
-            <form style={StylesForm} >
+            <form className={Styles.form} >
                 <Input 
                     type={'email'}
                     onChange={e => onChange(e)}
@@ -54,7 +47,6 @@ export default function LoginPage() {
                     name={'email'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     />
@@ -66,7 +58,6 @@ export default function LoginPage() {
                     name={'password'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     icon='ShowIcon'

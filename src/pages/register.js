@@ -6,25 +6,25 @@ import AppHeader from "../components/appHeader/appHeader";
 import { useDispatch } from 'react-redux';
 import { register } from "../services/actions/auth";
 import { useNavigate } from "react-router-dom";
+import Styles from './register.module.css';
 
 export default function RegisterPage() {
     const [form, setValue] = React.useState({ email: '', password: '', name: '' });
     const inputRef = React.useRef(null)
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    //узнаём: зарегистрирован ли пользователь
     let auth = localStorage.getItem('authorization');
 
+    //если пользователь зарегестрирова, отправляем его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
 
+    //записываем значения с полей в стейт
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
-    const onIconClick = () => {
-      setTimeout(() => inputRef.current.focus(), 0)
-      console.log('Icon Click Callback')
-    }
-
+    //регистрация нового пользователя
     let regist = React.useCallback(
         e => {
           e.preventDefault();
@@ -35,17 +35,11 @@ export default function RegisterPage() {
         [form, dispatch, navigate]
       );
 
-    const StylesForm = {
-        'display': 'grid',
-        'rowGap': '24px',
-        'justifyItems': 'center',
-    }
-
     return ( 
         <div>
             <AppHeader />
             <EntryForm title='Регистрация' entry='Уже зарегистрированы?' toEntry='Войти' linkEntry='/login' >
-            <form style={StylesForm} >
+            <form className={Styles.form} >
                 <Input 
                     type={'text'}
                     placeholder={'Имя'}
@@ -54,7 +48,6 @@ export default function RegisterPage() {
                     name={'name'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     />
@@ -66,7 +59,6 @@ export default function RegisterPage() {
                     name={'email'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     />
@@ -78,7 +70,6 @@ export default function RegisterPage() {
                     name={'password'}
                     error={false}
                     ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     icon='ShowIcon'

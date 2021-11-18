@@ -1,30 +1,27 @@
+import { REGISTRATION, AUTHORIZATION, EXIT, GET_USER, UPDATE_USER } from "../actions/auth";
+
 const initialState = {
     email: '',
     name: '',
     accessToken: '',
     refreshToken: '',
-    notAuth: true
 };
 
 export const auth = (state = initialState, action) => {
     switch (action.type) {
-        case 'REGISTRATION': {
-            console.log(action);
-          return { ...state, email: action.email, name: action.name, accessToken: action.accessToken, refreshToken: action.refreshToken, notAuth: false };
+        case REGISTRATION: {
+          return { ...state, email: action.email, name: action.name, accessToken: action.accessToken, refreshToken: action.refreshToken };
         }
-        case 'AUTHORIZATION': {
-          return { ...state, email: action.email, name: action.name, accessToken: action.accessToken, refreshToken: action.refreshToken, notAuth: false};
+        case AUTHORIZATION: {
+          return { ...state, email: action.email, name: action.name, accessToken: action.accessToken, refreshToken: action.refreshToken};
         }
-        case 'EXIT': {
-            return { ...state, email: '', name: '', accessToken: '', refreshToken: '', notAuth: true }
+        case EXIT: {
+            return { ...state, email: '', name: '', accessToken: '', refreshToken: '' }
         }
-        case 'UPDATE_TOKEN': {
-            return { ...state, accessToken: action.accessToken }
+        case GET_USER: {
+            return { ...state, email: action.email, name: action.name }
         }
-        case 'GET_USER': {
-            return { ...state, email: action.email, name: action.name, notAuth: false }
-        }
-        case 'UPDATE_USER': {
+        case UPDATE_USER: {
             return { ...state, email: action.email, name: action.name }
         }
         default: {
