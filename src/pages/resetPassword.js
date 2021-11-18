@@ -2,8 +2,13 @@ import React from "react";
 import EntryForm from "../components/entryForm/entryForm";
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from "../components/appHeader/appHeader";
+import { useNavigate } from "react-router-dom";
 
 export default function ResetPasswordPage() {
+    let navigate = useNavigate();
+    let auth = localStorage.getItem('authorization');
+
+    React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
     const [password, setPassword] = React.useState('');
     const [value, setValue] = React.useState('');
     const inputRef = React.useRef(null)

@@ -11,10 +11,13 @@ export default function LoginPage() {
     const [form, setValue] = React.useState({ email: '', password: ''});
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    let auth = localStorage.getItem('authorization');
     const inputRef = React.useRef(null)
     const onIconClick = () => {
       setTimeout(() => inputRef.current.focus(), 0)
     }
+
+    
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
@@ -35,6 +38,8 @@ export default function LoginPage() {
         },
         [form, dispatch, navigate]
       );
+
+      React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
 
     return ( 
         <div>

@@ -12,6 +12,9 @@ export default function RegisterPage() {
     const inputRef = React.useRef(null)
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    let auth = localStorage.getItem('authorization');
+
+    React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });

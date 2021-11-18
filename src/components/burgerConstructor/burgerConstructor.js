@@ -8,11 +8,14 @@ import { useDrop } from 'react-dnd';
 import { ADD_ITEM, CHANGE_BUN, CHANCE_ITEMS } from '../../services/actions/actions';
 import IngredientBurger from "../ingredientBurger/ingredientBurger";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { useNavigate } from "react-router-dom";
 
 export default function BurgerConstructor({ openPopup }) {
     //из редуса забираем ингредиенты конструктора и булку
-    const { burgerItems, bun} = useSelector( store => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun }) )
+    const { burgerItems, bun, notAuth} = useSelector( store => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun, notAuth: store.auth.notAuth }) )
     const dispatch = useDispatch();
+    let navigate = useNavigate();
+    let auth = localStorage.getItem('authorization');
 
     //контейнер куда перетаскивают инредиенты с поиощью библиотеки dnd
     const onDragEnd = (result) => {
@@ -73,6 +76,9 @@ export default function BurgerConstructor({ openPopup }) {
         burgerItems.forEach((el) => {
           if (el.type !== "bun") return idsData.push(el._id);
         });
+
+        //console.log(auth)
+        if(!auth) { return navigate('/login') }
 
         //отправляем запрос через редакс
         if( !bun._id ) {
