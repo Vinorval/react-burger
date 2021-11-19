@@ -1,7 +1,8 @@
 import React from "react";
 import appStyles from '../components/app/app.module.css';
 import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { CLOSE_POPUP } from '../services/actions/actions';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -18,6 +19,7 @@ export default function HomePage () {
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
   const { ingredient } = useSelector(store => ({ ingredient: store.ingredient.ingredient }))
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     setPopupIngredient(popupIngr);
@@ -37,11 +39,15 @@ export default function HomePage () {
     setPopupOrder(false);
     setPopupIngredient(false);
     localStorage.setItem('popup', false)
+    dispatch({
+      type: CLOSE_POPUP,
+      ingredient: {},
+      order: {}
+    });
   };
 
   return (
     <div className={appStyles.App}>
-    <AppHeader/>
     <DndProvider backend={HTML5Backend}>
       <main className={appStyles.main}>
         <h2 className={appStyles.title}>Соберите бургер</h2>

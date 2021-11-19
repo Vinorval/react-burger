@@ -25,12 +25,7 @@ export function register({email, password, name}) {
                 "name": name
             }),
         })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(res.status);
-        })
+        .then(res => checkReponse(res))
         .then(res => {
           if (res.success) {
             localStorage.setItem('token', res.refreshToken);
@@ -65,12 +60,7 @@ export function register({email, password, name}) {
                 "password": password
             }),
         })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(res.status);
-        })
+        .then(res => checkReponse(res))
         .then(res => {
           if (res.success) {
             localStorage.setItem('token', res.refreshToken);
@@ -104,12 +94,7 @@ export function register({email, password, name}) {
                 "token": localStorage.getItem('token')
             }),
         })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(res.status);
-        })
+        .then(res => checkReponse(res))
         .then(res => {
             console.log(res)
           if (res.success) {

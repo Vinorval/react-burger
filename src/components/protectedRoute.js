@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 export function ProtectedRoute({ children }) {
     const location = useLocation();
-    let auth = localStorage.getItem('authorization');
+    const auth = localStorage.getItem('authorization');
 
     if (!auth) {
         return <Navigate

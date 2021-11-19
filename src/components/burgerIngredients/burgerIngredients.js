@@ -42,9 +42,9 @@ export default function BurgerIngredients({ onClick }) {
     })
 
     //запрашиваем с сервера все ингредиенты
-    useEffect(() => {
-        dispatch(getItems());
-    }, [dispatch]);
+    //useEffect(() => {
+    //    dispatch(getItems());
+    //}, [dispatch]);
 
     //перебираем массив ингредиентов и возвращаем их
     const returnIngredient = (name) => {

@@ -9,9 +9,9 @@ import { URL } from "../utils/utils";
 export default function ResetPasswordPage() {
     const [form, setValue] = React.useState({ value: 'hh', password: ''});
     const inputRef = React.useRef(null)
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //узнаём: авторизирован ли пользователь
-    let auth = localStorage.getItem('authorization');
+    const auth = localStorage.getItem('authorization');
 
     //если пользователь авторизирован, то отправлять его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
@@ -47,7 +47,6 @@ export default function ResetPasswordPage() {
 
     return ( 
         <div>
-            <AppHeader />
             <EntryForm title='Восстановление пароля' entry='Вспомнили пароль?' toEntry='Войти' linkEntry='/login' >
                 <Input 
                     type={'password'}

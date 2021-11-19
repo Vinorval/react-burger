@@ -9,9 +9,9 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 export default function ForgotPasswordPage() {
     const [email, setEmail] = React.useState('');
     const inputRef = React.useRef(null)
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //узнаем авторизован ли пользователь
-    let auth = localStorage.getItem('authorization');
+    const auth = localStorage.getItem('authorization');
 
     //если пользователь авторизован отправляем его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
@@ -42,7 +42,6 @@ export default function ForgotPasswordPage() {
 
     return ( 
         <div>
-            <AppHeader />
             <EntryForm title='Восстановление пароля' entry='Вспомнили пароль?' toEntry='Войти' linkEntry='/login' >
                 <Input 
                     type={'email'}

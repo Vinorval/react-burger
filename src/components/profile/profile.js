@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     //если пользователь решил уйти, отправлять запрос на удаление токена и перенаправлять на страницу входа
-    let exited = React.useCallback(
+    const exited = React.useCallback(
         e => {
             console.log(localStorage)
           e.preventDefault();

@@ -6,7 +6,6 @@ import { Routes, Route } from 'react-router-dom';
 export default function ProfilePage() {
     return (
         <>
-          <AppHeader />
           <Routes>
             <Route path="/" element={<Profile />} />
           </Routes>

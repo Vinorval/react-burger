@@ -8,7 +8,7 @@ import { useDrag } from 'react-dnd';
 import { useNavigate } from "react-router-dom";
 
 export default function Ingredient({data, onClick}) {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //забираем из редукса счётчики количества ингредиентов в бургере
     const { quantity, quantityBun } = useSelector( store => ({ quantity: store.burgerItems.quantity, quantityBun: store.burgerItems.quantityBun }) );
     const dispatch = useDispatch();

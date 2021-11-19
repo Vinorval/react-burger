@@ -11,9 +11,9 @@ import Styles from './login.module.css';
 export default function LoginPage() {
     const [form, setValue] = React.useState({ email: '', password: ''});
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //узнаем: авторизирован ли пользователь
-    let auth = localStorage.getItem('authorization');
+    const auth = localStorage.getItem('authorization');
     const inputRef = React.useRef(null)
 
     //записываем значения поля в стейт
@@ -22,7 +22,7 @@ export default function LoginPage() {
     };
 
     //регистрируем пользователя
-    let log = React.useCallback(
+    const log = React.useCallback(
         e => {
           e.preventDefault();
           dispatch(login(form));
@@ -36,7 +36,6 @@ export default function LoginPage() {
 
     return ( 
         <div>
-            <AppHeader />
             <EntryForm title='Вход' entry='Вы — новый пользователь?' password='Забыли пароль?' toEntry='Зарегистрироваться' toPassword='Восстановить пароль' linkEntry='/register' linkPassword='/forgot-password' >
             <form className={Styles.form} >
                 <Input 

@@ -14,9 +14,9 @@ export default function BurgerConstructor({ openPopup }) {
     //из редуса забираем ингредиенты конструктора и булку
     const { burgerItems, bun} = useSelector( store => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun }) )
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //узнаем: был ли пользователь авторизован
-    let auth = localStorage.getItem('authorization');
+    const auth = localStorage.getItem('authorization');
 
     //контейнер куда перетаскивают инредиенты с поиощью библиотеки dnd
     const onDragEnd = (result) => {

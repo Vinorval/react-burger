@@ -12,9 +12,9 @@ export default function RegisterPage() {
     const [form, setValue] = React.useState({ email: '', password: '', name: '' });
     const inputRef = React.useRef(null)
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //узнаём: зарегистрирован ли пользователь
-    let auth = localStorage.getItem('authorization');
+    const auth = localStorage.getItem('authorization');
 
     //если пользователь зарегестрирова, отправляем его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
@@ -25,7 +25,7 @@ export default function RegisterPage() {
     };
 
     //регистрация нового пользователя
-    let regist = React.useCallback(
+    const regist = React.useCallback(
         e => {
           e.preventDefault();
           console.log(form);
@@ -37,7 +37,6 @@ export default function RegisterPage() {
 
     return ( 
         <div>
-            <AppHeader />
             <EntryForm title='Регистрация' entry='Уже зарегистрированы?' toEntry='Войти' linkEntry='/login' >
             <form className={Styles.form} >
                 <Input 

@@ -29,7 +29,7 @@ export default function AppHeader() {
                     .join(" ")
                     }><ListIcon type={location.pathname === '/orders' ? "primary" : "secondary"} /> Лента заказов</NavLink>
                 </div>
-                <Logo/>
+                <NavLink to={'/'} ><Logo/></NavLink>
                 <NavLink to='/profile' className={({ isActive }) =>
                     [
                         appHeaderStyles.text,
