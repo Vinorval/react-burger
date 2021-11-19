@@ -1,5 +1,7 @@
 import React from "react";
 import appStyles from '../components/app/app.module.css';
+import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -12,8 +14,14 @@ import OrderDetails from "../components/orderDetails/orderDetails";
 import IngredientDetails from "../components/ingredientDetails/ingredientDetails";
 
 export default function HomePage () {
+  const popupIngr = Boolean(localStorage.getItem('popup'));
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
+  const { ingredient } = useSelector(store => ({ ingredient: store.ingredient.ingredient }))
+
+  React.useEffect(() => {
+    setPopupIngredient(popupIngr);
+  }, [])
 
   const handleOpenPopupOrder = () => {
     setPopupOrder(true);
@@ -21,11 +29,14 @@ export default function HomePage () {
 
   const handleIngredientClick = () => {
     setPopupIngredient(true);
+    localStorage.setItem('popup', true)
+    console.log(popupIngredient)
   }
 
   const closePopup = () => {
     setPopupOrder(false);
     setPopupIngredient(false);
+    localStorage.setItem('popup', false)
   };
 
   return (
@@ -41,9 +52,13 @@ export default function HomePage () {
     <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
       <OrderDetails/>
     </Modal>
-    <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
-      <IngredientDetails/>
-    </Modal>
+    <Routes>
+      <Route path="ingredients/*" element={
+        <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
+          <IngredientDetails/>
+        </Modal>
+      }/>
+    </Routes>
   </div>
   )
 }

@@ -5,8 +5,10 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_POPUP } from '../../services/actions/actions';
 import { useDrag } from 'react-dnd';
+import { useNavigate } from "react-router-dom";
 
 export default function Ingredient({data, onClick}) {
+    let navigate = useNavigate();
     //забираем из редукса счётчики количества ингредиентов в бургере
     const { quantity, quantityBun } = useSelector( store => ({ quantity: store.burgerItems.quantity, quantityBun: store.burgerItems.quantityBun }) );
     const dispatch = useDispatch();
@@ -29,6 +31,7 @@ export default function Ingredient({data, onClick}) {
     //открытие попапа с деталями ингредиента
     const clickCard = () => {
         onClick();
+        navigate(`/ingredients/${_id}`);
         dispatch({
             type: OPEN_POPUP,
             ingredient: data
