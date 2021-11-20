@@ -1,4 +1,4 @@
-import { URL } from '../../utils/utils'
+import { URL, checkReponse } from '../../utils/utils'
 
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
@@ -13,11 +13,6 @@ export const CLOSE_POPUP = 'CLOSE_POPUP';
 
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
-
-//проверка запроса
-const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
 
 export function getItems() {
     return function(dispatch) {

@@ -1,4 +1,4 @@
-import { URL, setCookie, deleteCookie, getCookie } from '../../utils/utils';
+import { URL, setCookie, deleteCookie, getCookie, checkReponse } from '../../utils/utils';
 
 export const REGISTRATION = 'REGISTRATION';
 export const AUTHORIZATION = 'AUTHORIZATION';
@@ -9,10 +9,7 @@ export const POST_EMAIL = 'POST_EMAIL';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const GET_FAILED = 'GET_FAILED';
 
-//проверка запроса
-const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
+
 
 export function register({email, password, name}) {
     return function(dispatch) {
