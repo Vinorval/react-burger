@@ -1,15 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import burgerIngredientsStyles from './burgerIngredients.module.css'
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../../services/actions/actions';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
 
 export default function BurgerIngredients({ onClick }) {
     //забираем из редакс ингредиенты
     const { items } = useSelector( store => ({ items: store.items.items }) );
-    const dispatch = useDispatch();
     //создаём стейт для разделения ингредиентов
     const [current, setCurrent] = React.useState('Булки');
     //создание рефов

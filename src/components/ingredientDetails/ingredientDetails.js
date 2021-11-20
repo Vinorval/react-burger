@@ -1,10 +1,22 @@
 import React from "react";
 import ingredientDetailsStyles from './ingredientDetails.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from "react-router";
+import { OPEN_POPUP } from '../../services/actions/actions';
 
 export default function IngredientDetails() {
+    const dispatch = useDispatch();
+    let params = useParams();
+    
     //забираем из редукса данные о передоваемом ингредиенте
-    const { ingredient } = useSelector(store => ({ ingredient: store.ingredient.ingredient }))
+    const { ingredient, items } = useSelector(store => ({ ingredient: store.ingredient.ingredient, items: store }))
+
+    //React.useEffect(() => {
+    //    if (Boolean({id: params.id})) return console.log(params.id)
+    //    console.log(ingredient)
+    //    let result = items.find(item => item._id === params.id)
+    //    console.log(items)
+    //}, [items])
 
     //возвращаем верстку модала с деталями ингредиента
     return (

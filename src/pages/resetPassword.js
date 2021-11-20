@@ -1,17 +1,19 @@
 import React from "react";
 import EntryForm from "../components/entryForm/entryForm";
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import AppHeader from "../components/appHeader/appHeader";
 import { useNavigate } from "react-router-dom";
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { URL } from "../utils/utils";
+import { useDispatch } from "react-redux";
+import { resetPassword } from "../services/actions/auth";
 
 export default function ResetPasswordPage() {
-    const [form, setValue] = React.useState({ value: 'hh', password: ''});
+    const dispatch = useDispatch();
+    const [form, setValue] = React.useState({ value: '', password: ''});
     const inputRef = React.useRef(null)
     const navigate = useNavigate();
     //узнаём: авторизирован ли пользователь
     const auth = localStorage.getItem('authorization');
+    console.log(navigate(-1))
 
     //если пользователь авторизирован, то отправлять его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])
@@ -23,57 +25,23 @@ export default function ResetPasswordPage() {
     const onSubmit = React.useCallback(
         e => {
             e.preventDefault();
-            fetch(`${URL}/password-reset/reset`, {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify({
-                    "password": form.password,
-                    "token": form.value
-                }),
-            }).then(res => {
-                if (res.ok) {
-                  return res.json();
-                }
-                return Promise.reject(res.status);
-            }).then(res => {
-                if (res.success) {
-                    console.log(res)
-                    return navigate('/login')
-                }
-              }).catch(err => console.log(err))
-        }, [form, navigate])
+            dispatch(resetPassword( {password: form.password, value: form.value} ))
+            navigate('/login')
+        }, [form, navigate, dispatch])
 
     return ( 
         <div>
-            <EntryForm title='Восстановление пароля' entry='Вспомнили пароль?' toEntry='Войти' linkEntry='/login' >
-                <Input 
-                    type={'password'}
-                    onChange={e => onChange(e)}
-                    placeholder={'Введите новый пароль'}
-                    value={form.password}
-                    name={'password'}
-                    error={false}
-                    ref={inputRef}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    icon='ShowIcon'
-                    />
-                <Input 
-                    type={'email'}
-                    placeholder={'Введите код из письма'}
-                    onChange={e => onChange(e)}
-                    value={form.value}
-                    name={'value'}
-                    error={false}
-                    ref={inputRef}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    />
-                <Button type="primary" size="medium" onClick={onSubmit}>
-                    Сохранить
-                </Button>
+            <EntryForm
+                title='Восстановление пароля' 
+                inputs={[
+                    { type: 'password', placeholder: 'Пароль', icon: 'ShowIcon', name: 'password' },
+                    { type: 'text', placeholder: 'Введите код из письма', name: 'value' }
+                ]}
+                enty={{ link: '/login', text: 'Войти', title: 'Вспомнили пароль?' }}
+                entry={resetPassword}
+                button='Сохранить'
+                toResetPassword={() => { return navigate('/login') }}
+                >
             </EntryForm>
         </div>
     )

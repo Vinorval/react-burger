@@ -10,16 +10,17 @@ import ResetPasswordPage from "../../pages/resetPassword";
 import ProfilePage from "../../pages/profile";
 import AppHeader from "../appHeader/appHeader";
 import { ProtectedRoute } from "../protectedRoute";
-import { IngridientPage } from "../../pages/ingredient";
-import { CLOSE_POPUP } from '../../services/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/actions';
+import { RootStateOrAny } from "react-redux";
 
 export default function App() {
   const dispatch = useDispatch();
+  //const { items } = useSelector( (store: RootStateOrAny) => ({ items: store.items.items }) );
 
   React.useEffect(() => {
       dispatch(getItems());
+      //console.log(items)
   }, [dispatch]);
 
   return (

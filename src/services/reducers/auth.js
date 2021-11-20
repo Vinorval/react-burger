@@ -1,10 +1,11 @@
-import { REGISTRATION, AUTHORIZATION, EXIT, GET_USER, UPDATE_USER } from "../actions/auth";
+import { REGISTRATION, AUTHORIZATION, EXIT, GET_USER, UPDATE_USER, POST_EMAIL, RESET_PASSWORD } from "../actions/auth";
 
 const initialState = {
     email: '',
     name: '',
     accessToken: '',
     refreshToken: '',
+    toForgotPassword: false,
 };
 
 export const auth = (state = initialState, action) => {
@@ -23,6 +24,12 @@ export const auth = (state = initialState, action) => {
         }
         case UPDATE_USER: {
             return { ...state, email: action.email, name: action.name }
+        }
+        case POST_EMAIL: {
+          return { ...state, toForgotPassword: true }
+        }
+        case RESET_PASSWORD: {
+          return { ...state, toForgotPassword: false }
         }
         default: {
           return state;

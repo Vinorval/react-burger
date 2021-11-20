@@ -1,5 +1,4 @@
 import React from "react";
-import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredientDetails/ingredientDetails";
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';

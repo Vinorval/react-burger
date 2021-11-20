@@ -5,6 +5,8 @@ export const AUTHORIZATION = 'AUTHORIZATION';
 export const EXIT = 'EXIT';
 export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const POST_EMAIL = 'POST_EMAIL';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const GET_FAILED = 'GET_FAILED';
 
 //проверка запроса
@@ -63,6 +65,7 @@ export function register({email, password, name}) {
         .then(res => checkReponse(res))
         .then(res => {
           if (res.success) {
+            console.log(res)
             localStorage.setItem('token', res.refreshToken);
             localStorage.setItem('authorization', true);
             setCookie('accessToken', res.accessToken);
@@ -80,6 +83,53 @@ export function register({email, password, name}) {
           }
         })
         .catch(() => dispatch({ type: GET_FAILED}) );;
+    };
+  }
+
+  export function forgotPassword({email}) {
+    return function(dispatch) {
+      fetch(`${URL}/password-reset`, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            "email": email, 
+        }),
+      }).then(res => checkReponse(res))
+      .then(res => {
+        if (res.success) {
+            console.log(res)
+            dispatch({
+              type: POST_EMAIL,
+            })
+        }
+      })
+      .catch(err => console.log(err))
+    };
+  }
+
+  export function resetPassword({password, value}) {
+    return function(dispatch) {
+      fetch(`${URL}/password-reset`, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          "password": password,
+          "token": value
+        }),
+      }).then(res => checkReponse(res))
+      .then(res => {
+        if (res.success) {
+            console.log(res)
+            dispatch({
+              type: RESET_PASSWORD,
+            })
+        }
+      })
+      .catch(err => console.log(err))
     };
   }
 
