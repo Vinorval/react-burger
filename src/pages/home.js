@@ -1,6 +1,6 @@
 import React from "react";
 import appStyles from '../components/app/app.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { CLOSE_POPUP } from '../services/actions/actions';
 
 import { DndProvider } from 'react-dnd';
@@ -11,24 +11,15 @@ import Modal from '../components/modal/modal';
 import OrderDetails from "../components/orderDetails/orderDetails";
 
 export default function HomePage () {
-  //const popupIngr = Boolean(localStorage.getItem('popup'));
   const [popupOrder, setPopupOrder] = React.useState(false);
-  const [popupIngredient, setPopupIngredient] = React.useState(false);
-  const ingridientPopup = useSelector(store => ({ ingridientPopup: store.ingredient.ingridientPopup }))
   const dispatch = useDispatch();
 
   const handleOpenPopupOrder = () => {
     setPopupOrder(true);
   }
 
-  const handleIngredientClick = () => {
-    setPopupIngredient(true);
-  }
-
   const closePopup = () => {
     setPopupOrder(false);
-    setPopupIngredient(false);
-  //  localStorage.setItem('popup', false)
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
@@ -41,7 +32,7 @@ export default function HomePage () {
     <DndProvider backend={HTML5Backend}>
       <main className={appStyles.main}>
         <h2 className={appStyles.title}>Соберите бургер</h2>
-        <BurgerIngredients onClick={handleIngredientClick}/>
+        <BurgerIngredients />
         <BurgerConstructor openPopup={handleOpenPopupOrder} />
       </main>
     </DndProvider>

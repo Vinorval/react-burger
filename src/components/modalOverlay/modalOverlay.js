@@ -5,7 +5,6 @@ import modalOverlayStyles from './modalOverlay.module.css';
 const modalRoot = document.getElementById("react-modals");
 
 export default function ModalOverlay({isOpen, children, closePopup}) {
-    //console.log(isOpen)
     return ReactDOM.createPortal(
         (
             <>

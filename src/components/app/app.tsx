@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import HomePage from "../../pages/home";
 import NotFound from "../../pages/notFound";
@@ -23,9 +23,8 @@ export default function App() {
   const location = useLocation();
   const localPopup = localStorage.getItem('popup');
   let state = location.state as { backgroundLocation?: Location };
-  const {ingridientPopup, items} = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items.items }))
+  const {ingridientPopup} = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items.items }))
   const open = localPopup ? localPopup : Boolean(ingridientPopup);
-  console.log(Location)
 
   React.useEffect(() => {
       dispatch(getItems());
@@ -38,7 +37,6 @@ export default function App() {
       ingredient: {},
       order: {}
     });
-    //localStorage.removeItem('ingr')
   }
 
   return (

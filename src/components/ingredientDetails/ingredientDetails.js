@@ -1,25 +1,18 @@
 import React from "react";
 import ingredientDetailsStyles from './ingredientDetails.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from "react-router";
-import { OPEN_POPUP } from '../../services/actions/actions';
 
 export default function IngredientDetails() {
     let { id } = useParams('id');
-    const { ingredient, items } = useSelector(store => ({ ingredient: store.ingredient.ingredient, items: store.items.items }))
+    const { items } = useSelector(store => ({ ingredient: store.ingredient.ingredient, items: store.items.items }))
     const rett = React.useCallback(() => {
         const returnIngredient = () => {
          return items.find(item => item._id === id)
        }
        return returnIngredient()
-     }, [items])
+     }, [items, id])
     
-    //console.log(params)
-    //let result = {}
-    
-    //забираем из редукса данные о передоваемом ингредиенте
-    
-
     //возвращаем верстку модала с деталями ингредиента
     return (
         <>

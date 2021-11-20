@@ -7,7 +7,6 @@ export default function ResetPasswordPage() {
     const navigate = useNavigate();
     //узнаём: авторизирован ли пользователь
     const auth = localStorage.getItem('authorization');
-    //console.log(navigate(-1))
 
     //если пользователь авторизирован, то отправлять его на шаг назад
     React.useEffect(() => {if(auth) { return navigate(-1) }}, [auth, navigate])

@@ -1,6 +1,5 @@
 import React from "react";
-import IngredientDetails from "../components/ingredientDetails/ingredientDetails";
-import { Routes, Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Styles from './ingredient.module.css'
 
@@ -13,10 +12,8 @@ export function IngridientPage() {
         return items.find(item => item._id === id)
       }
       return returnIngredient()
-    }, [items])
+    }, [items, id])
     
-    console.log(rett())
-    console.log(items)
         
       return (
         <>

@@ -1,13 +1,12 @@
 import React, { useRef } from "react";
 import burgerIngredientsStyles from './burgerIngredients.module.css'
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-export default function BurgerIngredients({ onClick }) {
+export default function BurgerIngredients() {
     const location = useLocation();
     //забираем из редакс ингредиенты
     const { items } = useSelector( store => ({ items: store.items.items }) );
@@ -49,7 +48,7 @@ export default function BurgerIngredients({ onClick }) {
                 if (item.type === name) {
                     return (
                         <Link className={burgerIngredientsStyles.link} key={item._id} to={`/ingredients/${item._id}`} state={{ backgroundLocation: location }}>
-                          <Ingredient data={item} onClick={onClick} key={item._id}/>
+                          <Ingredient data={item} key={item._id}/>
                         </Link>
                     )
                 } else { return null }
@@ -89,6 +88,4 @@ export default function BurgerIngredients({ onClick }) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    onClick: PropTypes.func.isRequired
-};
+

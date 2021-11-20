@@ -65,7 +65,6 @@ export function register({email, password, name}) {
         .then(res => checkReponse(res))
         .then(res => {
           if (res.success) {
-            //console.log(res)
             localStorage.setItem('token', res.refreshToken);
             localStorage.setItem('authorization', true);
             setCookie('accessToken', res.accessToken);
@@ -99,7 +98,6 @@ export function register({email, password, name}) {
       }).then(res => checkReponse(res))
       .then(res => {
         if (res.success) {
-            //console.log(res)
             dispatch({
               type: POST_EMAIL,
             })
@@ -123,7 +121,6 @@ export function register({email, password, name}) {
       }).then(res => checkReponse(res))
       .then(res => {
         if (res.success) {
-            console.log(res)
             dispatch({
               type: RESET_PASSWORD,
             })
@@ -146,7 +143,6 @@ export function register({email, password, name}) {
         })
         .then(res => checkReponse(res))
         .then(res => {
-            console.log(res)
           if (res.success) {
             localStorage.removeItem('token');
             localStorage.setItem('authorization', false);
