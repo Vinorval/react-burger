@@ -37,7 +37,7 @@ export default function Ingredient({data, onClick}) {
             ingredient: data
           });
           console.log(data)
-        //localStorage.setItem('ingr', data)
+        localStorage.setItem('popup', true)
     };
 
     //возвращать верстку ингредиента

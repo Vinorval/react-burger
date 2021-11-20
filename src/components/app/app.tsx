@@ -21,17 +21,18 @@ import { IngridientPage } from "../../pages/ingredient";
 export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const localPopup = localStorage.getItem('popup');
   let state = location.state as { backgroundLocation?: Location };
   const {ingridientPopup, items} = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items.items }))
-  const open = Boolean(ingridientPopup);
-  console.log(location)
+  const open = localPopup ? localPopup : Boolean(ingridientPopup);
+  console.log(Location)
 
   React.useEffect(() => {
       dispatch(getItems());
   }, [dispatch]);
 
   const closePopup = () => {
-    //localStorage.setItem('popup', 'false')
+    localStorage.setItem('popup', 'false')
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
@@ -56,7 +57,7 @@ export default function App() {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="/ingredients/:id" element={
-          <Modal isOpen={Boolean(ingridientPopup)} title='Детали ингредиента' closePopup={closePopup}>
+          <Modal isOpen={Boolean(open)} title='Детали ингредиента' closePopup={closePopup}>
             <IngredientDetails/>
           </Modal>} />
         </Routes>
