@@ -1,7 +1,6 @@
 import React from "react";
 import appStyles from '../components/app/app.module.css';
-import { Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CLOSE_POPUP } from '../services/actions/actions';
 
 import { DndProvider } from 'react-dnd';
@@ -10,8 +9,6 @@ import BurgerIngredients from '../components/burgerIngredients/burgerIngredients
 import BurgerConstructor from '../components/burgerConstructor/burgerConstructor';
 import Modal from '../components/modal/modal';
 import OrderDetails from "../components/orderDetails/orderDetails";
-import IngredientDetails from "../components/ingredientDetails/ingredientDetails";
-import { IngridientPage } from "./ingredient";
 
 export default function HomePage () {
   //const popupIngr = Boolean(localStorage.getItem('popup'));
@@ -51,14 +48,6 @@ export default function HomePage () {
     <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
       <OrderDetails/>
     </Modal>
-    {/*<Routes>
-      <Route path="ingredients/:id" element={ popupIngredient ?
-        <Modal isOpen={Boolean(ingridientPopup)} title='Детали ингредиента' closePopup={closePopup}>
-          <IngredientDetails/>
-        </Modal> :
-        <IngredientDetails />
-      }/>
-    </Routes>*/}
   </div>
   )
 }
