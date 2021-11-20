@@ -48,7 +48,7 @@ export default function BurgerIngredients({ onClick }) {
             items.map((item) => {
                 if (item.type === name) {
                     return (
-                        <Link key={item._id} to={`/ingredients/${item._id}`} state={{ backgroundLocation: location }}>
+                        <Link className={burgerIngredientsStyles.link} key={item._id} to={`/ingredients/${item._id}`} state={{ backgroundLocation: location }}>
                           <Ingredient data={item} onClick={onClick} key={item._id}/>
                         </Link>
                     )
