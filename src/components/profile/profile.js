@@ -13,7 +13,7 @@ export default function Profile() {
     //если пользователь решил уйти, отправлять запрос на удаление токена и перенаправлять на страницу входа
     const exited = React.useCallback(
         e => {
-            console.log(localStorage)
+            //console.log(localStorage)
           e.preventDefault();
           navigate("/login");
           dispatch(exit());

@@ -28,7 +28,7 @@ export default function EntryForm ({ title, inputs, button, enty, password, entr
 
     const returnInputs = () => {
         return inputs.map((item, index) => {
-            console.log(item)
+            //(item)
             return <Input
                        key={index} 
                        type={item.type} 

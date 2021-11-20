@@ -6,7 +6,7 @@ import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-dev
 export default function AppHeader() {
     const location = useLocation();
 
-    console.log(location)
+    //console.log(location)
     return(
         <header className={appHeaderStyles.header}>
             <nav className={appHeaderStyles.navigation}>

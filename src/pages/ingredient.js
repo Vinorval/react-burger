@@ -8,9 +8,7 @@ export function IngridientPage() {
 
     return (
         
-          <Routes >
-            <Route path={`${ingredient._id}`} element={ <IngredientDetails/> } />
-          </Routes>
+          <h2>Guten Morgen</h2>
         
     )
 }

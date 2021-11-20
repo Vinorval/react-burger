@@ -26,6 +26,7 @@ const initialState = {
     quantityBun: {},
 
     ingredient: {},
+    ingridientPopup: false,
 
     order: {},
     orderFailed: false
@@ -75,10 +76,10 @@ export const burgerReducer = (state = initialState, action) => {
 export const detailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_POPUP: {
-      return { ...state, ingredient: action.ingredient }
+      return { ...state, ingredient: action.ingredient, ingridientPopup: true }
     }
     case CLOSE_POPUP: {
-      return { ...state, ingredient: {}, order: {}, }
+      return { ...state, ingredient: {}, order: {}, ingridientPopup: false }
     }
     default: {
       return state;

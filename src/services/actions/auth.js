@@ -65,7 +65,7 @@ export function register({email, password, name}) {
         .then(res => checkReponse(res))
         .then(res => {
           if (res.success) {
-            console.log(res)
+            //console.log(res)
             localStorage.setItem('token', res.refreshToken);
             localStorage.setItem('authorization', true);
             setCookie('accessToken', res.accessToken);
@@ -99,7 +99,7 @@ export function register({email, password, name}) {
       }).then(res => checkReponse(res))
       .then(res => {
         if (res.success) {
-            console.log(res)
+            //console.log(res)
             dispatch({
               type: POST_EMAIL,
             })

@@ -25,7 +25,7 @@ export default function ProfileForm() {
     //запись в стейт новые значания полей
     const onChange = e => {
       setValue({ ...form, [e.target.name]: e.target.value });
-      console.log(name)
+      //console.log(name)
       setChenge(true);
     };
 
