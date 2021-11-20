@@ -6,17 +6,17 @@ import { OPEN_POPUP } from '../../services/actions/actions';
 
 export default function IngredientDetails() {
     const dispatch = useDispatch();
-    let params = useParams();
+    //let ingr = localStorage.getItem('ingr')
+    //console.log(ingr)
+    let params = useParams('id');
+    const { ingredient, items } = useSelector(store => ({ ingredient: store.ingredient.ingredient, items: store.items.items }))
+    //let result = ingr ? ingr : ingredient
+    
+    console.log(params)
+    //let result = {}
     
     //забираем из редукса данные о передоваемом ингредиенте
-    const { ingredient, items } = useSelector(store => ({ ingredient: store.ingredient.ingredient, items: store }))
-
-    //React.useEffect(() => {
-    //    if (Boolean({id: params.id})) return console.log(params.id)
-    //    console.log(ingredient)
-    //    let result = items.find(item => item._id === params.id)
-    //    console.log(items)
-    //}, [items])
+    
 
     //возвращаем верстку модала с деталями ингредиента
     return (

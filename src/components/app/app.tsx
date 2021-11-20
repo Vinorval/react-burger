@@ -15,22 +15,37 @@ import { getItems } from '../../services/actions/actions';
 import { RootStateOrAny } from "react-redux";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
+import { CLOSE_POPUP } from "../../services/actions/actions";
+import { IngridientPage } from "../../pages/ingredient";
 
 export default function App() {
   const dispatch = useDispatch();
-  const ingridientPopup = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup }))
+  const location = useLocation();
+  let state = location.state as { backgroundLocation?: Location };
+  const {ingridientPopup, items} = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items.items }))
   const open = Boolean(ingridientPopup);
-  //console.log(open)
+  console.log(location)
 
   React.useEffect(() => {
       dispatch(getItems());
   }, [dispatch]);
 
+  const closePopup = () => {
+    //localStorage.setItem('popup', 'false')
+    dispatch({
+      type: CLOSE_POPUP,
+      ingredient: {},
+      order: {}
+    });
+    //localStorage.removeItem('ingr')
+  }
+
   return (
-    <BrowserRouter>
+    <>
       <AppHeader />
-      <Routes >
-        <Route path="/*" element={ <HomePage /> }/>
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path="/" element={ <HomePage /> }/>
+        <Route path="/ingredients/:id" element={<IngridientPage />} />
         <Route path="/profile/*" element={ <ProtectedRoute><ProfilePage /></ProtectedRoute> } />
         <Route path="/login" element={ <LoginPage /> } />
         <Route path="/register" element={ <RegisterPage /> } />
@@ -38,6 +53,14 @@ export default function App() {
         <Route path="/reset-password" element={ <ResetPasswordPage /> }/> 
         <Route path="*" element={ <NotFound /> } />
       </Routes>
-    </BrowserRouter>
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route path="/ingredients/:id" element={
+          <Modal isOpen={Boolean(ingridientPopup)} title='Детали ингредиента' closePopup={closePopup}>
+            <IngredientDetails/>
+          </Modal>} />
+        </Routes>
+      )}
+    </>
   );
 }

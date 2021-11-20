@@ -31,11 +31,13 @@ export default function Ingredient({data, onClick}) {
     //открытие попапа с деталями ингредиента
     const clickCard = () => {
         onClick();
-        navigate(`/ingredients/${_id}`);
+        //navigate(`/ingredients/${_id}`);
         dispatch({
             type: OPEN_POPUP,
             ingredient: data
           });
+          console.log(data)
+        //localStorage.setItem('ingr', data)
     };
 
     //возвращать верстку ингредиента

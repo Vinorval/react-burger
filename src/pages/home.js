@@ -14,15 +14,11 @@ import IngredientDetails from "../components/ingredientDetails/ingredientDetails
 import { IngridientPage } from "./ingredient";
 
 export default function HomePage () {
-  const popupIngr = Boolean(localStorage.getItem('popup'));
+  //const popupIngr = Boolean(localStorage.getItem('popup'));
   const [popupOrder, setPopupOrder] = React.useState(false);
   const [popupIngredient, setPopupIngredient] = React.useState(false);
   const ingridientPopup = useSelector(store => ({ ingridientPopup: store.ingredient.ingridientPopup }))
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    setPopupIngredient(popupIngr);
-  }, [popupIngr])
 
   const handleOpenPopupOrder = () => {
     setPopupOrder(true);
@@ -30,14 +26,12 @@ export default function HomePage () {
 
   const handleIngredientClick = () => {
     setPopupIngredient(true);
-    localStorage.setItem('popup', true)
-    //console.log(popupIngredient)
   }
 
   const closePopup = () => {
     setPopupOrder(false);
     setPopupIngredient(false);
-    localStorage.setItem('popup', false)
+  //  localStorage.setItem('popup', false)
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
@@ -57,14 +51,14 @@ export default function HomePage () {
     <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
       <OrderDetails/>
     </Modal>
-    <Routes>
+    {/*<Routes>
       <Route path="ingredients/:id" element={ popupIngredient ?
         <Modal isOpen={Boolean(ingridientPopup)} title='Детали ингредиента' closePopup={closePopup}>
           <IngredientDetails/>
         </Modal> :
         <IngredientDetails />
       }/>
-    </Routes>
+    </Routes>*/}
   </div>
   )
 }
