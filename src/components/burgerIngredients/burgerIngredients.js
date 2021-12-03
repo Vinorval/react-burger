@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import burgerIngredientsStyles from './burgerIngredients.module.css'
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../../services/actions/actions';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function BurgerIngredients({ onClick }) {
+export default function BurgerIngredients() {
+    const location = useLocation();
     //забираем из редакс ингредиенты
     const { items } = useSelector( store => ({ items: store.items.items }) );
-    const dispatch = useDispatch();
     //создаём стейт для разделения ингредиентов
     const [current, setCurrent] = React.useState('Булки');
     //создание рефов
@@ -41,18 +41,15 @@ export default function BurgerIngredients({ onClick }) {
         return () => block.removeEventListener('scroll', scrollBlock);
     })
 
-    //запрашиваем с сервера все ингредиенты
-    useEffect(() => {
-        dispatch(getItems());
-    }, [dispatch]);
-
     //перебираем массив ингредиентов и возвращаем их
     const returnIngredient = (name) => {
         return (
             items.map((item) => {
                 if (item.type === name) {
                     return (
-                        <Ingredient data={item} onClick={onClick} key={item._id}/>
+                        <Link className={burgerIngredientsStyles.link} key={item._id} to={`/ingredients/${item._id}`} state={{ backgroundLocation: location }}>
+                          <Ingredient data={item} key={item._id}/>
+                        </Link>
                     )
                 } else { return null }
             })
@@ -91,6 +88,4 @@ export default function BurgerIngredients({ onClick }) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    onClick: PropTypes.func.isRequired
-};
+

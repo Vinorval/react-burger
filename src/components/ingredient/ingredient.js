@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_POPUP } from '../../services/actions/actions';
 import { useDrag } from 'react-dnd';
 
-export default function Ingredient({data, onClick}) {
+export default function Ingredient({data}) {
     //забираем из редукса счётчики количества ингредиентов в бургере
     const { quantity, quantityBun } = useSelector( store => ({ quantity: store.burgerItems.quantity, quantityBun: store.burgerItems.quantityBun }) );
     const dispatch = useDispatch();
@@ -28,11 +28,11 @@ export default function Ingredient({data, onClick}) {
 
     //открытие попапа с деталями ингредиента
     const clickCard = () => {
-        onClick();
         dispatch({
             type: OPEN_POPUP,
             ingredient: data
           });
+        localStorage.setItem('popup', true)
     };
 
     //возвращать верстку ингредиента
@@ -47,6 +47,5 @@ export default function Ingredient({data, onClick}) {
 }
 
 Ingredient.propTypes = {
-    data: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
+    data: PropTypes.object.isRequired
 };

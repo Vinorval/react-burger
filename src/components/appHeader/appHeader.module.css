@@ -28,8 +28,10 @@
     justify-content: space-between;
     align-items: center;
     font-size: 16px;
+    color: #8585AD;
+    text-decoration: none;
 }
 
-.text_type_last {
-    color: #8585AD;
+.text_active {
+    color: #F2F2F3;
 }

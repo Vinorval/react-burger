@@ -1,0 +1,11 @@
+.form {
+    display: grid;
+    row-gap: 24px;
+    justify-content: end;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}

@@ -1,21 +1,17 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import modalStyles from './modal.module.css';
-import { useDispatch } from 'react-redux';
-import { CLOSE_POPUP } from '../../services/actions/actions';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from "../modalOverlay/modalOverlay";
+import { useNavigate } from "react-router-dom";
 
 export default function Modal({isOpen, title, closePopup, children}) {
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     //закрытие модала
     const closeModal = () => {
         closePopup();
-        dispatch({
-            type: CLOSE_POPUP,
-            ingredient: {}
-          });
+        navigate('/');
     }
 
     //закрытие модала на esc
@@ -43,5 +39,5 @@ export default function Modal({isOpen, title, closePopup, children}) {
 Modal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     title: PropTypes.string,
-    closePopup: PropTypes.func.isRequired,
+    //closePopup: PropTypes.func.isRequired,
 };

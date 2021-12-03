@@ -1,51 +1,65 @@
 import React from "react";
-import appStyles from './app.module.css';
-//импорт библиотек DND
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-//импорт компонентов
-import AppHeader from '../appHeader/appHeader.js';
-import BurgerIngredients from '../burgerIngredients/burgerIngredients.js';
-import BurgerConstructor from '../burgerConstructor/burgerConstructor';
-import Modal from '../modal/modal';
-import OrderDetails from "../orderDetails/orderDetails";
+import { Routes, Route, useLocation } from 'react-router-dom';
+
+import HomePage from "../../pages/home";
+import NotFound from "../../pages/notFound";
+import LoginPage from "../../pages/login";
+import RegisterPage from "../../pages/register";
+import ForgotPasswordPage from "../../pages/forgotPassword";
+import ResetPasswordPage from "../../pages/resetPassword";
+import ProfilePage from "../../pages/profile";
+import AppHeader from "../appHeader/appHeader";
+import { ProtectedRoute } from "../protectedRoute";
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from '../../services/actions/actions';
+import { RootStateOrAny } from "react-redux";
+import Modal from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
+import { CLOSE_POPUP } from "../../services/actions/actions";
+import { IngridientPage } from "../../pages/ingredient";
 
 export default function App() {
-  //реализация открытия и закрытия попапов
-  const [popupOrder, setPopupOrder] = React.useState(false);
-  const [popupIngredient, setPopupIngredient] = React.useState(false);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const localPopup = localStorage.getItem('popup');
+  let state = location.state as { backgroundLocation?: Location };
+  const {ingridientPopup} = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items.items }))
+  const open = localPopup ? localPopup : Boolean(ingridientPopup);
 
-  const handleOpenPopupOrder = () => {
-    setPopupOrder(true);
-  }
-
-  const handleIngredientClick = () => {
-    setPopupIngredient(true);
-  }
+  React.useEffect(() => {
+      dispatch(getItems());
+  }, [dispatch]);
 
   const closePopup = () => {
-    setPopupOrder(false);
-    setPopupIngredient(false);
-  };
+    localStorage.setItem('popup', 'false')
+    dispatch({
+      type: CLOSE_POPUP,
+      ingredient: {},
+      order: {}
+    });
+  }
 
-  //возвращаем верстку страницы
   return (
-    <div className={appStyles.App}>
-      <AppHeader/>
-      <DndProvider backend={HTML5Backend}>
-        <main className={appStyles.main}>
-          <h2 className={appStyles.title}>Соберите бургер</h2>
-          <BurgerIngredients onClick={handleIngredientClick}/>
-          <BurgerConstructor openPopup={handleOpenPopupOrder} />
-        </main>
-      </DndProvider>
-      <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
-        <OrderDetails/>
-      </Modal>
-      <Modal isOpen={popupIngredient} title='Детали ингредиента' closePopup={closePopup}>
-        <IngredientDetails/>
-      </Modal>
-    </div>
+    <>
+      <AppHeader />
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path="/" element={ <HomePage /> }/>
+        <Route path="/ingredients/:id" element={<IngridientPage />} />
+        <Route path="/profile/*" element={ <ProtectedRoute><ProfilePage /></ProtectedRoute> } />
+        <Route path="/login" element={ <LoginPage /> } />
+        <Route path="/register" element={ <RegisterPage /> } />
+        <Route path="/forgot-password" element={ <ForgotPasswordPage />} />
+        <Route path="/reset-password" element={ <ResetPasswordPage /> }/> 
+        <Route path="*" element={ <NotFound /> } />
+      </Routes>
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route path="/ingredients/:id" element={
+          <Modal isOpen={Boolean(open)} title='Детали ингредиента' closePopup={closePopup}>
+            <IngredientDetails/>
+          </Modal>} />
+        </Routes>
+      )}
+    </>
   );
 }

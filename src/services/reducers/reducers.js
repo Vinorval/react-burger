@@ -26,6 +26,7 @@ const initialState = {
     quantityBun: {},
 
     ingredient: {},
+    ingridientPopup: false,
 
     order: {},
     orderFailed: false
@@ -61,7 +62,7 @@ export const burgerReducer = (state = initialState, action) => {
       return { ...state, burgerItems: [...state.burgerItems].filter(item => item.id !== action.id), quantity: [...state.quantity, check] }
     }
     case CHANGE_BUN: {
-      return { ...state, bun: action.bun, quantityBun: { _ID: action.bun._id, qt: 1, id: Math.floor(Math.random() * 10000)} }
+      return { ...state, bun: action.bun, quantityBun: { _ID: action.bun._id, qt: 2, id: Math.floor(Math.random() * 10000)} }
     }
     case CHANCE_ITEMS: {
       return {...state, burgerItems: action.items}
@@ -75,10 +76,10 @@ export const burgerReducer = (state = initialState, action) => {
 export const detailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_POPUP: {
-      return { ...state, ingredient: action.ingredient }
+      return { ...state, ingredient: action.ingredient, ingridientPopup: true }
     }
     case CLOSE_POPUP: {
-      return { ...state, ingredient: {} }
+      return { ...state, ingredient: {}, order: {}, ingridientPopup: false }
     }
     default: {
       return state;

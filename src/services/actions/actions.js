@@ -1,4 +1,4 @@
-import { URL } from '../../utils/utils'
+import { URL, checkReponse } from '../../utils/utils'
 
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
@@ -17,12 +17,7 @@ export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 export function getItems() {
     return function(dispatch) {
         fetch(`${URL}/ingredients`)
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(res.status);
-        })
+        .then(res => checkReponse(res))
         .then(res => {
             dispatch({
               type: GET_ITEMS_SUCCESS,
@@ -42,12 +37,7 @@ export function getItems() {
             },
             body: JSON.stringify({"ingredients": idsData}),
         })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(res.status);
-        })
+        .then(res => checkReponse(res))
         .then(res => {
           if (res.success) {
             dispatch({
