@@ -24,7 +24,7 @@ export default function Profile() {
         <section className={Styles.section} >
             <div>
                 <nav className={Styles.menu} >
-                    <NavLink end="true" to='/profile' className={({ isActive }) =>
+                    <NavLink end={true} to='/profile' className={({ isActive }) =>
                     [
                         Styles.name,
                         isActive ? Styles.name_active : null

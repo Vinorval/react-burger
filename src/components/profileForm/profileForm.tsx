@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, RootStateOrAny } from "react-redux";
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Styles from './profileForm.module.css';
 import { useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 export default function ProfileForm() {
     const dispatch = useDispatch();
     //начальное состояние импутов в профиле
-    const { name, email } = useSelector( store => ({ name: store.auth.name, email: store.auth.email }) );
+    const { name, email } = useSelector( (store: RootStateOrAny) => ({ name: store.auth.name, email: store.auth.email }) );
     const [form, setValue] = React.useState({ name: name, email: email, password: ''});
     const [isChange, setChenge] = React.useState(false)
   
@@ -23,7 +23,7 @@ export default function ProfileForm() {
     }, [name, email])
 
     //запись в стейт новые значания полей
-    const onChange = e => {
+    const onChange = (e: any) => {
       setValue({ ...form, [e.target.name]: e.target.value });
       setChenge(true);
     };
