@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import BurgerIngredients from '../components/burgerIngredients/burgerIngredients';
 import BurgerConstructor from '../components/burgerConstructor/burgerConstructor';
-import Modal from '../components/modal/modal';
+import { Modal } from '../components/modal/modal';
 import OrderDetails from "../components/orderDetails/orderDetails";
 
 export default function HomePage () {

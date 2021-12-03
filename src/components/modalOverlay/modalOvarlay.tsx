@@ -1,10 +1,14 @@
-import React from "react";
+import React, { FC, MouseEventHandler } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from 'prop-types';
 import modalOverlayStyles from './modalOverlay.module.css';
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals")!;
 
-export default function ModalOverlay({isOpen, children, closePopup}) {
+interface IModalProps {
+    isOpen: boolean;
+    closePopup: MouseEventHandler<HTMLElement> | undefined;
+  }
+
+const ModalOverlay: FC<IModalProps> = ({isOpen, children, closePopup}) => {
     return ReactDOM.createPortal(
         (
             <>
@@ -17,7 +21,4 @@ export default function ModalOverlay({isOpen, children, closePopup}) {
     );
 }
 
-ModalOverlay.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closePopup: PropTypes.func.isRequired,
-};
+export default ModalOverlay

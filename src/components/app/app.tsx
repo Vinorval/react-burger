@@ -13,7 +13,7 @@ import { ProtectedRoute } from "../protectedRoute";
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/actions';
 import { RootStateOrAny } from "react-redux";
-import Modal from "../modal/modal";
+import { Modal } from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { CLOSE_POPUP } from "../../services/actions/actions";
 import { IngridientPage } from "../../pages/ingredient";
