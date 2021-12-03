@@ -1,15 +1,29 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import Styles from './ingredient.module.css'
+import { useSelector, RootStateOrAny } from 'react-redux';
+import Styles from './ingredient.module.css';
+
+interface IIngredient {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+}
 
 export function IngridientPage() {
-    let { id } = useParams('id');
-    const { items } = useSelector(store => ({ items: store.items.items }))
+    let { id } = useParams();
+    const { items } = useSelector((store: RootStateOrAny) => ({ items: store.items.items }))
  
     const rett = React.useCallback(() => {
        const returnIngredient = () => {
-        return items.find(item => item._id === id)
+        return items.find((item: IIngredient) => item._id === id)
       }
       return returnIngredient()
     }, [items, id])
