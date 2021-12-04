@@ -21,7 +21,7 @@ export const Modal: FC<IModalProps> = ({ isOpen, title, closePopup, children }) 
 
     //закрытие модала на esc
     React.useEffect(() => {
-        const close = ( e: any) => { if(e.key === 'Escape') closeModal()}
+        const close = ( e: KeyboardEvent) => { if(e.key === 'Escape') closeModal()}
         document.addEventListener('keydown', close);
 
         return () => document.removeEventListener('keydown', close);

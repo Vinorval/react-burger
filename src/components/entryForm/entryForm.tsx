@@ -42,7 +42,7 @@ const EntryForm: FC<IEntryForm> = ({ title, inputs, button, enty, password, entr
     const [form, setValue] = React.useState<IForm>({ email: '', password: '', name: '', value: ''});
 
     //записываем значения поля в стейт
-    const onChange = (e: any) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 

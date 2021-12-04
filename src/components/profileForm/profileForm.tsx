@@ -24,7 +24,7 @@ export default function ProfileForm() {
     }, [name, email])
 
     //запись в стейт новые значания полей
-    const onChange = (e: any) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue({ ...form, [e.target.name]: e.target.value });
       setChenge(true);
     };
