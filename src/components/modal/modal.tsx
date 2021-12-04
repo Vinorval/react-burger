@@ -8,7 +8,7 @@ interface IModalProps {
     title?: string;
     isOpen: boolean;
     closePopup: Function;
-  }
+}
 
 export const Modal: FC<IModalProps> = ({ isOpen, title, closePopup, children }) => {
     const navigate = useNavigate();

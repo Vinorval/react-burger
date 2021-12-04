@@ -8,24 +8,10 @@ import { ADD_ITEM, CHANGE_BUN, CHANCE_ITEMS } from '../../services/actions/actio
 import IngredientBurger from "../ingredientBurger/ingredientBurger";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
+import { TIngredientConstructor } from "../../utils/types";
 
 interface IConstructorProps {
     openPopup: Function;
-}
-
-interface IIngredient {
-    _id: string;
-    id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
 }
 
 const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
@@ -58,7 +44,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
 
     const [, drop] = useDrop(() => ({
         accept: 'ingredient',
-        drop(item: IIngredient) {
+        drop(item: TIngredientConstructor) {
             if(item.type !== "bun") {
               dispatch({
                 type: ADD_ITEM,
@@ -76,7 +62,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
     //создание ингредиентов коструктора из списка
     const returnIngredient = () => {
         return (
-            burgerItems.map((item: IIngredient, index: number) => {
+            burgerItems.map((item: TIngredientConstructor, index: number) => {
                 if (item.type !== "bun") {
                     return (
                         <IngredientBurger item={item} key={index} index={index} />
@@ -93,7 +79,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         //записываем id булки
         idsData.push(bun._id);
         //записываем id всех остальных инредиентов
-        burgerItems.forEach((el: IIngredient) => {
+        burgerItems.forEach((el: TIngredientConstructor) => {
           if (el.type !== "bun") return idsData.push(el._id);
         });
 
@@ -120,7 +106,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         //записываем стоимость булки
         let bunPrice = bun.price ? bun.price * 2 : 0
         //записываем стоимость всех ингредиентов
-        burgerItems.forEach((el: IIngredient) => {
+        burgerItems.forEach((el: TIngredientConstructor) => {
             if (el.type !== "bun")
               { return sum = sum + el.price; }
         });

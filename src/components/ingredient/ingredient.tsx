@@ -4,25 +4,10 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { OPEN_POPUP } from '../../services/actions/actions';
 import { useDrag } from 'react-dnd';
+import { TIngredientMore } from "../../utils/types";
 
 interface IData {
-    data: IIngredient
-}
-
-interface IIngredient {
-    _ID?: string;
-    qt?: number;
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
+    data: TIngredientMore
 }
 
 const Ingredient: FC<IData> = ({ data }) => {
@@ -37,7 +22,7 @@ const Ingredient: FC<IData> = ({ data }) => {
         //если это булка менять её счётчик
         if ( type === 'bun') return (quantityBun._ID === _id && quantityBun.qt > 0) && <p key={quantityBun.id} className={ingredientStyle.item__number}>{quantityBun.qt}</p>;
         //если это любой другой ингредиент менять ему счётчик с помощью сравнения id
-        return quantity.map((item: IIngredient) => {
+        return quantity.map((item: TIngredientMore) => {
             return (item._ID === _id && (item.qt === undefined? 0 : item.qt) > 0) && <p key={_id} className={ingredientStyle.item__number}>{item.qt}</p>;
         })
     }, [quantity, _id, quantityBun, type])

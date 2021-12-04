@@ -2,20 +2,7 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import Styles from './ingredient.module.css';
-
-interface IIngredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-}
+import { TIngredient } from '../utils/types'
 
 export function IngridientPage() {
     let { id } = useParams();
@@ -23,7 +10,7 @@ export function IngridientPage() {
  
     const rett = React.useCallback(() => {
        const returnIngredient = () => {
-        return items.find((item: IIngredient) => item._id === id)
+        return items.find((item: TIngredient) => item._id === id)
       }
       return returnIngredient()
     }, [items, id])

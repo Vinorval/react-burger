@@ -1,5 +1,11 @@
 import React from "react";
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+
+import AppHeader from "../appHeader/appHeader";
+import { ProtectedRoute } from "../protectedRoute";
+import { getItems } from '../../services/actions/actions';
+import { CLOSE_POPUP } from "../../services/actions/actions";
 
 import HomePage from "../../pages/home";
 import NotFound from "../../pages/notFound";
@@ -8,15 +14,9 @@ import RegisterPage from "../../pages/register";
 import ForgotPasswordPage from "../../pages/forgotPassword";
 import ResetPasswordPage from "../../pages/resetPassword";
 import ProfilePage from "../../pages/profile";
-import AppHeader from "../appHeader/appHeader";
-import { ProtectedRoute } from "../protectedRoute";
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../../services/actions/actions';
-import { RootStateOrAny } from "react-redux";
+import { IngridientPage } from "../../pages/ingredient";
 import { Modal } from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
-import { CLOSE_POPUP } from "../../services/actions/actions";
-import { IngridientPage } from "../../pages/ingredient";
 
 export default function App() {
   const dispatch = useDispatch();

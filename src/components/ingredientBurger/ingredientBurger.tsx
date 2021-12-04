@@ -4,25 +4,11 @@ import ingredientBurger from './ingredientBurger.module.css';
 import { DELETE_ITEM } from '../../services/actions/actions';
 import { useDispatch } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
-
-interface IIngredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    id: string;
-}
+import { TIngredientConstructor } from '../../utils/types'
 
 interface IIngredientProps {
-    item: IIngredient;
-    index: number;
+  item: TIngredientConstructor;
+  index: number;
 }
 
 const IngredientBurger: FC<IIngredientProps> = ({ item, index }) => {

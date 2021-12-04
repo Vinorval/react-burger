@@ -6,7 +6,7 @@ const modalRoot = document.getElementById("react-modals")!;
 interface IModalProps {
     isOpen: boolean;
     closePopup: MouseEventHandler<HTMLElement> | undefined;
-  }
+}
 
 const ModalOverlay: FC<IModalProps> = ({isOpen, children, closePopup}) => {
     return ReactDOM.createPortal(

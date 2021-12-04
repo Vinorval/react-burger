@@ -5,21 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
-
-interface IIngredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-}
+import { TIngredientMore } from "../../utils/types";
 
 const BurgerIngredients: FC = () => {
     const location = useLocation();
@@ -62,7 +48,7 @@ const BurgerIngredients: FC = () => {
     //перебираем массив ингредиентов и возвращаем их
     const returnIngredient = (name: string) => {
         return (
-            items.map((item: IIngredient) => {
+            items.map((item: TIngredientMore) => {
                 if (item.type === name) {
                     return (
                         <Link className={burgerIngredientsStyles.link} key={item._id} to={`/ingredients/${item._id}`} state={{ backgroundLocation: location }}>
