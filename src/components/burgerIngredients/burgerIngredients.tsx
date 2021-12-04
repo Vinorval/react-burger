@@ -26,7 +26,7 @@ const BurgerIngredients: FC = () => {
     //забираем из редакс ингредиенты
     const { items } = useSelector( ( store: RootStateOrAny) => ({ items: store.items.items }) );
     //создаём стейт для разделения ингредиентов
-    const [current, setCurrent] = React.useState('Булки');
+    const [current, setCurrent] = React.useState<string>('Булки');
     //создание рефов
     const bunRef = useRef<HTMLDivElement>(null);
     const saucesRef = useRef<HTMLDivElement>(null);

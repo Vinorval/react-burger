@@ -29,10 +29,17 @@ interface IEnty {
     title: string;
 }
 
+interface IForm {
+    email: string;
+    password: string;
+    name: string;
+    value: string;
+}
+
 const EntryForm: FC<IEntryForm> = ({ title, inputs, button, enty, password, entry, toResetPassword }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [form, setValue] = React.useState({ email: '', password: '', name: '', value: ''});
+    const [form, setValue] = React.useState<IForm>({ email: '', password: '', name: '', value: ''});
 
     //записываем значения поля в стейт
     const onChange = (e: any) => {

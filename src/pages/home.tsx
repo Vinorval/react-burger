@@ -11,7 +11,7 @@ import { Modal } from '../components/modal/modal';
 import OrderDetails from "../components/orderDetails/orderDetails";
 
 export default function HomePage () {
-  const [popupOrder, setPopupOrder] = React.useState(false);
+  const [popupOrder, setPopupOrder] = React.useState<boolean>(false);
   const dispatch = useDispatch();
 
   const handleOpenPopupOrder = () => {

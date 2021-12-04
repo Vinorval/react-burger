@@ -6,12 +6,18 @@ import { useDispatch } from "react-redux";
 import { getUser, updateUser } from "../../services/actions/auth";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
+interface Iprofile {
+    name: string;
+    email: string;
+    password: string;
+}
+
 export default function ProfileForm() {
     const dispatch = useDispatch();
     //начальное состояние импутов в профиле
     const { name, email } = useSelector( (store: RootStateOrAny) => ({ name: store.auth.name, email: store.auth.email }) );
-    const [form, setValue] = React.useState({ name: name, email: email, password: ''});
-    const [isChange, setChenge] = React.useState(false)
+    const [form, setValue] = React.useState<Iprofile>({ name: name, email: email, password: ''});
+    const [isChange, setChenge] = React.useState<boolean>(false)
   
     //запрос на сервер для получения информации о пользователе
     React.useEffect(() => { return dispatch(getUser()) }, [dispatch])
