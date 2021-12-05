@@ -1,15 +1,13 @@
-//import { getParsedCommandLineOfConfigFile } from "typescript";
-
 export const URL = 'https://norma.nomoreparties.space/api';
 
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)') // eslint-disable-line
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
   
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string, props: any) {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -31,11 +29,24 @@ export function setCookie(name, value, props) {
     }
     document.cookie = updatedCookie;
 }
+
+interface CustomResponse<T> extends Body {
+    readonly headers: Headers;
+    readonly ok: boolean;
+    readonly redirected: boolean;
+    readonly status: number;
+    readonly statusText: string;
+    readonly trailer?: Promise<Headers>;
+    readonly type: ResponseType;
+    readonly url: string;
+    clone(): Response;
+    json(): Promise<T>;
+  }
   
-export function deleteCookie(name) {
-    setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string) {
+    setCookie(name, '', { expires: -1 });
 }
 
-export const checkReponse = (res) => {
+export const checkReponse = (res: CustomResponse<JSON>) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };

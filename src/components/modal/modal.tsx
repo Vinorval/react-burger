@@ -1,11 +1,16 @@
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { FC } from "react";
 import modalStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from "../modalOverlay/modalOverlay";
+import ModalOverlay from "../modalOverlay/modalOvarlay";
 import { useNavigate } from "react-router-dom";
 
-export default function Modal({isOpen, title, closePopup, children}) {
+interface IModalProps {
+    title?: string;
+    isOpen: boolean;
+    closePopup: Function;
+}
+
+export const Modal: FC<IModalProps> = ({ isOpen, title, closePopup, children }) => {
     const navigate = useNavigate();
 
     //закрытие модала
@@ -16,7 +21,7 @@ export default function Modal({isOpen, title, closePopup, children}) {
 
     //закрытие модала на esc
     React.useEffect(() => {
-        const close = e => { if(e.key === 'Escape') closeModal()}
+        const close = ( e: KeyboardEvent) => { if(e.key === 'Escape') closeModal()}
         document.addEventListener('keydown', close);
 
         return () => document.removeEventListener('keydown', close);
@@ -35,9 +40,3 @@ export default function Modal({isOpen, title, closePopup, children}) {
         </ModalOverlay>
     )
 }
-
-Modal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    title: PropTypes.string,
-    //closePopup: PropTypes.func.isRequired,
-};

@@ -1,10 +1,10 @@
 import React from "react";
 import orderDetailsStyles from './orderDetails.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, RootStateOrAny } from 'react-redux';
 import icon from '../../images/graphics.png'
 
 export default function OrderDetails() {
-    const { order, orderFailed } = useSelector( store => ({ order: store.order.order, orderFailed: store.order.orderFailed }) )
+    const { order, orderFailed } = useSelector( ( store: RootStateOrAny) => ({ order: store.order.order, orderFailed: store.order.orderFailed }) )
 
     return (
         (!orderFailed) ? 

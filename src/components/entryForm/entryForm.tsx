@@ -1,18 +1,48 @@
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { FC } from "react";
 import entryFormStyles from './entryForm.module.css';
 import { Link } from "react-router-dom";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "react-redux"; 
 import { useNavigate } from "react-router-dom";
+import { TICons } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 
-export default function EntryForm ({ title, inputs, button, enty, password, entry, toResetPassword }) {
+interface IEntryForm {
+    title: string;
+    inputs: IInput[];
+    button: string;
+    entry: Function;
+    enty: IEnty;
+    password?: IEnty;
+    toResetPassword?: Function;
+}
+
+interface IInput {
+    type: 'password' | 'email' | 'text';
+    placeholder: string;
+    name: string;
+    icon?: keyof TICons;
+}
+
+interface IEnty {
+    link: string;
+    text: string;
+    title: string;
+}
+
+interface IForm {
+    email: string;
+    password: string;
+    name: string;
+    value: string;
+}
+
+const EntryForm: FC<IEntryForm> = ({ title, inputs, button, enty, password, entry, toResetPassword }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [form, setValue] = React.useState({ email: '', password: '', name: '', value: ''});
+    const [form, setValue] = React.useState<IForm>({ email: '', password: '', name: '', value: ''});
 
     //записываем значения поля в стейт
-    const onChange = e => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
@@ -21,7 +51,7 @@ export default function EntryForm ({ title, inputs, button, enty, password, entr
         e => {
           e.preventDefault();
           dispatch(entry(form));
-          Boolean(toResetPassword) ? toResetPassword() : navigate("/");
+          Boolean(toResetPassword) ? (toResetPassword !== undefined) && toResetPassword() : navigate("/");
         },
         [form, dispatch, navigate, entry, toResetPassword]
       );
@@ -52,19 +82,11 @@ export default function EntryForm ({ title, inputs, button, enty, password, entr
                     </Button>
                 <div className={entryFormStyles.textBlock}>
                     <p className={entryFormStyles.text} >{enty.title} <Link to={`${enty.link}`} className={entryFormStyles.link} >{enty.text}</Link></p>
-                    { Boolean(password) && <p className={entryFormStyles.text} >{password.title} <Link to={`${password.link}`} className={entryFormStyles.link} >{password.text}</Link></p>}
+                    { Boolean(password) && <p className={entryFormStyles.text} >{(password !== undefined) && password.title} <Link to={`${(password !== undefined) && password.link}`} className={entryFormStyles.link} >{(password !== undefined) && password.text}</Link></p>}
                 </div>
             </form>
         </section>
     )
 }
 
-EntryForm.propTypes = {
-    title: PropTypes.string.isRequired,
-    inputs: PropTypes.array.isRequired,
-    button: PropTypes.string.isRequired,
-    enty: PropTypes.object.isRequired,
-    password: PropTypes.object,
-    entry: PropTypes.func,
-    toResetPassword: PropTypes.func
-};
+export default EntryForm

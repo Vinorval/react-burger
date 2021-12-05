@@ -1,16 +1,21 @@
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { FC } from "react";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientBurger from './ingredientBurger.module.css';
 import { DELETE_ITEM } from '../../services/actions/actions';
 import { useDispatch } from 'react-redux';
-import { Draggable } from 'react-beautiful-dnd'
+import { Draggable } from 'react-beautiful-dnd';
+import { TIngredientConstructor } from '../../utils/types'
 
-export default function IngredientBurger ({ item, index }) {
+interface IIngredientProps {
+  item: TIngredientConstructor;
+  index: number;
+}
+
+const IngredientBurger: FC<IIngredientProps> = ({ item, index }) => {
     const dispatch = useDispatch();
 
     //слушатель кнопки удалить
-    const handleDelete = (id, _id) => {
+    const handleDelete = (id: string, _id: string) => {
         dispatch({
             type: DELETE_ITEM,
             id,
@@ -38,7 +43,4 @@ export default function IngredientBurger ({ item, index }) {
     )
 }
 
-IngredientBurger.propTypes = {
-    item: PropTypes.object.isRequired,
-    index: PropTypes.number
-};
+export default IngredientBurger

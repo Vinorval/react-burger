@@ -1,15 +1,16 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import Styles from './ingredient.module.css'
+import { useSelector, RootStateOrAny } from 'react-redux';
+import Styles from './ingredient.module.css';
+import { TIngredient } from '../utils/types'
 
 export function IngridientPage() {
-    let { id } = useParams('id');
-    const { items } = useSelector(store => ({ items: store.items.items }))
+    let { id } = useParams();
+    const { items } = useSelector((store: RootStateOrAny) => ({ items: store.items.items }))
  
     const rett = React.useCallback(() => {
        const returnIngredient = () => {
-        return items.find(item => item._id === id)
+        return items.find((item: TIngredient) => item._id === id)
       }
       return returnIngredient()
     }, [items, id])
