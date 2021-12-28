@@ -20,3 +20,5 @@ export type TProfile = {
     email: string;
     password: string;
 }
+
+export type TOrder = { number: number }
