@@ -1,4 +1,4 @@
-import { REGISTRATION, AUTHORIZATION, EXIT, GET_USER, UPDATE_USER, POST_EMAIL, RESET_PASSWORD } from "../actions/auth";
+import { REGISTRATION, AUTHORIZATION, EXIT, GET_USER, UPDATE_USER, POST_EMAIL, RESET_PASSWORD, TLoginActions } from "../actions/auth";
 
 const initialState = {
     email: '',
@@ -8,7 +8,7 @@ const initialState = {
     toForgotPassword: false,
 };
 
-export const auth = (state = initialState, action) => {
+export const auth = (state = initialState, action: TLoginActions) => {
     switch (action.type) {
         case REGISTRATION: {
           return { ...state, email: action.email, name: action.name, accessToken: action.accessToken, refreshToken: action.refreshToken };

@@ -21,4 +21,15 @@ export type TProfile = {
     password: string;
 }
 
+export type TResetPassword = {
+    password: string;
+    value: string;
+}
+
 export type TOrder = { number: number }
+
+export type TError = { 
+    success?: boolean;
+    message?: string;
+    headers?: Headers;
+ }
