@@ -1,5 +1,5 @@
 import { URL, setCookie, deleteCookie, getCookie, checkReponse } from '../../utils/utils';
-  import { TProfile, TResetPassword } from '../../utils/types';
+  import { TProfile, TResetPassword, AppDispatch, AppThunk } from '../../utils/types';
   import { TResponseBody, registerRequest, loginRequest, forgotPasswordRequest, resetPasswordRequest, logoutRequest } from '../api';
   
   export const REGISTRATION: 'REGISTRATION' = 'REGISTRATION';
@@ -11,8 +11,20 @@ import { URL, setCookie, deleteCookie, getCookie, checkReponse } from '../../uti
   export const RESET_PASSWORD: 'RESET_PASSWORD' = 'RESET_PASSWORD';
   export const GET_FAILED: 'GET_FAILED' = 'GET_FAILED';
 
-type TRegisterActionSuccess = { readonly type: typeof REGISTRATION; readonly email: string; readonly name: string; readonly accessToken: string; readonly refreshToken: string; };
-type TLoginActionsSuccess = { readonly type: typeof AUTHORIZATION; readonly email: string; readonly name: string; readonly accessToken: string; readonly refreshToken: string; };
+type TRegisterActionSuccess = {
+  readonly type: typeof REGISTRATION;
+  readonly email: string;
+  readonly name: string;
+  readonly accessToken: string;
+  readonly refreshToken: string;
+};
+type TLoginActionsSuccess = {
+  readonly type: typeof AUTHORIZATION;
+  readonly email: string;
+  readonly name: string;
+  readonly accessToken: string;
+  readonly refreshToken: string;
+};
 type TForgotPasswordActionsSuccess = { readonly type: typeof POST_EMAIL; }
 type TResetPasswordActionsSuccess = { readonly type: typeof RESET_PASSWORD; }
 type TExitActionSuccess = { readonly type: typeof EXIT };
@@ -81,11 +93,18 @@ const getFailed = (): TGetActionFailed => {
 };
 
 export type TLoginActions = ReturnType<
-  typeof registrationSuccess | typeof loginSuccess | typeof forgotPasswordSuccess | typeof resetPasswordSuccess | typeof exitSuccess | typeof getUserSuccess | typeof updateUserSuccess | typeof getFailed
+  typeof registrationSuccess
+  | typeof loginSuccess
+  | typeof forgotPasswordSuccess
+  | typeof resetPasswordSuccess
+  | typeof exitSuccess
+  | typeof getUserSuccess
+  | typeof updateUserSuccess
+  | typeof getFailed
 >;
   
-  export const register: any = ( data: TProfile) => {
-      return function(dispatch: any) {
+  export const register: AppThunk = ( data: TProfile) => {
+      return function(dispatch: AppDispatch) {
           registerRequest(data)
           .then(res => {
             if (res.success) {
@@ -101,61 +120,49 @@ export type TLoginActions = ReturnType<
       };
     }
   
-    export const login: any = ( data: TProfile ) => {
-      return function(dispatch: any) {
+    export const login: AppThunk = ( data: TProfile ) => {
+      return function(dispatch: AppDispatch) {
           loginRequest(data)
           .then(res => {
             if (res.success) {
               localStorage.setItem('token', res.refreshToken ? res.refreshToken : '');
               localStorage.setItem('authorization', 'true');
               setCookie('accessToken', res.accessToken ? res.accessToken : '');
-              dispatch({
-                type: AUTHORIZATION,
-                email: res.user.email,
-                name: res.user.name,
-                accessToken: res.accessToken,
-                refreshToken: res.refreshToken
-              });
+              dispatch(loginSuccess(res.user.email, res.user.name, res.accessToken ? res.accessToken : '', res.refreshToken ? res.refreshToken : ''));
             } else {
-              dispatch({
-                type: GET_FAILED
-              });
+              dispatch(getFailed());
             }
           })
-          .catch(() => dispatch({ type: GET_FAILED}) );;
+          .catch(() => dispatch(getFailed()) );;
       };
     }
   
-    export const forgotPassword: any = ( data: TProfile ) => {
-      return function(dispatch: any) {
+    export const forgotPassword: AppThunk = ( data: TProfile ) => {
+      return function(dispatch: AppDispatch) {
         forgotPasswordRequest(data)
         .then(res => {
           if (res.success) {
-              dispatch({
-                type: POST_EMAIL,
-              })
+              dispatch(forgotPasswordSuccess())
           }
         })
-        .catch(err => console.log(err))
+        .catch(() => dispatch(getFailed()))
       };
     }
   
-    export const resetPassword: any = ( data: TResetPassword ) => {
-      return function(dispatch: any) {
+    export const resetPassword: AppThunk = ( data: TResetPassword ) => {
+      return function(dispatch: AppDispatch) {
           resetPasswordRequest(data)
         .then(res => {
           if (res.success) {
-              dispatch({
-                type: RESET_PASSWORD,
-              })
+              dispatch(resetPasswordSuccess())
           }
         })
-        .catch(err => console.log(err))
+        .catch(() => dispatch(getFailed()))
       };
     }
   
-    export const exit: any = () => {
-      return function(dispatch: any) {
+    export const exit: AppThunk = () => {
+      return function(dispatch: AppDispatch) {
           logoutRequest()
           .then(res => {
             if (res.success) {
@@ -163,16 +170,12 @@ export type TLoginActions = ReturnType<
               localStorage.setItem('authorization', 'false');
               localStorage.removeItem('authorization')
               deleteCookie('accessToken');
-              dispatch({
-                type: EXIT,
-              });
+              dispatch(exitSuccess());
             } else {
-              dispatch({
-                type: GET_FAILED
-              });
+              dispatch(getFailed())
             }
           })
-          .catch(() => dispatch({ type: GET_FAILED}) );;
+          .catch(() => dispatch(getFailed()) );;
       };
     }
   
@@ -188,8 +191,8 @@ export type TLoginActions = ReturnType<
           }).then(res => checkReponse(res))
     }
   
-    export const getUser: any = () => {
-      return function(dispatch: any) {
+    export const getUser: AppThunk = () => {
+      return function(dispatch: AppDispatch) {
         retriableFetch(`${URL}/auth/user`, {
              method: "GET",
               headers: {
@@ -199,23 +202,17 @@ export type TLoginActions = ReturnType<
           }
         ).then(res => {
             if (res.success) {
-             dispatch({
-                type: GET_USER,
-                email: res.user.email,
-                name: res.user.name
-              });
+             dispatch(getUserSuccess(res.user.email, res.user.name));
             } else {
               localStorage.setItem('authorization', 'false');
-              dispatch({
-                type: GET_FAILED
-             });
+              dispatch(getFailed())
             }
-          }).catch(() => dispatch({ type: GET_FAILED}) );
+          }).catch(() => dispatch(getFailed()) );
       };
     }
   
-    export const updateUser: any = (data: TProfile) => {
-      return function(dispatch: any) {
+    export const updateUser: AppThunk = (data: TProfile) => {
+      return function(dispatch: AppDispatch) {
         retriableFetch(`${URL}/auth/user`, {
               method: "PATCH",
               headers: {
@@ -229,17 +226,11 @@ export type TLoginActions = ReturnType<
               }),
           }).then(res => {
               if (res.success) {
-                dispatch({
-                  type: UPDATE_USER,
-                  email: res.user.email,
-                  name: res.user.name
-                });
+                dispatch(updateUserSuccess(res.user.email, res.user.name));
               } else {
-                dispatch({
-                  type: GET_FAILED
-                });
+                dispatch(getFailed())
               }
-            }).catch(() => dispatch({ type: GET_FAILED}) );
+            }).catch(() => dispatch(getFailed()) );
       };
     }
   

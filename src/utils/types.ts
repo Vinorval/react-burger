@@ -1,3 +1,10 @@
+import { store } from '../services/store';
+import { ThunkAction } from 'redux-thunk';
+import { Action, ActionCreator } from 'redux';
+
+import { TBurgerActions } from '../services/actions/actions';
+import { TLoginActions } from '../services/actions/auth';
+
 export type TIngredient = {
     _id: string;
     name: string;
@@ -32,4 +39,12 @@ export type TError = {
     success?: boolean;
     message?: string;
     headers?: Headers;
- }
+}
+
+export type RootState = ReturnType<typeof store.getState>;
+type TApplicationActions = TBurgerActions | TLoginActions;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>; 
+export type AppDispatch = typeof store.dispatch; 

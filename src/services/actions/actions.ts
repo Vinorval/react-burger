@@ -1,4 +1,5 @@
 import { getItemsRequest, postOrderRequest } from '../api';
+import { AppThunk, AppDispatch } from '../../utils/types';
 import { TIngredient, TOrder, TIngredientConstructor, TIngredientMore } from '../../utils/types';
 
 export const GET_ITEMS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
@@ -14,20 +15,6 @@ export const CLOSE_POPUP: 'CLOSE_POPUP' = 'CLOSE_POPUP';
 
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
-
-export interface IOpenPopupAction {
-  readonly type: typeof OPEN_POPUP;
-  ingredient: TIngredientMore
-}
-
-export interface ICloseAction {
-  readonly type: typeof CLOSE_POPUP;
-  ingredient: {};
-  order: {}
-}
-
-export type TPopupActions = IOpenPopupAction | ICloseAction;
-
 
 type TGetIngredientsActionSuccess = { readonly type: typeof GET_ITEMS_SUCCESS; readonly items: readonly TIngredient[] };
 type TGetIngredientsActionFailed = { readonly type: typeof GET_ITEMS_FAILED };
@@ -49,8 +36,8 @@ export type TGetIngredientsActions = ReturnType<
   typeof getIngredientsSuccess | typeof getIngredientsFailed
 >;
 
-export const getItems: any = () => {
-    return (dispatch: any) => {
+export const getItems: AppThunk = () => {
+    return (dispatch: AppDispatch) => {
         getItemsRequest().then(res => {
             return dispatch(getIngredientsSuccess(res.data));
         })
@@ -58,7 +45,18 @@ export const getItems: any = () => {
     };
 }
 
+export interface IOpenPopupAction {
+  readonly type: typeof OPEN_POPUP;
+  ingredient: TIngredientMore
+}
 
+export interface ICloseAction {
+  readonly type: typeof CLOSE_POPUP;
+  ingredient: {};
+  order: {}
+}
+
+export type TPopupActions = IOpenPopupAction | ICloseAction;
 
 type TPostOrgerActionSuccess = { readonly type: typeof GET_ORDER_SUCCESS; readonly order: TOrder };
 type TPostOrderActionFailed = { readonly type: typeof GET_ORDER_FAILED };
@@ -80,8 +78,8 @@ export type TPostOrderActions = ReturnType<
   typeof postOrderSuccess | typeof postOrderFailed
 >;
 
-export const postOrder: any = (idsData: string[]) => {
-    return function(dispatch: any) {
+export const postOrder: AppThunk = (idsData: string[]) => {
+    return function(dispatch: AppDispatch) {
         postOrderRequest(idsData)
         .then(res => {
           if (res.success) {

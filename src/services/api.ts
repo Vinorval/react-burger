@@ -87,10 +87,6 @@ export const logoutRequest = async (): Promise<
       .then(res => res.json())
       .then(data => data);
    
-
-
-
-
 export const getItemsRequest = async (): Promise<
   TResponseBody<'data', ReadonlyArray<TIngredient>>
   > =>
