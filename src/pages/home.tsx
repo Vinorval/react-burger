@@ -1,6 +1,6 @@
 import React from "react";
 import appStyles from '../components/app/app.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../services/hooks';
 import { CLOSE_POPUP } from '../services/actions/actions';
 
 import { DndProvider } from 'react-dnd';

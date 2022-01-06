@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+//import { useDispatch, useSelector } from "../../services/hooks";
 import { postOrder } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd';
 import { ADD_ITEM, CHANGE_BUN, CHANCE_ITEMS } from '../../services/actions/actions';

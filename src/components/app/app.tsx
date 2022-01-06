@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector, useDispatch } from "../../services/hooks";
 
 import AppHeader from "../appHeader/appHeader";
 import { ProtectedRoute } from "../protectedRoute";
@@ -23,7 +23,7 @@ export default function App() {
   const location = useLocation();
   const localPopup = localStorage.getItem('popup');
   let state = location.state as { backgroundLocation?: Location };
-  const {ingridientPopup} = useSelector((store: RootStateOrAny) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items.items }))
+  const {ingridientPopup} = useSelector((store) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items }))
   const open = localPopup ? localPopup : Boolean(ingridientPopup);
 
   React.useEffect(() => {

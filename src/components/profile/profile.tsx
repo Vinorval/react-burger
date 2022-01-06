@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileForm from "../profileForm/profileForm";
 import Styles from './profile.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../../services/hooks";
 import { exit } from "../../services/actions/auth";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientBurger from './ingredientBurger.module.css';
 import { DELETE_ITEM } from '../../services/actions/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "../../services/hooks";
 import { Draggable } from 'react-beautiful-dnd';
 import { TIngredientConstructor } from '../../utils/types'
 
