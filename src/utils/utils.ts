@@ -50,3 +50,50 @@ export function deleteCookie(name: string) {
 export const checkReponse = (res: CustomResponse<JSON>) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
+
+export const ordersArr = {
+  "success": true,
+  "orders": [
+    {
+      "ingredients": [
+        "60d3463f7034a000269f45e7",
+        "60d3463f7034a000269f45e9",
+        "60d3463f7034a000269f45e8",
+        "60d3463f7034a000269f45ea"
+      ],
+      "_id": "000",
+      "status": "done",
+      "number": 0,
+      "createdAt": "2021-06-23T14:43:22.587Z",
+      "updatedAt": "2021-06-23T14:43:22.603Z"
+    },
+    {
+      "ingredients": [
+        "60d3463f7034a000269f45e7",
+        "60d3463f7034a000269f45e9",
+        "60d3463f7034a000269f45e8",
+        "60d3463f7034a000269f45ea"
+      ],
+      "_id": "999",
+      "status": "done",
+      "number": 0,
+      "createdAt": "2021-06-23T14:43:22.587Z",
+      "updatedAt": "2021-06-23T14:43:22.603Z"
+    },
+    {
+      "ingredients": [
+        "60d3463f7034a000269f45e7",
+        "60d3463f7034a000269f45e9",
+        "60d3463f7034a000269f45e8",
+        "60d3463f7034a000269f45ea"
+      ],
+      "_id": "888",
+      "status": "done",
+      "number": 0,
+      "createdAt": "2021-06-23T14:43:22.587Z",
+      "updatedAt": "2021-06-23T14:43:22.603Z"
+    }
+  ],
+  "total": 1,
+  "totalToday": 1
+} 

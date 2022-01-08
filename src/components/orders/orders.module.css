@@ -1,0 +1,7 @@
+.orders {
+    margin: 0;
+    padding: 0;
+    max-height: 852px;
+    display: grid;
+    row-gap: 16px;
+}

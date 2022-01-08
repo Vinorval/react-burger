@@ -4,6 +4,7 @@ import Styles from './profile.module.css';
 import { useDispatch } from "../../services/hooks";
 import { exit } from "../../services/actions/auth";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import Orders from "../orders/orders";
 
 export default function Profile() {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function Profile() {
     );
 
     return (
-        <section className={Styles.section} >
+        <section className={`${Styles.section} ${location.pathname === '/profile/orders' && Styles.section_path_order}`} >
             <div>
                 <nav className={Styles.menu} >
                     <NavLink end={true} to='/profile' className={({ isActive }) =>
@@ -46,6 +47,7 @@ export default function Profile() {
             </div>
             <div>
                 {location.pathname === '/profile' && <ProfileForm />}
+                {location.pathname === '/profile/orders' && <Orders />}
             </div>
         </section>
     )

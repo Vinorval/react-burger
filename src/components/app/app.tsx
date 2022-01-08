@@ -14,6 +14,7 @@ import RegisterPage from "../../pages/register";
 import ForgotPasswordPage from "../../pages/forgotPassword";
 import ResetPasswordPage from "../../pages/resetPassword";
 import ProfilePage from "../../pages/profile";
+import FeedPage from "../../pages/feed";
 import { IngridientPage } from "../../pages/ingredient";
 import { Modal } from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
@@ -49,7 +50,8 @@ export default function App() {
         <Route path="/login" element={ <LoginPage /> } />
         <Route path="/register" element={ <RegisterPage /> } />
         <Route path="/forgot-password" element={ <ForgotPasswordPage />} />
-        <Route path="/reset-password" element={ <ResetPasswordPage /> }/> 
+        <Route path="/reset-password" element={ <ResetPasswordPage /> }/>
+        <Route path="/feed" element={ <FeedPage /> } />
         <Route path="*" element={ <NotFound /> } />
       </Routes>
       {state?.backgroundLocation && (

@@ -15,11 +15,11 @@ import {
   } from '../actions/actions';
 
 import { TGetIngredientsActions, TPostOrderActions, TBurgerActions, TPopupActions } from '../actions/actions';
-import { TIngredientConstructor, TIngredientMore, TIngredient, TOrder } from '../../utils/types';
+import { TIngredientConstructor, TIngredientMore, TIngredient, TOrder, TIngr } from '../../utils/types';
   
 
 type TInitialStatte = {
-  items: Array<TIngredient> | Array<TIngredientMore>;
+  items: Array<TIngredient> | [];
   itemsFailed: boolean;
 
   burgerItems: Array<TIngredientConstructor>;

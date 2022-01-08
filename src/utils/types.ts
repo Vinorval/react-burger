@@ -1,6 +1,7 @@
 import { store } from '../services/store';
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
+import { rootReducer } from '../services/reducers/rootReducer';
 
 //import { TBurgerActions } from '../services/actions/actions';
 //import { TLoginActions } from '../services/actions/auth';
@@ -17,6 +18,10 @@ export type TIngredient = {
     image: string;
     image_mobile: string;
     image_large: string;
+}
+
+export type TIngr = {
+    _id: string
 }
 
 export type TIngredientConstructor = TIngredient & { id: string; }
@@ -41,7 +46,8 @@ export type TError = {
     headers?: Headers;
 }
 
-export type RootState = ReturnType<typeof store.getState>;
+//export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 //type TApplicationActions = TBurgerActions | TLoginActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
