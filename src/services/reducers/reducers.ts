@@ -15,17 +15,17 @@ import {
   } from '../actions/actions';
 
 import { TGetIngredientsActions, TPostOrderActions, TBurgerActions, TPopupActions } from '../actions/actions';
-import { TIngredientConstructor, TIngredientMore, TIngredient, TOrder, TIngr } from '../../utils/types';
+import { TIngredientConstructor, TIngredientMore, TIngredient, TOrder } from '../../utils/types';
   
 
 type TInitialStatte = {
-  items: Array<TIngredient> | [];
+  items: readonly TIngredient[] | [];
   itemsFailed: boolean;
 
   burgerItems: Array<TIngredientConstructor>;
   burgerItemsFailed: boolean;
   bun: TIngredient | {};
-  quantity: Array<TIngredientMore>;
+  quantity: Array<TIngredientMore> | [];
   quantityBun: TIngredientMore | {};
 
   ingredient: TIngredientMore | {};
@@ -53,7 +53,7 @@ type TInitialStatte = {
       orderFailed: false
   };
   
-  export const ingredientsReducer = (state = initialState, action: TGetIngredientsActions) => {
+  export const ingredientsReducer = (state = initialState, action: TGetIngredientsActions): TInitialStatte => {
     switch (action.type) {
       case GET_ITEMS_SUCCESS: {
         return { ...state, items: action.items, itemsFailed: false };
@@ -70,8 +70,8 @@ type TInitialStatte = {
   export const burgerReducer = (state = initialState, action: TBurgerActions) => {
     switch (action.type) {
       case ADD_ITEM: {
-        const check = state.quantity.find((item: TIngredientMore) => item._ID === action.item._id)
-          ? state.quantity.map((item: TIngredientMore) => item._ID === action.item._id && ++item.qt)
+        const check = state.quantity!.find((item: TIngredientMore) => item._ID === action.item._id)
+          ? state.quantity!.map((item: TIngredientMore) => item._ID === action.item._id && ++item.qt)
           : { _ID: action.item._id, qt: 1, id: Math.floor(Math.random() * 10000)};
         return {
           ...state,
@@ -79,7 +79,7 @@ type TInitialStatte = {
           quantity: [...state.quantity, check] }
       }
       case DELETE_ITEM: {
-        const check = state.quantity.map((item: TIngredientMore) => item._ID === action._id && --item.qt)
+        const check = state.quantity!.map((item: TIngredientMore) => item._ID === action._id && --item.qt)
         return { ...state, burgerItems: [...state.burgerItems].filter((item: TIngredientConstructor) => item.id !== action.id), quantity: [...state.quantity, check] }
       }
       case CHANGE_BUN: {

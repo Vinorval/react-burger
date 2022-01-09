@@ -40,6 +40,15 @@ export type TResetPassword = {
 
 export type TOrder = { number: number }
 
+export type TOrders = {
+    ingredients: string[];
+    _id: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export type TError = { 
     success?: boolean;
     message?: string;
