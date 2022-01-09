@@ -19,14 +19,17 @@ import OrderPage from "../../pages/order";
 import { IngridientPage } from "../../pages/ingredient";
 import { Modal } from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
+import OrderPopup from "../orderPopup/orderPopup";
 
 export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const localPopup = localStorage.getItem('popup');
-  let state = location.state as { backgroundLocation?: Location };
+  const feedPopup = localStorage.getItem('orderPopup');
+  let state = location.state as { backgroundLocation?: Location; backgroundForFeed?: Location };
   const {ingridientPopup} = useSelector((store) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items }))
   const open = localPopup ? localPopup : Boolean(ingridientPopup);
+  const openFeed = feedPopup ? feedPopup : false;
 
   React.useEffect(() => {
       dispatch(getItems());
@@ -34,6 +37,7 @@ export default function App() {
 
   const closePopup = () => {
     localStorage.setItem('popup', 'false')
+    localStorage.setItem('orderPopup', 'false')
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
@@ -62,6 +66,14 @@ export default function App() {
           <Route path="/ingredients/:id" element={
           <Modal isOpen={Boolean(open)} title='Детали ингредиента' closePopup={closePopup}>
             <IngredientDetails/>
+          </Modal>} />
+        </Routes>
+      )}
+      {state?.backgroundForFeed && (
+        <Routes>
+          <Route path="/feed/:id" element={
+          <Modal isOpen={Boolean(openFeed)} closePopup={closePopup}>
+            <OrderPopup/>
           </Modal>} />
         </Routes>
       )}
