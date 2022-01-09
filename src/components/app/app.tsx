@@ -26,10 +26,12 @@ export default function App() {
   const location = useLocation();
   const localPopup = localStorage.getItem('popup');
   const feedPopup = localStorage.getItem('orderPopup');
-  let state = location.state as { backgroundLocation?: Location; backgroundForFeed?: Location };
+  const profilePopup = localStorage.getItem('profilePopup');
+  let state = location.state as { backgroundLocation?: Location; backgroundForFeed?: Location; backgroundForProfile?: Location };
   const {ingridientPopup} = useSelector((store) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items }))
   const open = localPopup ? localPopup : Boolean(ingridientPopup);
   const openFeed = feedPopup ? feedPopup : false;
+  const openProfile = profilePopup ? profilePopup : false;
 
   React.useEffect(() => {
       dispatch(getItems());
@@ -38,6 +40,7 @@ export default function App() {
   const closePopup = () => {
     localStorage.setItem('popup', 'false')
     localStorage.setItem('orderPopup', 'false')
+    localStorage.setItem('profilePopup', 'false')
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
@@ -73,6 +76,14 @@ export default function App() {
         <Routes>
           <Route path="/feed/:id" element={
           <Modal isOpen={Boolean(openFeed)} closePopup={closePopup}>
+            <OrderPopup/>
+          </Modal>} />
+        </Routes>
+      )}
+      {state?.backgroundForProfile && (
+        <Routes>
+          <Route path="/profile/orders/:id" element={
+          <Modal isOpen={Boolean(openProfile)} closePopup={closePopup}>
             <OrderPopup/>
           </Modal>} />
         </Routes>

@@ -18,9 +18,9 @@ export default function OrderPopup() {
       }, [id, orders]);
 
       React.useEffect(() => {
-        if (!location.state) dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });
+        dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });
         return () => {
-          if (!location.state) dispatch({ type: WS_CONNECTION_CLOSED });
+          dispatch({ type: WS_CONNECTION_CLOSED });
         };
     }, []);
 

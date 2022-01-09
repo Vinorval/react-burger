@@ -14,6 +14,7 @@ export default function Orders() {
     const { orders } = useSelector( store => ({ orders: store.orders.orders }) )
     const path = (item: TOrders) => location.pathname === '/profile/orders' ? `/profile/orders/${item._id}` : `/feed/${item._id}`
     const clickOrder = () => localStorage.setItem('orderPopup', 'true');
+    const clickProfileOrder = () => localStorage.setItem('profilePopup', 'true')
     return (
         <ul className={Styles.orders}>
             {orders.map((item) => {
@@ -21,7 +22,7 @@ export default function Orders() {
                 <Link key={item._id} to={`/feed/${item._id}`} state={{ backgroundForFeed: location }} onClick={clickOrder}>
                     <Order number={item.number} createdAt={item.createdAt} name={item.name} ></Order>
                 </Link> :
-                <Link key={item._id} to={`/profile/orders/${item._id}`} state={{ backgroundForProfile: location }}>
+                <Link key={item._id} to={`/profile/orders/${item._id}`} state={{ backgroundForProfile: location }} onClick={clickProfileOrder}>
                     <Order number={item.number} createdAt={item.createdAt} name={item.name} ></Order>
                 </Link>
             })}
