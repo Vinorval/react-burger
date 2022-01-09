@@ -18,6 +18,7 @@ export type TIngredient = {
     image: string;
     image_mobile: string;
     image_large: string;
+    qty?: number
 }
 
 export type TIngr = {

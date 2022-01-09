@@ -9,6 +9,8 @@ export const ADD_ITEM: 'ADD_ITEM' = 'ADD_ITEM';
 export const DELETE_ITEM: 'DELETE_ITEM' = 'DELETE_ITEM';
 export const CHANGE_BUN: 'CHANGE_BUN' = 'CHANGE_BUN';
 export const CHANCE_ITEMS: 'CHANCE_ITEMS' = 'CHANCE_ITEMS';
+export const INCREASE_ITEM_COUNT: 'INCREASE_ITEM_COUNT' = 'INCREASE_ITEM_COUNT'
+export const DECREASE_ITEM_COUNT: 'DECREASE_ITEM_COUNT' = 'DECREASE_ITEM_COUNT'
 
 export const OPEN_POPUP: 'OPEN_POPUP' = 'OPEN_POPUP';
 export const CLOSE_POPUP: 'CLOSE_POPUP' = 'CLOSE_POPUP';
@@ -18,6 +20,8 @@ export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
 
 type TGetIngredientsActionSuccess = { readonly type: typeof GET_ITEMS_SUCCESS; readonly items: readonly TIngredient[] };
 type TGetIngredientsActionFailed = { readonly type: typeof GET_ITEMS_FAILED };
+type TIncreaseItemAction = { readonly type: typeof INCREASE_ITEM_COUNT; payload: {item: TIngredient; qty: number}}
+type TDecreaseItemAction = { readonly type: typeof DECREASE_ITEM_COUNT; payload: {item: TIngredient; qty: number}}
 
 const getIngredientsSuccess = (items: readonly TIngredient[]): TGetIngredientsActionSuccess => {
   return {
@@ -32,8 +36,26 @@ const getIngredientsFailed = (): TGetIngredientsActionFailed => {
   };
 };
 
+export const increaseItem = (item: TIngredient, qty: number): TIncreaseItemAction => {
+  return {
+    type: INCREASE_ITEM_COUNT,
+    payload: {
+    item,
+    qty
+  }
+}}
+
+export const decreaseItem = (item: TIngredient, qty: number): TDecreaseItemAction => {
+  return {
+    type: DECREASE_ITEM_COUNT,
+    payload: {
+    item,
+    qty
+  }
+}}
+
 export type TGetIngredientsActions = ReturnType<
-  typeof getIngredientsSuccess | typeof getIngredientsFailed
+  typeof getIngredientsSuccess | typeof getIngredientsFailed | typeof increaseItem | typeof decreaseItem
 >;
 
 export const getItems: AppThunk = () => {

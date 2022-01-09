@@ -10,6 +10,7 @@ import IngredientBurger from "../ingredientBurger/ingredientBurger";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import { TIngredientConstructor } from "../../utils/types";
+import { increaseItem } from '../../services/actions/actions'
 
 interface IConstructorProps {
     openPopup: Function;
@@ -47,15 +48,19 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         accept: 'ingredient',
         drop(item: TIngredientConstructor) {
             if(item.type !== "bun") {
+              const qty: number = 1;
               dispatch({
                 type: ADD_ITEM,
                 item: { image: item.image, name: item.name, price: item.price, _id: item._id, id: `${Math.floor(Math.random() * 10000)}` }
               });
+              dispatch(increaseItem(item, qty))
             } else {
+                const qty: number = 2
                 dispatch({
                     type: CHANGE_BUN,
                     bun: { image: item.image, name: item.name, price: item.price, _id: item._id, id: `${Math.floor(Math.random() * 10000)}` }
-                  });
+                });
+                dispatch(increaseItem(item, qty))
             }
           },
     }));

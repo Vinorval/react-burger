@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientBurger from './ingredientBurger.module.css';
-import { DELETE_ITEM } from '../../services/actions/actions';
+import { DELETE_ITEM, decreaseItem } from '../../services/actions/actions';
 import { useDispatch } from "../../services/hooks";
 import { Draggable } from 'react-beautiful-dnd';
 import { TIngredientConstructor } from '../../utils/types'
@@ -16,11 +16,13 @@ const IngredientBurger: FC<IIngredientProps> = ({ item, index }) => {
 
     //слушатель кнопки удалить
     const handleDelete = (id: string, _id: string) => {
+      const qty: number = 1
         dispatch({
             type: DELETE_ITEM,
             id,
             _id
-          });
+        });
+        dispatch(decreaseItem(item, qty))
     }
  
     //возращаем верстку ингредиента конструктора

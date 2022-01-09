@@ -6,6 +6,8 @@ import {
     DELETE_ITEM,
     CHANGE_BUN,
     CHANCE_ITEMS,
+    INCREASE_ITEM_COUNT,
+    DECREASE_ITEM_COUNT,
   
     OPEN_POPUP,
     CLOSE_POPUP,
@@ -61,6 +63,12 @@ type TInitialStatte = {
       case GET_ITEMS_FAILED: {
         return { ...state, itemsFailed: true};
       }
+      case INCREASE_ITEM_COUNT: {
+        return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: ( el.qty ? el.qty : 0) + action.payload.qty } : el)) }
+      }
+      case DECREASE_ITEM_COUNT: {
+        return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: ( el.qty ? el.qty : 0) - action.payload.qty } : el)) }
+      }
       default: {
         return state;
       }
@@ -70,20 +78,20 @@ type TInitialStatte = {
   export const burgerReducer = (state = initialState, action: TBurgerActions) => {
     switch (action.type) {
       case ADD_ITEM: {
-        const check = state.quantity!.find((item: TIngredientMore) => item._ID === action.item._id)
-          ? state.quantity!.map((item: TIngredientMore) => item._ID === action.item._id && ++item.qt)
-          : { _ID: action.item._id, qt: 1, id: Math.floor(Math.random() * 10000)};
+        //const check = state.quantity!.find((item: TIngredientMore) => item._ID === action.item._id)
+        //  ? state.quantity!.map((item: TIngredientMore) => item._ID === action.item._id && ++item.qt)
+        //  : { _ID: action.item._id, qt: 1, id: Math.floor(Math.random() * 10000)};
         return {
           ...state,
           burgerItems: [...state.burgerItems, action.item],
-          quantity: [...state.quantity, check] }
+        }
       }
       case DELETE_ITEM: {
-        const check = state.quantity!.map((item: TIngredientMore) => item._ID === action._id && --item.qt)
-        return { ...state, burgerItems: [...state.burgerItems].filter((item: TIngredientConstructor) => item.id !== action.id), quantity: [...state.quantity, check] }
+        //const check = state.quantity!.map((item: TIngredientMore) => item._ID === action._id && --item.qt)
+        return { ...state, burgerItems: [...state.burgerItems].filter((item: TIngredientConstructor) => item.id !== action.id) }
       }
       case CHANGE_BUN: {
-        return { ...state, bun: action.bun, quantityBun: { _ID: action.bun._id, qt: 2, id: Math.floor(Math.random() * 10000)} }
+        return { ...state, bun: action.bun }
       }
       case CHANCE_ITEMS: {
         return {...state, burgerItems: action.items}
