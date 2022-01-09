@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
-//import { useDispatch, useSelector } from "../../services/hooks";
+//import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/hooks";
 import { postOrder } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd';
 import { ADD_ITEM, CHANGE_BUN, CHANCE_ITEMS } from '../../services/actions/actions';
@@ -18,7 +18,7 @@ interface IConstructorProps {
 
 const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
     //из редуса забираем ингредиенты конструктора и булку
-    const { burgerItems, bun} = useSelector( ( store: RootStateOrAny) => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun }) )
+    const { burgerItems, bun} = useSelector( ( store ) => ({ burgerItems: store.burgerItems.burgerItems, bun: store.burgerItems.bun }) )
     const dispatch = useDispatch();
     const navigate = useNavigate();
     //узнаем: был ли пользователь авторизован
@@ -83,7 +83,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         //создаем массив для отправки
         let idsData: string[] = [];
         //записываем id булки
-        idsData.push(bun._id);
+        bun !== null && idsData.push(bun._id);
         //записываем id всех остальных инредиентов
         burgerItems.forEach((el: TIngredientConstructor) => {
           if (el.type !== "bun") return idsData.push(el._id);
@@ -93,7 +93,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         if(!auth) { return navigate('/login') }
 
         //отправляем запрос через редакс
-        if( !bun._id ) {
+        if( !bun?._id ) {
             idsData = [];
             dispatch(postOrder(idsData));
         } else {
@@ -110,7 +110,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         let totalPrice = 0;
 
         //записываем стоимость булки
-        let bunPrice = bun.price ? bun.price * 2 : 0
+        let bunPrice = bun !== null && bun.price ? bun.price * 2 : 0
         //записываем стоимость всех ингредиентов
         burgerItems.forEach((el: TIngredientConstructor) => {
             if (el.type !== "bun")
@@ -126,25 +126,25 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         <section>
             <DragDropContext onDragEnd={onDragEnd}>
             <menu ref={drop} className={burgerConstructorStyles.burger__menu}>
-                <ConstructorElement
+                { bun !== null && <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={bun.name ? `${bun.name} (верх)` : ''}
-                    price={bun.price ? bun.price : ''}
+                    price={bun.price ? bun.price : 0}
                     thumbnail={bun.image}
-                />
+                />}
                 <Droppable droppableId='droppable'>
                 {(provided, snapshot) => (
                 <ul className={burgerConstructorStyles.burger__list} {...provided.droppableProps} ref={provided.innerRef} >{returnIngredient()} {provided.placeholder}</ul>  
                 )}
                 </Droppable>
-                <ConstructorElement
+                { bun !== null && <ConstructorElement
                     type="bottom"
                     isLocked={true}
                     text={bun.name ? `${bun.name} (низ)` : ''}
-                    price={bun.price ? bun.price : ''}
+                    price={bun.price ? bun.price : 0}
                     thumbnail={bun.image}
-                />
+                />}
             </menu>
             <div className={burgerConstructorStyles.burger__price}>
                 <p className={burgerConstructorStyles.sum}>{returnSum()}<CurrencyIcon type="primary" /></p>

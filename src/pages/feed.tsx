@@ -2,12 +2,13 @@ import React from "react";
 import Styles from './feed.module.css';
 import Orders from "../components/orders/orders";
 import { useDispatch } from "../services/hooks";
-import { useSelector, RootStateOrAny } from 'react-redux';
+//import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector } from "../services/hooks";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../services/actions/wsActionTypes";
 
 export default function FeedPage () {
     const dispatch = useDispatch();
-    const { total, totalToday, orders } = useSelector((state: RootStateOrAny) => state.orders);
+    const { total, totalToday, orders } = useSelector((state ) => state.orders);
 
     React.useEffect(() => {
         dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });

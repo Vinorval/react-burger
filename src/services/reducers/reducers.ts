@@ -21,37 +21,37 @@ import { TIngredientConstructor, TIngredientMore, TIngredient, TOrder } from '..
   
 
 type TInitialStatte = {
-  items: readonly TIngredient[] | [];
+  items: readonly TIngredient[] | null;
   itemsFailed: boolean;
 
   burgerItems: Array<TIngredientConstructor>;
   burgerItemsFailed: boolean;
-  bun: TIngredient | {};
+  bun: TIngredient | null;
   quantity: Array<TIngredientMore> | [];
   quantityBun: TIngredientMore | {};
 
   ingredient: TIngredientMore | {};
   ingridientPopup: boolean;
 
-  order: TOrder | {};
+  order: TOrder | null;
   orderFailed: boolean;
 }
 
   const initialState: TInitialStatte = {
     
-      items: [],
+      items: null,
       itemsFailed: false,
     
       burgerItems: [],
       burgerItemsFailed: false,
-      bun: {},
+      bun: null,
       quantity: [],
       quantityBun: {},
   
       ingredient: {},
       ingridientPopup: false,
   
-      order: {},
+      order: null,
       orderFailed: false
   };
   
@@ -64,10 +64,10 @@ type TInitialStatte = {
         return { ...state, itemsFailed: true};
       }
       case INCREASE_ITEM_COUNT: {
-        return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: ( el.qty ? el.qty : 0) + action.payload.qty } : el)) }
+        return { ...state, items: state.items!.map(el => (el._id === action.payload.item._id ? { ...el, qty: ( el.qty ? el.qty : 0) + action.payload.qty } : el)) }
       }
       case DECREASE_ITEM_COUNT: {
-        return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: ( el.qty ? el.qty : 0) - action.payload.qty } : el)) }
+        return { ...state, items: state.items!.map(el => (el._id === action.payload.item._id ? { ...el, qty: ( el.qty ? el.qty : 0) - action.payload.qty } : el)) }
       }
       default: {
         return state;
@@ -75,7 +75,7 @@ type TInitialStatte = {
     }
   };
   
-  export const burgerReducer = (state = initialState, action: TBurgerActions) => {
+  export const burgerReducer = (state = initialState, action: TBurgerActions): TInitialStatte => {
     switch (action.type) {
       case ADD_ITEM: {
         //const check = state.quantity!.find((item: TIngredientMore) => item._ID === action.item._id)
@@ -102,13 +102,13 @@ type TInitialStatte = {
     }
   };
   
-  export const detailsReducer = (state = initialState, action: TPopupActions) => {
+  export const detailsReducer = (state = initialState, action: TPopupActions): TInitialStatte => {
     switch (action.type) {
       case OPEN_POPUP: {
         return { ...state, ingredient: action.ingredient, ingridientPopup: true }
       }
       case CLOSE_POPUP: {
-        return { ...state, ingredient: {}, order: {}, ingridientPopup: false }
+        return { ...state, ingredient: {}, order: null, ingridientPopup: false }
       }
       default: {
         return state;
@@ -116,13 +116,13 @@ type TInitialStatte = {
     }
   }
   
-  export const orderReducer = (state = initialState, action: TPostOrderActions) => {
+  export const orderReducer = (state = initialState, action: TPostOrderActions): TInitialStatte => {
     switch (action.type) {
       case GET_ORDER_SUCCESS: {
         return { ...state, order: action.order, orderFailed: false };
       }
      case GET_ORDER_FAILED: {
-        return { ...state, orderFailed: true, order: {} };
+        return { ...state, orderFailed: true, order: null };
       }
       default: {
         return state;
