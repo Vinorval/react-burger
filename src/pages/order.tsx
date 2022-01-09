@@ -45,26 +45,26 @@ export default function OrderPage() {
         <>
         {Boolean(order) && <div className={Style.page}>
           <p className={Style.order__number}>{order?.number}</p>
-          <h2 className={Style.order__title}>{order?.name}</h2>
+          <h2 className={Style.order__name}>{order?.name}</h2>
           <p className={Style.order__status}>{order?.status}</p>
           <div className={Style.info}>
-              <p>Состав:</p>
+              <p className={Style.info__title}>Состав:</p>
               {orderIngredients.map(item => (
-            <div key={item._id + Math.random()} style={{ width: '95%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <img src={item.image_mobile} alt='ingredientLogo' style={{ width: 64, height: 64 }} />
-                <span className='text text_type_main-small'>{item.name}</span>
+            <div className={Style.item} key={item._id}>
+              <div className={Style.item__info}>
+                <img className={Style.item__img} src={item.image_mobile} alt='ingredientLogo' />
+                <span className={Style.item__text}>{item.name}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <p className={`text text_type_main-medium mr-2`}>{item.price}</p>
+              <div className={Style.item__sum}>
+                <p className={Style.price}>{item.price}</p>
                 <CurrencyIcon type='primary' />
               </div>
             </div>
           ))}
           </div>
-          <div>
-              <p>Вчера, 13:50 i-GMT+3</p>
-              <p>510 <CurrencyIcon type='primary'/></p>
+          <div className={Style.total}>
+              <p className={Style.date}>Вчера, 13:50 i-GMT+3</p>
+              <p className={Style.sum}>510 <CurrencyIcon type='primary'/></p>
           </div>
         </div>}
         </>

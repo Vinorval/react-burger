@@ -45,7 +45,11 @@
     line-height: 30px;
 }
 
-.total
+.total {
+    margin: 40px 0 0;
+    display: flex;
+    justify-content: space-between;
+}
 
 .date {
     margin: 0;
@@ -59,6 +63,43 @@
 .sum {
     margin: 0;
     color: #F2F2F3;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 24px;
+}
+
+.item {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item__info {
+    display: flex;
+    align-items: center; 
+}
+
+.item__img {
+    width: 64px;
+    height: 64px;
+}
+
+.item__text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+}
+
+.item__sum {
+    display: flex;
+    align-items: center;
+}
+
+.item__price {
     font-style: normal;
     font-weight: normal;
     font-size: 28px;
