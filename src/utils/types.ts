@@ -44,6 +44,7 @@ export type TOrder = { number: number }
 export type TOrders = {
     ingredients: string[];
     _id: string;
+    name: string;
     status: string;
     number: number;
     createdAt: string;

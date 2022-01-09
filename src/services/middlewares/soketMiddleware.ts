@@ -37,7 +37,7 @@ export const socketMiddleware = (): Middleware => {
                 // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
           const { data } = event;
-          dispatch({ type: WS_GET_ORDERS, payload: data });
+          dispatch({ type: WS_GET_ORDERS, payload: JSON.parse(data) });
         };
                 // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {

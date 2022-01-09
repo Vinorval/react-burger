@@ -25,7 +25,7 @@ const initialState: TInitialState = {
     toForgotPassword: false,
 };
 
-export const auth = (state = initialState, action: TLoginActions) => {
+export const auth = (state = initialState, action: TLoginActions): TInitialState => {
     switch (action.type) {
         case REGISTRATION: {
           return { ...state, email: action.email, name: action.name, accessToken: action.accessToken, refreshToken: action.refreshToken };

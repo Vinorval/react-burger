@@ -14,7 +14,7 @@ export default function ProfileForm() {
     const [isChange, setChenge] = React.useState<boolean>(false)
   
     //запрос на сервер для получения информации о пользователе
-    React.useEffect(() => { dispatch(getUser()) }, [dispatch])
+    //React.useEffect(() => { dispatch(getUser()) }, [dispatch])
 
     //запись в стейт значения полей из хранилища
     React.useEffect(() => {

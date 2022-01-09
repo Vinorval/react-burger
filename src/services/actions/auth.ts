@@ -241,7 +241,7 @@ export type TLoginActions = ReturnType<
         //const result = await checkReponse(res);
         return res;
       } catch (err) {
-        if ( err instanceof Error && err.message === "jwt expired") {
+        if ( (err as Error).message! === "jwt expired") {
           console.log('progress...')
           const refreshData = await updateToken();
           localStorage.setItem("token", refreshData.refreshToken); 

@@ -1,15 +1,22 @@
 import React from "react";
 import ProfileForm from "../profileForm/profileForm";
 import Styles from './profile.module.css';
-import { useDispatch } from "../../services/hooks";
-import { exit } from "../../services/actions/auth";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { exit, getUser } from "../../services/actions/auth";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import Orders from "../orders/orders";
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
+import { getCookie } from "../../utils/utils";
 
 export default function Profile() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+    const accessToken = getCookie('accessToken');
+    //const { accessToken } = useSelector( ( store ) => ({ accessToken: store.auth.accessToken }) );
+
+
+    React.useEffect(() => { dispatch(getUser()) }, [dispatch])
 
     //если пользователь решил уйти, отправлять запрос на удаление токена и перенаправлять на страницу входа
     const exited = React.useCallback(
@@ -20,6 +27,13 @@ export default function Profile() {
         },
         [dispatch, navigate]
     );
+
+    React.useEffect(() => {
+        dispatch({ type: WS_CONNECTION_START, payload: `wss://norma.nomoreparties.space/orders/all?token=${accessToken?.replace('Bearer ','')}` });
+        return () => {
+        dispatch({ type: WS_CONNECTION_CLOSED });
+        };
+      }, [accessToken, dispatch]);
 
     return (
         <section className={`${Styles.section} ${location.pathname === '/profile/orders' && Styles.section_path_order}`} >

@@ -16,6 +16,15 @@ export default function FeedPage () {
           dispatch({ type: WS_CONNECTION_CLOSED });
         };
       }, []);
+    //React.useEffect(() => console.log(orders), [orders])
+
+    const doneOrders = React.useCallback(() => {
+        return orders.filter(item => item.status === 'done').slice(0, 5);
+    }, [orders])
+
+    const pendingOrders = React.useCallback(() => {
+        return orders.filter(item => item.status === 'pending').slice(0, 5);
+    }, [orders])
 
     return (
         <section className={Styles.page} >
@@ -27,17 +36,13 @@ export default function FeedPage () {
                       <div className={Styles.inWork}>
                           <h3 className={Styles.inWork__title}>Готовы:</h3>
                           <div className={Styles.inWork__numbers}>
-                              <p className={Styles.inWork__number}>034525</p>
-                              <p className={Styles.inWork__number}>034525</p>
-                              <p className={Styles.inWork__number}>034525</p>
+                              {doneOrders().map(order => <p className={Styles.inWork__number}>{order.number}</p>)}
                           </div>
                       </div>
                       <div className={Styles.inWork}>
                           <h3 className={Styles.inWork__title}>В работе:</h3>
                           <div className={Styles.inWork__numbers}>
-                              <p className={Styles.inWork__number}>034525</p>
-                              <p className={Styles.inWork__number}>034525</p>
-                              <p className={Styles.inWork__number}>034525</p>
+                              {pendingOrders().map(order => <p className={Styles.inWork__number}>{order.number}</p>)}
                           </div>
                       </div>
                   </div>
@@ -47,7 +52,7 @@ export default function FeedPage () {
                   </div>
                   <div className={Styles.statistics__orders}>
                       <p className={Styles.statistics__orders__title}>Выполнено за сегодня:</p>
-                      <p className={Styles.statistics__orders__number}>138</p>
+                      <p className={Styles.statistics__orders__number}>{totalToday}</p>
                   </div>
               </div>
           </div>

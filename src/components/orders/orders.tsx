@@ -4,15 +4,25 @@ import Order from "../order/order";
 import Styles from './orders.module.css'
 //import { useSelector, RootStateOrAny } from 'react-redux';
 import { useSelector } from "../../services/hooks";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { TOrders } from "../../utils/types";
 
 export default function Orders() {
+    const location = useLocation()
     //const { items } = useSelector( ( store: RootStateOrAny) => ({ items: store.items.items }) );
     const { orders } = useSelector( store => ({ orders: store.orders.orders }) )
-
+    const path = (item: TOrders) => location.pathname === '/profile/orders' ? `/profile/orders/${item._id}` : `/feed/${item._id}`
     return (
         <ul className={Styles.orders}>
             {orders.map((item) => {
-                return <Order key={item._id} number={item.number} createdAt={item.createdAt} name={item.name} ></Order>
+                return location.pathname === '/feed' ? 
+                <Link key={item._id} to={`/feed/${item._id}`} state={{ backgroundForFeed: location }}>
+                    <Order number={item.number} createdAt={item.createdAt} name={item.name} ></Order>
+                </Link> :
+                <Link key={item._id} to={`/profile/orders/${item._id}`} state={{ backgroundForProfile: location }}>
+                    <Order number={item.number} createdAt={item.createdAt} name={item.name} ></Order>
+                </Link>
             })}
         </ul>
     )
