@@ -8,7 +8,9 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 //import { TOrders } from "../../utils/types";
 
-export default function Orders(props:any) {
+type TProps = { openPopup: Function }
+
+export default function Orders(props: TProps) {
     const location = useLocation()
     //const { items } = useSelector( ( store: RootStateOrAny) => ({ items: store.items.items }) );
     const { orders } = useSelector( store => ({ orders: store.orders.orders }) )

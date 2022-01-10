@@ -6,7 +6,9 @@ import { useDispatch } from "../services/hooks";
 import { useSelector } from "../services/hooks";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../services/actions/wsActionTypes";
 
-export default function FeedPage (props: any) {
+type TProps = { openPopup: Function }
+
+export default function FeedPage (props: TProps) {
     const dispatch = useDispatch();
     const { total, totalToday, orders } = useSelector((state ) => state.orders);
 

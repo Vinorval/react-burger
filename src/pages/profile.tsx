@@ -3,7 +3,9 @@ import Profile from "../components/profile/profile";
 import { Routes, Route } from 'react-router-dom';
 import OrderPage from "./order";
 
-export default function ProfilePage(props:any) {
+type TProps = { openPopup: Function }
+
+export default function ProfilePage(props: TProps) {
     return (
         <>
           <Routes>
