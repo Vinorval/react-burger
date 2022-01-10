@@ -110,7 +110,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         let totalPrice = 0;
 
         //записываем стоимость булки
-        let bunPrice = bun !== null && bun.price ? bun.price * 2 : 0
+        const bunPrice = bun !== null && bun.price ? bun.price * 2 : 0
         //записываем стоимость всех ингредиентов
         burgerItems.forEach((el: TIngredientConstructor) => {
             if (el.type !== "bun")

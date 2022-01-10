@@ -6,7 +6,7 @@ import Styles from './ingredient.module.css';
 import { TIngredient } from '../utils/types'
 
 export function IngridientPage() {
-    let { id } = useParams();
+    const { id } = useParams();
     const { items } = useSelector((store ) => ({ items: store.items.items }))
  
     //const rett = React.useCallback(() => {

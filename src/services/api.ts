@@ -25,7 +25,8 @@ TResponseBody<'user', TProfile>
     "name": data.name
     }),
   })
-  .then(res => res.json())
+  //.then(res => checkReponse(res))
+  .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
   .then(data => data);
 
 export const loginRequest = async (data: TProfile): Promise<
@@ -40,7 +41,7 @@ export const loginRequest = async (data: TProfile): Promise<
       "password": data.password,
       }),
     })
-    .then(res => res.json())
+    .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
     .then(data => data);
  
     
@@ -55,7 +56,7 @@ export const forgotPasswordRequest = async (data: TProfile): Promise<
         "email": data.email
         }),
     })
-    .then(res => res.json())
+    .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
     .then(data => data);
     
 export const resetPasswordRequest = async (data: TResetPassword): Promise<
@@ -70,7 +71,7 @@ export const resetPasswordRequest = async (data: TResetPassword): Promise<
         "token": data.value
       }),
       })
-      .then(res => res.json())
+      .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
       .then(data => data);
  
 export const logoutRequest = async (): Promise<
@@ -84,7 +85,7 @@ export const logoutRequest = async (): Promise<
         "token": localStorage.getItem('token')
       }),
       })
-      .then(res => res.json())
+      .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
       .then(data => data);
    
 export const getItemsRequest = async (): Promise<
@@ -93,7 +94,7 @@ export const getItemsRequest = async (): Promise<
   await fetch(`${URL}/ingredients`, {
     method: 'GET'
   })
-    .then(res => res.json())
+  .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
     .then(data => data);
 
 export const postOrderRequest = async (idsData: string[]): Promise<TResponseBody<'order', TOrder>> =>
@@ -103,5 +104,5 @@ export const postOrderRequest = async (idsData: string[]): Promise<TResponseBody
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({"ingredients": idsData})
-        }).then(res => res.json())
+        }).then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
         .then(data => data);

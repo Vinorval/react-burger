@@ -45,3 +45,8 @@
     font-family: 'Jet Brains Mono', Arial, sans-serif;
     margin: 0;
 }
+
+.inputs {
+    display: grid;
+    row-gap: 24px;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from "../../services/hooks";
 
@@ -24,14 +24,17 @@ import OrderPopup from "../orderPopup/orderPopup";
 export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  //const { isFeddOrder, setFeedOrder } = useState<boolean>(false);
+  const [ feedOrder, setFeedOrder] = useState<boolean>(false);
+  const [ profileOrder, setProfileOrder ] = useState<boolean>(false);
   const localPopup = localStorage.getItem('popup');
   const feedPopup = localStorage.getItem('orderPopup');
   const profilePopup = localStorage.getItem('profilePopup');
-  let state = location.state as { backgroundLocation?: Location; backgroundForFeed?: Location; backgroundForProfile?: Location };
+  const state = location.state as { backgroundLocation?: Location; backgroundForFeed?: Location; backgroundForProfile?: Location };
   const {ingridientPopup} = useSelector((store) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items }))
   const open = localPopup ? localPopup : Boolean(ingridientPopup);
-  const openFeed = feedPopup ? feedPopup : false;
-  const openProfile = profilePopup ? profilePopup : false;
+  //const openFeed = feedPopup ? feedPopup : false;
+  //const openProfile = profilePopup ? profilePopup : false;
 
   React.useEffect(() => {
       dispatch(getItems());
@@ -39,8 +42,10 @@ export default function App() {
 
   const closePopup = () => {
     localStorage.setItem('popup', 'false')
-    localStorage.setItem('orderPopup', 'false')
-    localStorage.setItem('profilePopup', 'false')
+    setFeedOrder(false);
+    setProfileOrder(false);
+    //localStorage.setItem('orderPopup', 'false')
+    //localStorage.setItem('profilePopup', 'false')
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
@@ -54,11 +59,11 @@ export default function App() {
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={ <HomePage /> }/>
         <Route path="/ingredients/:id" element={<IngridientPage />} />
-        <Route path="/profile/*" element={ <ProtectedRoute><ProfilePage /></ProtectedRoute> } />
+        <Route path="/profile/*" element={ <ProtectedRoute><ProfilePage openPopup={setProfileOrder} /></ProtectedRoute> } />
         <Route path="/profile/orders/:id" element={<OrderPage />} />
         <Route path="/login" element={ <LoginPage /> } />
         <Route path="/register" element={ <RegisterPage /> } />
-        <Route path="/feed" element={ <FeedPage /> } />
+        <Route path="/feed" element={ <FeedPage openPopup={setFeedOrder} /> } />
         <Route path="/feed/:id" element={ <OrderPage/> } />
         <Route path="/forgot-password" element={ <ForgotPasswordPage />} />
         <Route path="/reset-password" element={ <ResetPasswordPage /> }/>
@@ -75,7 +80,7 @@ export default function App() {
       {state?.backgroundForFeed && (
         <Routes>
           <Route path="/feed/:id" element={
-          <Modal isOpen={Boolean(openFeed)} closePopup={closePopup}>
+          <Modal isOpen={feedOrder} closePopup={closePopup}>
             <OrderPopup/>
           </Modal>} />
         </Routes>
@@ -83,7 +88,7 @@ export default function App() {
       {state?.backgroundForProfile && (
         <Routes>
           <Route path="/profile/orders/:id" element={
-          <Modal isOpen={Boolean(openProfile)} closePopup={closePopup}>
+          <Modal isOpen={profileOrder} closePopup={closePopup}>
             <OrderPopup/>
           </Modal>} />
         </Routes>

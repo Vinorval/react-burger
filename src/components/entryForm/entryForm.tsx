@@ -76,7 +76,7 @@ const EntryForm: FC<IEntryForm> = ({ title, inputs, button, enty, password, entr
         <section className={entryFormStyles.section} >
             <form className={entryFormStyles.conteiner} onSubmit={onSubmit}>
                 <h2 className={entryFormStyles.title}>{title}</h2>
-                <ul>{returnInputs()}</ul>
+                <ul className={entryFormStyles.inputs}>{returnInputs()}</ul>
                     <Button type="primary" size="medium">
                         {button}
                     </Button>

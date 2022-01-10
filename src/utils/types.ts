@@ -57,6 +57,15 @@ export type TError = {
     headers?: Headers;
 }
 
+export type wsActions = {
+    wsInit: string,
+    wsSendMessage: string,
+    onOpen: string,
+    onClose:string,
+    onError: string,
+    onMessage: string
+  }
+
 //export type RootState = ReturnType<typeof store.getState>;
 export type RootState = ReturnType<typeof rootReducer>;
 //type TApplicationActions = TBurgerActions | TLoginActions;

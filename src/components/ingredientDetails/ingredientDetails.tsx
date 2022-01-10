@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import { TIngredient } from "../../utils/types";
 
 export default function IngredientDetails() {
-    let { id } = useParams();
+    const { id } = useParams();
     const { items } = useSelector(( store ) => ({ items: store.items.items }))
     //const rett = React.useCallback(() => {
     //    const returnIngredient = () => {

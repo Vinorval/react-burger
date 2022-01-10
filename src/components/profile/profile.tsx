@@ -8,7 +8,7 @@ import Orders from "../orders/orders";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
 import { getCookie } from "../../utils/utils";
 
-export default function Profile() {
+export default function Profile(props: any) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -61,7 +61,7 @@ export default function Profile() {
             </div>
             <div>
                 {location.pathname === '/profile' && <ProfileForm />}
-                {location.pathname === '/profile/orders' && <Orders />}
+                {location.pathname === '/profile/orders' && <Orders openPopup={props.openPopup} />}
             </div>
         </section>
     )

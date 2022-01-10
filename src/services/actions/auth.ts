@@ -1,4 +1,4 @@
-import { URL, setCookie, deleteCookie, getCookie, checkReponse } from '../../utils/utils';
+import { URL, setCookie, deleteCookie, getCookie } from '../../utils/utils';
   import { TProfile, TResetPassword, AppDispatch, AppThunk } from '../../utils/types';
   import { TResponseBody, registerRequest, loginRequest, forgotPasswordRequest, resetPasswordRequest, logoutRequest } from '../api';
   
@@ -188,7 +188,7 @@ export type TLoginActions = ReturnType<
               body: JSON.stringify({
                   "token": localStorage.getItem('token')
               }),
-          }).then(res => checkReponse(res))
+          }).then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
     }
   
     export const getUser: AppThunk = () => {

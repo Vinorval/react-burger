@@ -50,7 +50,7 @@ export default function OrderPage() {
           <div className={Style.info}>
               <p className={Style.info__title}>Состав:</p>
               {orderIngredients.map(item => (
-            <div className={Style.item} key={item._id}>
+            <div className={Style.item} key={item._id + Math.random()}>
               <div className={Style.item__info}>
                 <img className={Style.item__img} src={item.image_mobile} alt='ingredientLogo' />
                 <span className={Style.item__text}>{item.name}</span>
