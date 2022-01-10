@@ -1,5 +1,6 @@
 import { TIngredient, TOrder, TProfile, TResetPassword } from '../utils/types';
 import { URL } from '../utils/utils';
+import { getCookie } from '../utils/utils';
 
 export type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
     [key in TDataKey]: TDataType
@@ -101,7 +102,8 @@ export const postOrderRequest = async (idsData: string[]): Promise<TResponseBody
         await fetch(`${URL}/orders`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: getCookie('accessToken')!
           },
           body: JSON.stringify({"ingredients": idsData})
         }).then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))

@@ -30,6 +30,7 @@ export const socketMiddleware = (wsActions: any): Middleware => {
                 // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
           const { data } = event;
+          console.log(event)
           dispatch({ type: onMessage, payload: JSON.parse(data) });
         };
                 // функция, которая вызывается при закрытии соединения
@@ -37,11 +38,11 @@ export const socketMiddleware = (wsActions: any): Middleware => {
           dispatch({ type: onClose, payload: event });
         };
 
-        if (type === wsSendMessage) {
-          const order = payload;
-                    // функция для отправки сообщения на сервер
-          socket.send(JSON.stringify(order));
-        }
+        //if (type === wsSendMessage) {
+        //  const order = payload;
+        //            // функция для отправки сообщения на сервер
+        //  socket.send(JSON.stringify(order));
+        //}
       }
 
       next(action);

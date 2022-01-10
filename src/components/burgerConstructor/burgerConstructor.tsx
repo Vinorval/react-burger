@@ -10,7 +10,8 @@ import IngredientBurger from "../ingredientBurger/ingredientBurger";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import { TIngredientConstructor } from "../../utils/types";
-import { increaseItem } from '../../services/actions/actions'
+import { increaseItem } from '../../services/actions/actions';
+import { WS_SEND_ORDER } from '../../services/actions/wsActionTypes';
 
 interface IConstructorProps {
     openPopup: Function;
@@ -96,8 +97,10 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
         if( !bun?._id ) {
             idsData = [];
             dispatch(postOrder(idsData));
+            //dispatch({ type: WS_SEND_ORDER, payload: idsData })
         } else {
             dispatch(postOrder(idsData))
+            //dispatch({ type: WS_SEND_ORDER, payload: idsData })
         };
         openPopup();
     }
