@@ -6,6 +6,7 @@ import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/action
 import { useLocation } from "react-router-dom";
 import { TIngredient } from "../../utils/types";
 import Style from './orderPopup.module.css';
+import { getDate } from "../../utils/utils";
 
 export default function OrderPopup() {
     const location = useLocation();
@@ -35,7 +36,7 @@ export default function OrderPopup() {
       };
     
     const orderIngredients = orderInfo(items);
-    const orderPrice = React.useMemo(() => {
+    const orderPrice = React.useCallback(() => {
         let price: number = 0;
         orderIngredients.forEach(item => (price += item.price));
         return price;
@@ -63,8 +64,8 @@ export default function OrderPopup() {
           ))}
           </div>
           <div className={Style.total}>
-              <p className={Style.date}>Вчера, 13:50 i-GMT+3</p>
-              <p className={Style.sum}>510 <CurrencyIcon type='primary'/></p>
+              <p className={Style.date}>{getDate(order?.createdAt!)}</p>
+              <p className={Style.sum}>{orderPrice()} <CurrencyIcon type='primary'/></p>
           </div>
         </div>}
         </>
