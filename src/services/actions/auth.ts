@@ -186,7 +186,7 @@ export type TLoginActions = ReturnType<
                   "content-type": "application/json"
               },
               body: JSON.stringify({
-                  "token": localStorage.getItem('token')
+                  token: localStorage.getItem('token')
               }),
           }).then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
     }
@@ -237,8 +237,8 @@ export type TLoginActions = ReturnType<
     const retriableFetch = async(url: string, options?: RequestInit | undefined | any): Promise<
     TResponseBody<'user', TProfile>> => {
       try {
-        const res = await fetch(url, options).then(res => res.json());
-        //const result = await checkReponse(res);
+        const res = await fetch(url, options).then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
+        //const result = await then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
         return res;
       } catch (err) {
         if ( (err as Error).message! === "jwt expired") {

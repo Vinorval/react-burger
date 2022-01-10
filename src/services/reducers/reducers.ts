@@ -51,7 +51,7 @@ type TInitialStatte = {
       ingredient: {},
       ingridientPopup: false,
   
-      order: null,
+      order: { number: 'немного подождите' },
       orderFailed: false
   };
   
@@ -122,7 +122,10 @@ type TInitialStatte = {
         return { ...state, order: action.order, orderFailed: false };
       }
      case GET_ORDER_FAILED: {
-        return { ...state, orderFailed: true, order: null };
+        return { ...state, orderFailed: true, order: { number: 'немного подождите' } };
+      }
+      case CLOSE_POPUP: {
+        return { ...state, ingredient: {}, order: { number: 'немного подождите' }, ingridientPopup: false }
       }
       default: {
         return state;

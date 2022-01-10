@@ -16,7 +16,7 @@ export const Modal: FC<IModalProps> = ({ isOpen, title, closePopup, children }) 
     //закрытие модала
     const closeModal = () => {
         closePopup();
-        navigate(-1);
+        //navigate(-1);
     }
 
     //закрытие модала на esc

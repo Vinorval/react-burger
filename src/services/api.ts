@@ -1,6 +1,6 @@
 import { TIngredient, TOrder, TProfile, TResetPassword } from '../utils/types';
 import { URL } from '../utils/utils';
-import { getCookie } from '../utils/utils';
+import { getCookie, checkReponse } from '../utils/utils';
 
 export type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
     [key in TDataKey]: TDataType

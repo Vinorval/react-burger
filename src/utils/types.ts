@@ -39,7 +39,7 @@ export type TResetPassword = {
     value: string;
 }
 
-export type TOrder = { number: number }
+export type TOrder = { number: number | string }
 
 export type TOrders = {
     ingredients: string[];

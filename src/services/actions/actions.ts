@@ -84,6 +84,14 @@ export type TPopupActions = IOpenPopupAction | ICloseAction;
 type TPostOrgerActionSuccess = { readonly type: typeof GET_ORDER_SUCCESS; readonly order: TOrder };
 type TPostOrderActionFailed = { readonly type: typeof GET_ORDER_FAILED };
 
+const closePopupOrder = (): ICloseAction => {
+  return {
+    type: CLOSE_POPUP,
+    ingredient: {},
+    order: {}
+  }
+}
+
 const postOrderSuccess = (order: TOrder): TPostOrgerActionSuccess => {
   return {
     type: GET_ORDER_SUCCESS,
@@ -98,7 +106,7 @@ const postOrderFailed = (): TPostOrderActionFailed => {
 };
 
 export type TPostOrderActions = ReturnType<
-  typeof postOrderSuccess | typeof postOrderFailed
+  typeof postOrderSuccess | typeof postOrderFailed | typeof closePopupOrder
 >;
 
 export const postOrder: AppThunk = (idsData: string[]) => {

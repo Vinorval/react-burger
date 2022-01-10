@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "../../services/hooks";
 
 import AppHeader from "../appHeader/appHeader";
@@ -24,6 +24,7 @@ import OrderPopup from "../orderPopup/orderPopup";
 export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   //const { isFeddOrder, setFeedOrder } = useState<boolean>(false);
   const [ feedOrder, setFeedOrder] = useState<boolean>(false);
   const [ profileOrder, setProfileOrder ] = useState<boolean>(false);
@@ -46,6 +47,9 @@ export default function App() {
     setProfileOrder(false);
     //localStorage.setItem('orderPopup', 'false')
     //localStorage.setItem('profilePopup', 'false')
+    if (state.backgroundLocation) navigate('/');
+    if (state.backgroundForFeed) navigate(-1);
+    if (state.backgroundForProfile) navigate(-1);
     dispatch({
       type: CLOSE_POPUP,
       ingredient: {},
