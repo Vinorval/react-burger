@@ -4,7 +4,13 @@ import Styles from './order.module.css';
 import ingredients from '../../images/ingredients.png';
 import { getDate } from "../../utils/utils";
 
-export default function Order(props: any) {
+type TPops = {
+    name: string;
+    createdAt: string;
+    number: number;
+}
+
+export default function Order(props: TPops) {
     return (
         <li className={Styles.order}>
             <div className={Styles.order__info}>

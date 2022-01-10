@@ -1,6 +1,6 @@
 import { TIngredient, TOrder, TProfile, TResetPassword } from '../utils/types';
 import { URL } from '../utils/utils';
-import { getCookie, checkReponse } from '../utils/utils';
+import { getCookie } from '../utils/utils';
 
 export type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
     [key in TDataKey]: TDataType
@@ -26,7 +26,6 @@ TResponseBody<'user', TProfile>
     "name": data.name
     }),
   })
-  //.then(res => checkReponse(res))
   .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
   .then(data => data);
 

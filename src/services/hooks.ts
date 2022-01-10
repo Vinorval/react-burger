@@ -1,4 +1,3 @@
-// hooks.ts
 import {
     TypedUseSelectorHook,
     useDispatch as dispatchHook,

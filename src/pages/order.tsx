@@ -23,7 +23,7 @@ export default function OrderPage() {
         return () => {
           if (!location.state) dispatch({ type: WS_CONNECTION_CLOSED });
         };
-    }, []);
+    }, [location.state, dispatch]);
 
     const orderInfo = (items: readonly TIngredient[] | null) => {
         let result: Array<TIngredient> = [];

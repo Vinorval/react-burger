@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import ingredientStyle from './ingredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-//import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useDispatch, useSelector } from "../../services/hooks";
 import { OPEN_POPUP } from '../../services/actions/actions';
 import { useDrag } from 'react-dnd';

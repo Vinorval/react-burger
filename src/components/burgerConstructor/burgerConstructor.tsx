@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import burgerConstructorStyles from './burgerConstructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-//import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useDispatch, useSelector } from "../../services/hooks";
 import { postOrder } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd';
@@ -11,7 +10,6 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import { TIngredientConstructor } from "../../utils/types";
 import { increaseItem } from '../../services/actions/actions';
-import { WS_SEND_ORDER } from '../../services/actions/wsActionTypes';
 
 interface IConstructorProps {
     openPopup: Function;

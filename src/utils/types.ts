@@ -3,9 +3,6 @@ import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
 import { rootReducer } from '../services/reducers/rootReducer';
 
-//import { TBurgerActions } from '../services/actions/actions';
-//import { TLoginActions } from '../services/actions/auth';
-
 export type TIngredient = {
     _id: string;
     name: string;
@@ -66,9 +63,7 @@ export type wsActions = {
     onMessage: string
   }
 
-//export type RootState = ReturnType<typeof store.getState>;
 export type RootState = ReturnType<typeof rootReducer>;
-//type TApplicationActions = TBurgerActions | TLoginActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, RootState, unknown, Action>

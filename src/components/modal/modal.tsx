@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import modalStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from "../modalOverlay/modalOvarlay";
-import { useNavigate } from "react-router-dom";
 
 interface IModalProps {
     title?: string;
@@ -11,12 +10,10 @@ interface IModalProps {
 }
 
 export const Modal: FC<IModalProps> = ({ isOpen, title, closePopup, children }) => {
-    const navigate = useNavigate();
 
     //закрытие модала
     const closeModal = () => {
         closePopup();
-        //navigate(-1);
     }
 
     //закрытие модала на esc

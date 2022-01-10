@@ -78,16 +78,12 @@ type TInitialStatte = {
   export const burgerReducer = (state = initialState, action: TBurgerActions): TInitialStatte => {
     switch (action.type) {
       case ADD_ITEM: {
-        //const check = state.quantity!.find((item: TIngredientMore) => item._ID === action.item._id)
-        //  ? state.quantity!.map((item: TIngredientMore) => item._ID === action.item._id && ++item.qt)
-        //  : { _ID: action.item._id, qt: 1, id: Math.floor(Math.random() * 10000)};
         return {
           ...state,
           burgerItems: [...state.burgerItems, action.item],
         }
       }
       case DELETE_ITEM: {
-        //const check = state.quantity!.map((item: TIngredientMore) => item._ID === action._id && --item.qt)
         return { ...state, burgerItems: [...state.burgerItems].filter((item: TIngredientConstructor) => item.id !== action.id) }
       }
       case CHANGE_BUN: {

@@ -25,17 +25,12 @@ export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  //const { isFeddOrder, setFeedOrder } = useState<boolean>(false);
   const [ feedOrder, setFeedOrder] = useState<boolean>(false);
   const [ profileOrder, setProfileOrder ] = useState<boolean>(false);
   const localPopup = localStorage.getItem('popup');
-  const feedPopup = localStorage.getItem('orderPopup');
-  const profilePopup = localStorage.getItem('profilePopup');
   const state = location.state as { backgroundLocation?: Location; backgroundForFeed?: Location; backgroundForProfile?: Location };
   const {ingridientPopup} = useSelector((store) => ({ ingridientPopup: store.ingredient.ingridientPopup, items: store.items }))
   const open = localPopup ? localPopup : Boolean(ingridientPopup);
-  //const openFeed = feedPopup ? feedPopup : false;
-  //const openProfile = profilePopup ? profilePopup : false;
 
   React.useEffect(() => {
       dispatch(getItems());
@@ -45,8 +40,6 @@ export default function App() {
     localStorage.setItem('popup', 'false')
     setFeedOrder(false);
     setProfileOrder(false);
-    //localStorage.setItem('orderPopup', 'false')
-    //localStorage.setItem('profilePopup', 'false')
     if (state.backgroundLocation) navigate('/');
     if (state.backgroundForFeed) navigate(-1);
     if (state.backgroundForProfile) navigate(-1);

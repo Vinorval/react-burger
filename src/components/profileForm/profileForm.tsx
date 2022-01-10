@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Styles from './profileForm.module.css';
-import { getUser, updateUser } from "../../services/actions/auth";
+import { updateUser } from "../../services/actions/auth";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TProfile } from '../../utils/types';
 
@@ -12,9 +12,6 @@ export default function ProfileForm() {
     const { name, email } = useSelector( ( store ) => ({ name: store.auth.name, email: store.auth.email }) );
     const [form, setValue] = React.useState<TProfile>({ name: name, email: email, password: ''});
     const [isChange, setChenge] = React.useState<boolean>(false)
-  
-    //запрос на сервер для получения информации о пользователе
-    //React.useEffect(() => { dispatch(getUser()) }, [dispatch])
 
     //запись в стейт значения полей из хранилища
     React.useEffect(() => {

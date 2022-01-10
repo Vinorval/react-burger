@@ -1,7 +1,6 @@
 import React from "react";
 import Profile from "../components/profile/profile";
 import { Routes, Route } from 'react-router-dom';
-import OrderPage from "./order";
 
 type TProps = { openPopup: Function }
 

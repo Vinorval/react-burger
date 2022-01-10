@@ -1,6 +1,5 @@
 import React, { useRef, FC, useEffect } from "react";
-import burgerIngredientsStyles from './burgerIngredients.module.css'
-//import { useSelector, RootStateOrAny } from 'react-redux';
+import burgerIngredientsStyles from './burgerIngredients.module.css';
 import { useSelector } from "../../services/hooks";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
@@ -11,7 +10,6 @@ import { TIngredient } from "../../utils/types";
 const BurgerIngredients: FC = () => {
     const location = useLocation();
     //забираем из редакс ингредиенты
-    //const { items } = useSelector( ( store: RootStateOrAny) => ({ items: store.items.items }) );
     const { items } = useSelector( store => ({ items: store.items.items }) );
     //создаём стейт для разделения ингредиентов
     const [current, setCurrent] = React.useState<string>('Булки');

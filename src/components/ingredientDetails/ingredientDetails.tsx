@@ -1,6 +1,5 @@
 import React from "react";
 import ingredientDetailsStyles from './ingredientDetails.module.css';
-//import { useSelector, RootStateOrAny } from 'react-redux';
 import { useSelector } from "../../services/hooks";
 import { useParams } from "react-router";
 import { TIngredient } from "../../utils/types";
@@ -8,12 +7,6 @@ import { TIngredient } from "../../utils/types";
 export default function IngredientDetails() {
     const { id } = useParams();
     const { items } = useSelector(( store ) => ({ items: store.items.items }))
-    //const rett = React.useCallback(() => {
-    //    const returnIngredient = () => {
-    //     return items !== null && items.find((item: TIngredient) => item._id === id)
-    //   }
-    //   return returnIngredient()
-    //}, [items, id])
 
     const returnIngredient = React.useMemo(() => {
         return items && items.find((item: TIngredient) => item._id === id);

@@ -238,7 +238,6 @@ export type TLoginActions = ReturnType<
     TResponseBody<'user', TProfile>> => {
       try {
         const res = await fetch(url, options).then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
-        //const result = await then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
         return res;
       } catch (err) {
         if ( (err as Error).message! === "jwt expired") {

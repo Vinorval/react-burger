@@ -1,20 +1,20 @@
 import React from "react";
 import ProfileForm from "../profileForm/profileForm";
 import Styles from './profile.module.css';
-import { useDispatch, useSelector } from "../../services/hooks";
+import { useDispatch } from "../../services/hooks";
 import { exit, getUser } from "../../services/actions/auth";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import Orders from "../orders/orders";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
 import { getCookie } from "../../utils/utils";
 
-export default function Profile(props: any) {
+type TProps = { openPopup?: Function }
+
+export default function Profile(props: TProps) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const accessToken = getCookie('accessToken');
-    //const { accessToken } = useSelector( ( store ) => ({ accessToken: store.auth.accessToken }) );
-
 
     React.useEffect(() => { dispatch(getUser()) }, [dispatch])
 
@@ -61,7 +61,7 @@ export default function Profile(props: any) {
             </div>
             <div>
                 {location.pathname === '/profile' && <ProfileForm />}
-                {location.pathname === '/profile/orders' && <Orders openPopup={props.openPopup} />}
+                {location.pathname === '/profile/orders' && <Orders openPopup={props.openPopup!} />}
             </div>
         </section>
     )

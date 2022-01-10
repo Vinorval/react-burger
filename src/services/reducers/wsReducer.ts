@@ -1,12 +1,10 @@
 import { TOrders } from '../../utils/types';
 import {
     TActions,
-    WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_ORDERS,
-    WS_SEND_ORDER
 } from '../actions/wsActionTypes';
 
 type TWSState = {

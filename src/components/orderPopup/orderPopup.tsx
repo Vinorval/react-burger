@@ -3,13 +3,11 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from "../../services/hooks";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
-import { useLocation } from "react-router-dom";
 import { TIngredient } from "../../utils/types";
 import Style from './orderPopup.module.css';
 import { getDate } from "../../utils/utils";
 
 export default function OrderPopup() {
-    const location = useLocation();
     const dispatch = useDispatch();
     let { id } = useParams();
     const { items, orders } = useSelector((store ) => ({ items: store.items.items, orders: store.orders.orders }));
@@ -23,7 +21,7 @@ export default function OrderPopup() {
         return () => {
           dispatch({ type: WS_CONNECTION_CLOSED });
         };
-    }, []);
+    }, [dispatch]);
 
     const orderInfo = (items: readonly TIngredient[] | null) => {
         let result: Array<TIngredient> = [];

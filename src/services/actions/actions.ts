@@ -1,7 +1,6 @@
 import { getItemsRequest, postOrderRequest } from '../api';
 import { AppThunk, AppDispatch } from '../../utils/types';
 import { TIngredient, TOrder, TIngredientConstructor, TIngredientMore } from '../../utils/types';
-import { getCookie } from '../../utils/utils';
 
 export const GET_ITEMS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_FAILED: 'GET_ITEMS_FAILED' = 'GET_ITEMS_FAILED';

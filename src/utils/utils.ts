@@ -1,4 +1,3 @@
-//import { TResponseBody } from '../services/api';
 export const URL = 'https://norma.nomoreparties.space/api';
 
 export function getCookie(name: string) {
