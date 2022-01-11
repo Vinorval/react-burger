@@ -1,16 +1,16 @@
 import React, { useRef, FC, useEffect } from "react";
-import burgerIngredientsStyles from './burgerIngredients.module.css'
-import { useSelector, RootStateOrAny } from 'react-redux';
+import burgerIngredientsStyles from './burgerIngredients.module.css';
+import { useSelector } from "../../services/hooks";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { TIngredientMore } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 const BurgerIngredients: FC = () => {
     const location = useLocation();
     //забираем из редакс ингредиенты
-    const { items } = useSelector( ( store: RootStateOrAny) => ({ items: store.items.items }) );
+    const { items } = useSelector( store => ({ items: store.items.items }) );
     //создаём стейт для разделения ингредиентов
     const [current, setCurrent] = React.useState<string>('Булки');
     //создание рефов
@@ -47,8 +47,8 @@ const BurgerIngredients: FC = () => {
 
     //перебираем массив ингредиентов и возвращаем их
     const returnIngredient = (name: string) => {
-        return (
-            items.map((item: TIngredientMore) => {
+        return items !== null &&
+            items.map((item: TIngredient) => {
                 if (item.type === name) {
                     return (
                         <Link className={burgerIngredientsStyles.link} key={item._id} to={`/ingredients/${item._id}`} state={{ backgroundLocation: location }}>
@@ -57,7 +57,6 @@ const BurgerIngredients: FC = () => {
                     )
                 } else { return null }
             })
-        )
     }
 
     //возвращаем верстку контейнера ингредиентов

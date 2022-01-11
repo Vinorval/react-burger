@@ -7,7 +7,7 @@ export function getCookie(name: string) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
   
-export function setCookie(name: string, value: string, props: any) {
+export function setCookie(name: string, value: string, props?: any) {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -47,6 +47,8 @@ export function deleteCookie(name: string) {
     setCookie(name, '', { expires: -1 });
 }
 
-export const checkReponse = (res: CustomResponse<JSON>) => {
+export const checkReponse = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
+
+export const getDate = (date: string) => { return `${date.slice(0, 10)}, ${date.slice(11, 16)} i-GMT+3`; };

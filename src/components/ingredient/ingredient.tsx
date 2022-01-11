@@ -1,31 +1,33 @@
 import React, { FC } from "react";
 import ingredientStyle from './ingredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/hooks";
 import { OPEN_POPUP } from '../../services/actions/actions';
 import { useDrag } from 'react-dnd';
-import { TIngredientMore } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 interface IData {
-    data: TIngredientMore
+    data: TIngredient
 }
 
 const Ingredient: FC<IData> = ({ data }) => {
     //забираем из редукса счётчики количества ингредиентов в бургере
-    const { quantity, quantityBun } = useSelector( ( store: RootStateOrAny ) => ({ quantity: store.burgerItems.quantity, quantityBun: store.burgerItems.quantityBun }) );
+    const { bun } = useSelector( ( store ) => ({ bun: store.burgerItems.bun }) );
     const dispatch = useDispatch();
     //разбиваем data на важные компоненты
-    const { _id, name, image, price, type } = data;
+    const { _id, name, image, price, type, qty } = data;
 
     //реализация изменение счётчика при изменении количества ингредиента в бургере
     const returnQt = React.useMemo(() => {
         //если это булка менять её счётчик
-        if ( type === 'bun') return (quantityBun._ID === _id && quantityBun.qt > 0) && <p key={quantityBun.id} className={ingredientStyle.item__number}>{quantityBun.qt}</p>;
+        //if ( type === 'bun') return (quantityBun._ID === _id && quantityBun.qt > 0) && <p key={quantityBun.id} className={ingredientStyle.item__number}>{quantityBun.qt}</p>;
+        if ( type === 'bun') {
+            if ( _id === ( bun !== null && bun._id) ) { return <p key={_id} className={ingredientStyle.item__number}>2</p> };
+            return <p key={_id} className={ingredientStyle.item__number}>0</p>
+        }
         //если это любой другой ингредиент менять ему счётчик с помощью сравнения id
-        return quantity.map((item: TIngredientMore) => {
-            return (item._ID === _id && (item.qt === undefined? 0 : item.qt) > 0) && <p key={_id} className={ingredientStyle.item__number}>{item.qt}</p>;
-        })
-    }, [quantity, _id, quantityBun, type])
+        return ((qty && qty !== 0)? <p key={_id} className={ingredientStyle.item__number}>{qty}</p> : null)
+    }, [type, ( bun !== null && bun._id), qty, ( _id !== null && _id )])
 
     //добавить возможность перетаскивать элемент с помощью dnd
     const [, drag] = useDrag({type: 'ingredient', item: { _id, name, image, price, type }});

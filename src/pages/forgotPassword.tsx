@@ -2,10 +2,10 @@ import React from "react";
 import EntryForm from "../components/entryForm/entryForm";
 import { useNavigate } from "react-router-dom";
 import { forgotPassword } from "../services/actions/auth";
-import { useSelector, RootStateOrAny } from "react-redux";
+import { useSelector } from "../services/hooks";
 
 export default function ForgotPasswordPage() {
-    const toForgotPassword = useSelector((store: RootStateOrAny) => ({ toForgotPassword: store.auth.toForgotPassword }) )
+    const toForgotPassword = useSelector((store ) => ({ toForgotPassword: store.auth.toForgotPassword }) )
     const navigate = useNavigate();
     //узнаем авторизован ли пользователь
     const auth = localStorage.getItem('authorization');

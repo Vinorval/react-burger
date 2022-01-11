@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import entryFormStyles from './entryForm.module.css';
 import { Link } from "react-router-dom";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from "react-redux"; 
+import { useDispatch } from "../../services/hooks";
 import { useNavigate } from "react-router-dom";
 import { TICons } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 
@@ -76,7 +76,7 @@ const EntryForm: FC<IEntryForm> = ({ title, inputs, button, enty, password, entr
         <section className={entryFormStyles.section} >
             <form className={entryFormStyles.conteiner} onSubmit={onSubmit}>
                 <h2 className={entryFormStyles.title}>{title}</h2>
-                <ul>{returnInputs()}</ul>
+                <ul className={entryFormStyles.inputs}>{returnInputs()}</ul>
                     <Button type="primary" size="medium">
                         {button}
                     </Button>

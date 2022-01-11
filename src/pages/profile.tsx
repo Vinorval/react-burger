@@ -2,14 +2,16 @@ import React from "react";
 import Profile from "../components/profile/profile";
 import { Routes, Route } from 'react-router-dom';
 
-export default function ProfilePage() {
+type TProps = { openPopup: Function }
+
+export default function ProfilePage(props: TProps) {
     return (
         <>
           <Routes>
             <Route path="/" element={<Profile />} />
           </Routes>
           <Routes>
-            <Route path="/orders" element={<Profile />} />
+            <Route path="/orders" element={<Profile openPopup={props.openPopup} />} />
           </Routes>
         </>
     )

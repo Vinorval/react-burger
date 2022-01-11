@@ -1,21 +1,17 @@
 import React from "react";
-import { useSelector, RootStateOrAny } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Styles from './profileForm.module.css';
-import { useDispatch } from "react-redux";
-import { getUser, updateUser } from "../../services/actions/auth";
+import { updateUser } from "../../services/actions/auth";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TProfile } from '../../utils/types';
 
 export default function ProfileForm() {
     const dispatch = useDispatch();
     //начальное состояние импутов в профиле
-    const { name, email } = useSelector( (store: RootStateOrAny) => ({ name: store.auth.name, email: store.auth.email }) );
+    const { name, email } = useSelector( ( store ) => ({ name: store.auth.name, email: store.auth.email }) );
     const [form, setValue] = React.useState<TProfile>({ name: name, email: email, password: ''});
     const [isChange, setChenge] = React.useState<boolean>(false)
-  
-    //запрос на сервер для получения информации о пользователе
-    React.useEffect(() => { return dispatch(getUser()) }, [dispatch])
 
     //запись в стейт значения полей из хранилища
     React.useEffect(() => {

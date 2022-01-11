@@ -19,7 +19,7 @@ export default function AppHeader() {
                     .join(" ")
                     }><BurgerIcon type={location.pathname === '/' ? "primary" : "secondary"} /> Конструктор</NavLink>
 
-                    <NavLink to='/orders' className={({ isActive }) =>
+                    <NavLink to='/feed' className={({ isActive }) =>
                     [
                         appHeaderStyles.text,
                         isActive ? appHeaderStyles.text_active : null

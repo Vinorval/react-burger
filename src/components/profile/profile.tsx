@@ -1,14 +1,22 @@
 import React from "react";
 import ProfileForm from "../profileForm/profileForm";
 import Styles from './profile.module.css';
-import { useDispatch } from 'react-redux';
-import { exit } from "../../services/actions/auth";
+import { useDispatch } from "../../services/hooks";
+import { exit, getUser } from "../../services/actions/auth";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import Orders from "../orders/orders";
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/wsActionTypes";
+import { getCookie } from "../../utils/utils";
 
-export default function Profile() {
+type TProps = { openPopup?: Function }
+
+export default function Profile(props: TProps) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+    const accessToken = getCookie('accessToken');
+
+    React.useEffect(() => { dispatch(getUser()) }, [dispatch])
 
     //если пользователь решил уйти, отправлять запрос на удаление токена и перенаправлять на страницу входа
     const exited = React.useCallback(
@@ -20,8 +28,15 @@ export default function Profile() {
         [dispatch, navigate]
     );
 
+    React.useEffect(() => {
+        dispatch({ type: WS_CONNECTION_START, payload: `wss://norma.nomoreparties.space/orders/all?token=${accessToken?.replace('Bearer ','')}` });
+        return () => {
+        dispatch({ type: WS_CONNECTION_CLOSED });
+        };
+      }, [accessToken, dispatch]);
+
     return (
-        <section className={Styles.section} >
+        <section className={`${Styles.section} ${location.pathname === '/profile/orders' && Styles.section_path_order}`} >
             <div>
                 <nav className={Styles.menu} >
                     <NavLink end={true} to='/profile' className={({ isActive }) =>
@@ -44,8 +59,9 @@ export default function Profile() {
                 </nav>
                 <p className={Styles.text}>В этом разделе вы можете изменить свои персональные данные</p>
             </div>
-            <div>
+            <div className={Styles.orders} >
                 {location.pathname === '/profile' && <ProfileForm />}
+                {location.pathname === '/profile/orders' && <Orders openPopup={props.openPopup!} />}
             </div>
         </section>
     )
