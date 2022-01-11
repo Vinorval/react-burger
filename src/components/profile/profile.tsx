@@ -59,7 +59,7 @@ export default function Profile(props: TProps) {
                 </nav>
                 <p className={Styles.text}>В этом разделе вы можете изменить свои персональные данные</p>
             </div>
-            <div>
+            <div className={Styles.orders} >
                 {location.pathname === '/profile' && <ProfileForm />}
                 {location.pathname === '/profile/orders' && <Orders openPopup={props.openPopup!} />}
             </div>

@@ -245,8 +245,10 @@ export type TLoginActions = ReturnType<
           const refreshData = await updateToken();
           localStorage.setItem("token", refreshData.refreshToken); 
           localStorage.setItem('authorization', 'true');
-          setCookie("accessToken", refreshData.accessToken);
-          options.headers.authorization = getCookie('accessToken');
+          console.log(refreshData.accessToken)
+          setCookie('accessToken', refreshData.accessToken);
+          console.log(getCookie('accessToken'))
+          options.headers.authorization = await getCookie('accessToken');
           const res = await fetch(url, options).then(res => res.json());
           return res;
         } else {
