@@ -1,5 +1,5 @@
 .order {
-    max-height: 214px;
+    max-height: 324px;
     width: 96%;
     row-gap: 24px;
     display: grid;
@@ -43,7 +43,7 @@
     color: #F2F2F3;
     font-style: normal;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 30px;
 }
 
