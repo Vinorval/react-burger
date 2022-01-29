@@ -19,13 +19,25 @@ describe('service is available', function() {
         cy.get('#closeIcon').click();
         cy.get('#root').not('section');
     });
-
-    //it('check cabinet button loaded', () => {
-    //    cy.contains('Личный кабинет');
-    //});
     
-    //it('turn to auth page', () => {
-    //   cy.get('NavLink').contains('Личный кабинет').click();
-    //    cy.contains('Вход');
-    //});
+    it('to auth page', () => {
+       cy.get('#toProfile').contains('Личный кабинет').click();
+       cy.contains('Вход');
+    });
+
+    it('record auth data', () => {
+        cy.get('input').first().as('email');
+        cy.get('input').last().as('password');
+    
+        cy.get('@email').type('vino@yandex.ru');
+        cy.get('@password').type('12101');
+    
+        cy.get('@email').should('have.value', 'vino@yandex.ru');
+        cy.get('@password').should('have.value', '12101');
+    });
+    
+    it('authorization', () => {
+        cy.get('button').contains('Войти').click();
+        cy.contains('Соберите бургер');
+    });
   }); 
