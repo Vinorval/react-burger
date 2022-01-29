@@ -36,9 +36,10 @@ export default function HomePage () {
         <BurgerConstructor openPopup={handleOpenPopupOrder} />
       </main>
     </DndProvider>
+    {popupOrder &&
     <Modal isOpen={popupOrder} title='' closePopup={closePopup}>
       <OrderDetails/>
-    </Modal>
+    </Modal>}
   </div>
   )
 }
