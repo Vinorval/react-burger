@@ -10,4 +10,4 @@
 
 ### `Деплой`
 
-Посмотреть проект можно по адресу: https://vinorval.github.io/react-burger/
+Посмотреть проект можно по адресу: https://vinorval.github.io/react-burger
