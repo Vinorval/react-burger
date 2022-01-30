@@ -1,4 +1,4 @@
-import { ingredientsReducer, burgerReducer, detailsReducer, orderReducer } from './reducers';
+import { ingredientsReducer, burgerReducer, detailsReducer } from './reducers';
 import {
     GET_ITEMS_SUCCESS,
     GET_ITEMS_FAILED,
@@ -10,33 +10,66 @@ import {
   
     OPEN_POPUP,
     CLOSE_POPUP,
-  
-    GET_ORDER_SUCCESS,
-    GET_ORDER_FAILED,
     increaseItem,
     decreaseItem
   } from '../actions/actions';
 
+const initialState = {
+    
+    items: [],
+    itemsFailed: false,
+  
+    burgerItems: [],
+    burgerItemsFailed: false,
+    bun: null,
+    quantity: [],
+    quantityBun: {},
+
+    ingredient: {},
+    ingridientPopup: false,
+
+    order: { number: 'немного подождите' },
+    orderFailed: false
+};
+
+const newState = { ...initialState, items: [
+  {
+    _id: 'pppp',
+    name: 'oooo',
+    type: 'kkk',
+    proteins: 90,
+    fat: 90,
+    carbohydrates: 90,
+    calories: 90,
+    price: 90,
+    image: 'kjhgfdsa',
+    image_mobile: 'hfd',
+    image_large: 'jggd',
+    qty: 1
+  }
+],
+burgerItems: [
+  {
+    _id: 'pppp',
+    id: 'k',
+    name: 'oooo',
+    type: 'kkk',
+    proteins: 90,
+    fat: 90,
+    carbohydrates: 90,
+    calories: 90,
+    price: 90,
+    image: 'kjhgfdsa',
+    image_mobile: 'hfd',
+    image_large: 'jggd',
+    qty: 1
+  }
+]
+}
+
 describe('ingredients reducer', () => {
   it('should return the initial state', () => {
-    expect(ingredientsReducer(undefined, {})).toEqual(
-      {
-        items: [],
-        itemsFailed: false,
-    
-        burgerItems: [],
-        burgerItemsFailed: false,
-        bun: null,
-        quantity: [],
-        quantityBun: {},
-  
-        ingredient: {},
-        ingridientPopup: false,
-  
-        order: { number: 'немного подождите' },
-        orderFailed: false
-      }
-    )
+    expect(ingredientsReducer(undefined, {})).toEqual(initialState)
   })
 
   it('should handle GET_ITEMS_SUCCESS', () => {
@@ -48,20 +81,9 @@ describe('ingredients reducer', () => {
       })
     ).toEqual(
       {
+        ...initialState,
         items: [{id: 'ggg'}, {id: 'hghg'}],
         itemsFailed: false,
-    
-        burgerItems: [],
-        burgerItemsFailed: false,
-        bun: null,
-        quantity: [],
-        quantityBun: {},
-  
-        ingredient: {},
-        ingridientPopup: false,
-  
-        order: { number: 'немного подождите' },
-        orderFailed: false
       }
     )
   })
@@ -74,27 +96,15 @@ describe('ingredients reducer', () => {
       })
     ).toEqual(
       {
-        items: [],
+        ...initialState,
         itemsFailed: true,
-    
-        burgerItems: [],
-        burgerItemsFailed: false,
-        bun: null,
-        quantity: [],
-        quantityBun: {},
-  
-        ingredient: {},
-        ingridientPopup: false,
-  
-        order: { number: 'немного подождите' },
-        orderFailed: false
       }
     )
   })
 
   it('should handle INCREASE_ITEM_COUNT', () => {
     expect(
-        ingredientsReducer(undefined, increaseItem(
+        ingredientsReducer(newState, increaseItem(
             {
                 _id: 'pppp',
                 name: 'oooo',
@@ -107,33 +117,36 @@ describe('ingredients reducer', () => {
                 image: 'kjhgfdsa',
                 image_mobile: 'hfd',
                 image_large: 'jggd',
-                qty: 0
+                qty: 1
             }, 9
         )
       )
     ).toEqual(
       {
-        items: [],
-        itemsFailed: false,
-    
-        burgerItems: [],
-        burgerItemsFailed: false,
-        bun: null,
-        quantity: [],
-        quantityBun: {},
-  
-        ingredient: {},
-        ingridientPopup: false,
-  
-        order: { number: 'немного подождите' },
-        orderFailed: false
+        ...newState,
+        items: [
+          {
+            _id: 'pppp',
+            name: 'oooo',
+            type: 'kkk',
+            proteins: 90,
+            fat: 90,
+            carbohydrates: 90,
+            calories: 90,
+            price: 90,
+            image: 'kjhgfdsa',
+            image_mobile: 'hfd',
+            image_large: 'jggd',
+            qty: 10
+        }
+        ],
       }
     )
   })
 
   it('should handle DECREASE_ITEM_COUNT', () => {
     expect(
-        ingredientsReducer(undefined, decreaseItem(
+        ingredientsReducer(newState, decreaseItem(
             {
                 _id: 'pppp',
                 name: 'oooo',
@@ -146,26 +159,29 @@ describe('ingredients reducer', () => {
                 image: 'kjhgfdsa',
                 image_mobile: 'hfd',
                 image_large: 'jggd',
-                qty: 8
+                qty: 1
             }, 1
         )
       )
     ).toEqual(
       {
-        items: [],
-        itemsFailed: false,
-    
-        burgerItems: [],
-        burgerItemsFailed: false,
-        bun: null,
-        quantity: [],
-        quantityBun: {},
-  
-        ingredient: {},
-        ingridientPopup: false,
-  
-        order: { number: 'немного подождите' },
-        orderFailed: false
+        ...newState,
+        items: [
+          {
+            _id: 'pppp',
+            name: 'oooo',
+            type: 'kkk',
+            proteins: 90,
+            fat: 90,
+            carbohydrates: 90,
+            calories: 90,
+            price: 90,
+            image: 'kjhgfdsa',
+            image_mobile: 'hfd',
+            image_large: 'jggd',
+            qty: 0
+        }
+        ],
       }
     )
   })
@@ -175,75 +191,34 @@ describe('ingredients reducer', () => {
 
 describe('burger reducer', () => {
     it('should return the initial state', () => {
-      expect(burgerReducer(undefined, {})).toEqual(
-        {
-          items: [],
-          itemsFailed: false,
-      
-          burgerItems: [],
-          burgerItemsFailed: false,
-          bun: null,
-          quantity: [],
-          quantityBun: {},
-    
-          ingredient: {},
-          ingridientPopup: false,
-    
-          order: { number: 'немного подождите' },
-          orderFailed: false
-        }
-      )
+      expect(burgerReducer(undefined, {})).toEqual(initialState)
     })
   
     it('should handle ADD_ITEM', () => {
       expect(
         burgerReducer(undefined, {
           type: ADD_ITEM,
-          burgerItems: [{id: 'hghg'}, undefined]
+          item: {id: 'hghg'}
         })
       ).toEqual(
         {
-          items: [],
-          itemsFailed: false,
-      
-          burgerItems: [undefined],
-          burgerItemsFailed: false,
-          bun: null,
-          quantity: [],
-          quantityBun: {},
-    
-          ingredient: {},
-          ingridientPopup: false,
-    
-          order: { number: 'немного подождите' },
-          orderFailed: false
+          ...initialState,
+          burgerItems: [{id: 'hghg'}],
         }
       )
     })
   
     it('should handle DELETE_ITEM', () => {
       expect(
-        burgerReducer(undefined, {
+        burgerReducer(newState, {
           type: DELETE_ITEM,
-          id: 'kkk',
-          _id: 'kjh'
+          id: 'k',
+          _id: 'pppp'
         })
       ).toEqual(
         {
-          items: [],
-          itemsFailed: false,
-      
+          ...newState,
           burgerItems: [],
-          burgerItemsFailed: false,
-          bun: null,
-          quantity: [],
-          quantityBun: {},
-    
-          ingredient: {},
-          ingridientPopup: false,
-    
-          order: { number: 'немного подождите' },
-          orderFailed: false
         }
       )
     })
@@ -252,24 +227,12 @@ describe('burger reducer', () => {
         expect(
           burgerReducer(undefined, {
             type: CHANCE_ITEMS,
-            burgerItems: [{id: 'hghg'}, {id: 'hghg'}]
+            items: [{id: 'hghg'}, {id: 'hghg'}]
           })
         ).toEqual(
           {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: undefined,
-            burgerItemsFailed: false,
-            bun: null,
-            quantity: [],
-            quantityBun: {},
-      
-            ingredient: {},
-            ingridientPopup: false,
-      
-            order: { number: 'немного подождите' },
-            orderFailed: false
+            ...initialState,
+            burgerItems: [{id: 'hghg'}, {id: 'hghg'}],
           }
         )
       })
@@ -282,45 +245,16 @@ describe('burger reducer', () => {
           })
         ).toEqual(
           {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: [],
-            burgerItemsFailed: false,
+            ...initialState,
             bun: {id: 'hghg'},
-            quantity: [],
-            quantityBun: {},
-      
-            ingredient: {},
-            ingridientPopup: false,
-      
-            order: { number: 'немного подождите' },
-            orderFailed: false
           }
         )
       })
-  })
+})
 
-  describe('details reducer', () => {
+describe('details reducer', () => {
     it('should return the initial state', () => {
-      expect(ingredientsReducer(undefined, {})).toEqual(
-        {
-          items: [],
-          itemsFailed: false,
-      
-          burgerItems: [],
-          burgerItemsFailed: false,
-          bun: null,
-          quantity: [],
-          quantityBun: {},
-    
-          ingredient: {},
-          ingridientPopup: false,
-    
-          order: { number: 'немного подождите' },
-          orderFailed: false
-        }
-      )
+      expect(ingredientsReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle OPEN_POPUP', () => {
@@ -332,20 +266,9 @@ describe('burger reducer', () => {
           })
         ).toEqual(
           {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: [],
-            burgerItemsFailed: false,
-            bun: null,
-            quantity: [],
-            quantityBun: {},
-      
+            ...initialState,
             ingredient: {id: 'hghg'},
             ingridientPopup: true,
-      
-            order: { number: 'немного подождите' },
-            orderFailed: false
           }
         )
       })
@@ -358,120 +281,10 @@ describe('burger reducer', () => {
           })
         ).toEqual(
           {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: [],
-            burgerItemsFailed: false,
-            bun: null,
-            quantity: [],
-            quantityBun: {},
-      
+            ...initialState,
             ingredient: {}, ingridientPopup: false,
-      
             order: null,
-            orderFailed: false
           }
         )
       })
-  })
-
-  describe('order reducer', () => {
-    it('should return the initial state', () => {
-      expect(ingredientsReducer(undefined, {})).toEqual(
-        {
-          items: [],
-          itemsFailed: false,
-      
-          burgerItems: [],
-          burgerItemsFailed: false,
-          bun: null,
-          quantity: [],
-          quantityBun: {},
-    
-          ingredient: {},
-          ingridientPopup: false,
-    
-          order: { number: 'немного подождите' },
-          orderFailed: false
-        }
-      )
-    })
-
-    it('should handle GET_ORDER_SUCCESS', () => {
-        expect(
-            orderReducer(undefined, {
-            type: GET_ORDER_SUCCESS,
-            orderFailed: false ,
-            order: { number: 234 }
-          })
-        ).toEqual(
-          {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: [],
-            burgerItemsFailed: false,
-            bun: null,
-            quantity: [],
-            quantityBun: {},
-      
-            ingredient: {},
-            ingridientPopup: false,
-      
-            order: { number: 234 },
-            orderFailed: false
-          }
-        )
-      })
-
-      it('should handle GET_ORDER_FAILED', () => {
-        expect(
-            orderReducer(undefined, {
-            type: GET_ORDER_FAILED,
-            orderFailed: true, order: { number: 'немного подождите' }
-          })
-        ).toEqual(
-          {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: [],
-            burgerItemsFailed: false,
-            bun: null,
-            quantity: [],
-            quantityBun: {},
-      
-            ingredient: {}, ingridientPopup: false,
-      
-            order: { number: 'немного подождите' },
-            orderFailed: true
-          }
-        )
-      })
-
-      it('should handle CLOSE_POPUP', () => {
-        expect(
-            detailsReducer(undefined, {
-            type: CLOSE_POPUP,
-            ingredient: {}, order: { number: 'немного подождите' }, ingridientPopup: false
-          })
-        ).toEqual(
-          {
-            items: [],
-            itemsFailed: false,
-        
-            burgerItems: [],
-            burgerItemsFailed: false,
-            bun: null,
-            quantity: [],
-            quantityBun: {},
-      
-            ingredient: {}, ingridientPopup: false,
-      
-            order: null,
-            orderFailed: false
-          }
-        )
-      })
-  })
+})
