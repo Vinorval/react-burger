@@ -1,3 +1,4 @@
+import fixture from '../fixtures/example.json';
 describe('service is available', function() {
     before(() => {
         cy.visit('http://localhost:3000');
@@ -15,13 +16,13 @@ describe('service is available', function() {
         cy.get('p').contains('53');
     });
     
-    it('close ingredient modal', () => {
+    it('close modal', () => {
         cy.get('#closeIcon').click();
         cy.get('#root').not('section');
     });
     
     it('to auth page', () => {
-       cy.get('#toProfile').contains('Личный кабинет').click();
+       cy.get('button').contains('Оформить заказ').click();
        cy.contains('Вход');
     });
 
@@ -39,5 +40,36 @@ describe('service is available', function() {
     it('authorization', () => {
         cy.get('button').contains('Войти').click();
         cy.contains('Соберите бургер');
+    });
+
+    it('DnD testing', () => {
+        cy.get('div').contains('Краторная булка N-200i').as('bun');
+        cy.get('div').contains('Соус Spicy-X').as('ingredient');
+        cy.get('div').contains('Мини-салат Экзо-Плантаго').as('salat');
+        cy.get('div').get('#burger').as('contructor_container');
+    
+        cy.get('@bun').trigger('dragstart');
+        cy.get('@contructor_container').trigger('drop');
+    
+        cy.get('@ingredient').trigger('dragstart');
+        cy.get('@contructor_container').trigger('drop');
+
+        cy.get('@salat').trigger('dragstart');
+        cy.get('@contructor_container').trigger('drop');
+    
+        cy.get('@contructor_container').contains('Соус Spicy-X');
+        cy.get('@contructor_container').contains('Мини-салат Экзо-Плантаго');
+      });
+
+    it('check order', () => {
+        cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', { fixture: 'example.json' }).as('order');
+        cy.get('button').contains('Оформить заказ').click();
+        cy.wait('@order').then(res => expect(res.response.body.order.number).equal(fixture.order.number)); // eslint-disable-line
+        cy.get('section').contains(`${fixture.order.number}`);
+    });
+
+    it('close order modal', () => {
+        cy.get('#closeIcon').click();
+        cy.get('#root').not('section');
     });
   }); 

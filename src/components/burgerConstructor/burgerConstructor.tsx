@@ -136,7 +136,7 @@ const BurgerConstructor: FC<IConstructorProps> = ({ openPopup }) => {
                 />}
                 <Droppable droppableId='droppable'>
                 {(provided, snapshot) => (
-                <ul className={burgerConstructorStyles.burger__list} {...provided.droppableProps} ref={provided.innerRef} >{returnIngredient()} {provided.placeholder}</ul>  
+                <ul id='burger' className={burgerConstructorStyles.burger__list} {...provided.droppableProps} ref={provided.innerRef} >{returnIngredient()} {provided.placeholder}</ul>  
                 )}
                 </Droppable>
                 { bun !== null && <ConstructorElement
