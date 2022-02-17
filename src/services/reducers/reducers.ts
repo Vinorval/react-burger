@@ -21,7 +21,7 @@ import { TIngredientConstructor, TIngredientMore, TIngredient, TOrder } from '..
   
 
 type TInitialStatte = {
-  items: readonly TIngredient[] | null;
+  items: readonly TIngredient[] | null | [];
   itemsFailed: boolean;
 
   burgerItems: Array<TIngredientConstructor>;
@@ -39,7 +39,7 @@ type TInitialStatte = {
 
   const initialState: TInitialStatte = {
     
-      items: null,
+      items: [],
       itemsFailed: false,
     
       burgerItems: [],

@@ -30,7 +30,9 @@ export const Modal: FC<IModalProps> = ({ isOpen, title, closePopup, children }) 
             <div className={modalStyles.popup} onClick={ e => e.stopPropagation()}>
                 <div className={modalStyles.popup__header}>
                     <h2 className={modalStyles.title}>{title}</h2>
-                    <CloseIcon type="primary" onClick={closeModal} />
+                    <div id='closeIcon' onClick={closeModal}>
+                       <CloseIcon type="primary" />
+                    </div>
                 </div>
                 {children}
             </div>

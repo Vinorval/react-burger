@@ -18,7 +18,7 @@ export default function OrderDetails() {
               </div>
             </div> :
             <div className={orderDetailsStyles.popup__conteiner_err}>
-              <p className={`${orderDetailsStyles.order} ${orderDetailsStyles.order_err}`}>Пожалуйста, добавьyте в конструктор булку и ингредиенты</p>
+              <p className={`${orderDetailsStyles.order} ${orderDetailsStyles.order_err}`}>Пожалуйста, добавьте в конструктор булку и ингредиенты</p>
             </div>
     )
 }
